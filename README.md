@@ -1,6 +1,6 @@
-CG-Project
-
-Phase 1
+**CG-Project**
+ 
+<u> Phase 1 </u>
 
 Phase 2
 
