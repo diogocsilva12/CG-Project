@@ -120,15 +120,13 @@ Example Workflow
 Note: The same applies for the other shapes.
 
 ### TODO 
-
 - [ ] Fix some bugs
 - [ ] Clean up the code
 - [ ] Fix the box shape
 - [ ] Document the rest of the code 
 
 ### Demo
-![Demo](/usage_example.gif)
-
+![Demo](https://github.com/diogocsilva12/CG-Project/raw/main/Phase%201/usage_example.gif)
 
 
 
