@@ -7,6 +7,7 @@ This document provides an overview of the project, including how to build and ru
 2. [Build Instructions](#build-instructions)
 3. [Program Usage](#program-usage) 
 4. [TODO](#todo)
+5. [Demo](#demo)
 
 ---
 
@@ -124,6 +125,9 @@ Note: The same applies for the other shapes.
 - [ ] Clean up the code
 - [ ] Fix the box shape
 - [ ] Document the rest of the code 
+
+### Demo
+![Demo](/usage_example.gif)
 
 
 
