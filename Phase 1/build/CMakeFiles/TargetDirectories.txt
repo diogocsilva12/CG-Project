@@ -1,0 +1,5 @@
+/Users/diogokeeper12/Documents/GitHub/CG-Project/Phase 1/build/CMakeFiles/tinyxml2.dir
+/Users/diogokeeper12/Documents/GitHub/CG-Project/Phase 1/build/CMakeFiles/generator.dir
+/Users/diogokeeper12/Documents/GitHub/CG-Project/Phase 1/build/CMakeFiles/engine.dir
+/Users/diogokeeper12/Documents/GitHub/CG-Project/Phase 1/build/CMakeFiles/edit_cache.dir
+/Users/diogokeeper12/Documents/GitHub/CG-Project/Phase 1/build/CMakeFiles/rebuild_cache.dir
