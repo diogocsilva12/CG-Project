@@ -7,6 +7,7 @@ This document provides an overview of the project, including how to build and ru
 2. [Build Instructions](#build-instructions)
 3. [Program Usage](#program-usage) 
 4. [TODO](#todo)
+5. [Demo](#demo)
 
 ---
 
@@ -119,12 +120,13 @@ Example Workflow
 Note: The same applies for the other shapes.
 
 ### TODO 
-
 - [ ] Fix some bugs
 - [ ] Clean up the code
 - [ ] Fix the box shape
 - [ ] Document the rest of the code 
 
+### Demo
+![Demo](https://github.com/diogocsilva12/CG-Project/raw/main/Phase%201/usage_example.gif)
 
 
 
