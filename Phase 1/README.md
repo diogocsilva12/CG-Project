@@ -71,3 +71,38 @@
 - [ ] Clean the code
 - [ ] Add more camera controls
 - [ ] Implement solid rendering mode
+
+## How to Run
+
+1. Build the project:
+```bash
+# From Phase 1 directory
+mkdir build
+cd build
+cmake ..
+make
+```
+
+2. Generate models:
+```bash
+# From build directory
+./generator plane 2 8 plane.3d
+```
+
+3. Check generated files:
+```bash
+# Files are created in generator/tests/
+ls ../generator/tests/
+```
+
+4. Test individual models:
+- Modify config.xml to include the model you want to test
+- Run the engine with the config file:
+```bash
+./engine ../engine/config.xml
+```
+or just run the engine with the model file (example):
+```bash
+./engine ../generator/tests/plane.3d
+```
+Note: Generated .3d files are saved in the `generator/tests/` directory.
