@@ -3,15 +3,21 @@
 #include <vector>
 #include <cmath>
 #include <string>
+#include <stdexcept> // For std::invalid_argument
 #include "generatorAux.h"
 
-
-
+/**
+ * Writes a list of vertices to a file.
+ * The first line of the file contains the number of vertices, followed by the coordinates of each vertex.
+ *
+ * @param filename The name of the file to write the vertices to.
+ * @param vertices The list of vertices to write.
+ * @throws std::runtime_error If the file cannot be opened.
+ */
 void writeVertices(const std::string& filename, const std::vector<Vertex>& vertices) {
     std::ofstream file(filename);
     if (!file.is_open()) {
-        std::cerr << "Erro ao abrir o arquivo: " << filename << "\n";
-        return;
+        throw std::runtime_error("Error: Unable to open file " + filename);
     }
     // Write the number of vertices as the first line
     file << vertices.size() << "\n";
@@ -22,11 +28,23 @@ void writeVertices(const std::string& filename, const std::vector<Vertex>& verti
     file.close();
 }
 
+/**
+ * Generates vertices for a plane in the XZ plane, centered at the origin.
+ *
+ * @param unit The size of the plane (length of each side).
+ * @param slices The number of divisions along each axis.
+ * @param filename The name of the file to save the vertices.
+ * @throws std::invalid_argument If unit or slices are non-positive.
+ */
 void plane(float unit, int slices, const std::string& filename) {
+    if (unit <= 0 || slices <= 0) {
+        throw std::invalid_argument("Error: Unit and slices must be positive.");
+    }
+
     std::vector<Vertex> vertices;
     float half = unit / 2.0f;
     float step = unit / slices;
-    
+
     // Generate vertices in the XZ plane (Y = 0) for a square centered at the origin
     for (int i = 0; i <= slices; i++) {
         for (int j = 0; j <= slices; j++) {
@@ -40,7 +58,19 @@ void plane(float unit, int slices, const std::string& filename) {
     writeVertices(filename, vertices);
 }
 
+/**
+ * Generates vertices for a box (cube) centered at the origin.
+ *
+ * @param unit The size of the box (length of each edge).
+ * @param slices The number of divisions along each edge.
+ * @param filename The name of the file to save the vertices.
+ * @throws std::invalid_argument If unit or slices are non-positive.
+ */
 void box(float unit, int slices, const std::string& filename) {
+    if (unit <= 0 || slices <= 0) {
+        throw std::invalid_argument("Error: Unit and slices must be positive.");
+    }
+
     std::vector<Vertex> vertices;
     float half = unit / 2.0f;
     float step = unit / slices;
@@ -108,7 +138,21 @@ void box(float unit, int slices, const std::string& filename) {
     writeVertices(filename, vertices);
 }
 
+/**
+ * Generates vertices for a cone with a circular base and a pointed apex.
+ *
+ * @param radius The radius of the base of the cone.
+ * @param height The height of the cone.
+ * @param slices The number of divisions around the circumference.
+ * @param stacks The number of divisions along the height.
+ * @param filename The name of the file to save the vertices.
+ * @throws std::invalid_argument If radius, height, slices, or stacks are non-positive.
+ */
 void cone(float radius, float height, int slices, int stacks, const std::string& filename) {
+    if (radius <= 0 || height <= 0 || slices <= 0 || stacks <= 0) {
+        throw std::invalid_argument("Error: Radius, height, slices, and stacks must be positive.");
+    }
+
     std::vector<Vertex> vertices;
 
     // Lateral Surface: generate vertices for each (stack, slice)
@@ -126,7 +170,7 @@ void cone(float radius, float height, int slices, int stacks, const std::string&
             vertices.push_back(v);
         }
     }
-    
+
     // Base: generate center and circumference vertices
     Vertex center = {0.0f, 0.0f, 0.0f};
     vertices.push_back(center);
@@ -141,7 +185,20 @@ void cone(float radius, float height, int slices, int stacks, const std::string&
     writeVertices(filename, vertices);
 }
 
+/**
+ * Generates vertices for a sphere using spherical coordinates.
+ *
+ * @param radius The radius of the sphere.
+ * @param slices The number of divisions around the equator.
+ * @param stacks The number of divisions from pole to pole.
+ * @param filename The name of the file to save the vertices.
+ * @throws std::invalid_argument If radius, slices, or stacks are non-positive.
+ */
 void sphere(float radius, int slices, int stacks, const std::string& filename) {
+    if (radius <= 0 || slices <= 0 || stacks <= 0) {
+        throw std::invalid_argument("Error: Radius, slices, and stacks must be positive.");
+    }
+
     std::vector<Vertex> vertices;
     // Generate vertices using spherical coordinates
     for (int i = 0; i <= stacks; i++) {
