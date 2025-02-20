@@ -6,7 +6,7 @@
 			[
 				{
 					"build" : ".",
-					"jsonFile" : "directory-.-f5ebdc15457944623624.json",
+					"jsonFile" : "directory-.-Debug-f5ebdc15457944623624.json",
 					"minimumCMakeVersion" : 
 					{
 						"string" : "3.10"
@@ -21,7 +21,7 @@
 					]
 				}
 			],
-			"name" : "",
+			"name" : "Debug",
 			"projects" : 
 			[
 				{
@@ -43,21 +43,21 @@
 				{
 					"directoryIndex" : 0,
 					"id" : "engine::@6890427a1f51a3e7e1df",
-					"jsonFile" : "target-engine-a94ccdd600fea15b7a66.json",
+					"jsonFile" : "target-engine-Debug-0a2219cc01a80628f431.json",
 					"name" : "engine",
 					"projectIndex" : 0
 				},
 				{
 					"directoryIndex" : 0,
 					"id" : "generator::@6890427a1f51a3e7e1df",
-					"jsonFile" : "target-generator-03c25c8fe37cdaafc7ce.json",
+					"jsonFile" : "target-generator-Debug-de6fbeb32d29e5ce9c41.json",
 					"name" : "generator",
 					"projectIndex" : 0
 				},
 				{
 					"directoryIndex" : 0,
 					"id" : "tinyxml2::@6890427a1f51a3e7e1df",
-					"jsonFile" : "target-tinyxml2-023690466d6d90594147.json",
+					"jsonFile" : "target-tinyxml2-Debug-3b831c4a68ffc18efd2d.json",
 					"name" : "tinyxml2",
 					"projectIndex" : 0
 				}

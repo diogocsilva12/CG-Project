@@ -1,0 +1,32 @@
+[
+{
+  "directory": "/Users/diogokeeper12/Documents/GitHub/CG-Project/Phase 1/build",
+  "command": "/usr/bin/clang++  -I\"/Users/diogokeeper12/Documents/GitHub/CG-Project/Phase 1/external/tinyxml2\" -g -std=gnu++11 -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX15.1.sdk -mmacosx-version-min=15.0 -o CMakeFiles/tinyxml2.dir/external/tinyxml2/tinyxml2.cpp.o -c \"/Users/diogokeeper12/Documents/GitHub/CG-Project/Phase 1/external/tinyxml2/tinyxml2.cpp\"",
+  "file": "/Users/diogokeeper12/Documents/GitHub/CG-Project/Phase 1/external/tinyxml2/tinyxml2.cpp",
+  "output": "CMakeFiles/tinyxml2.dir/external/tinyxml2/tinyxml2.cpp.o"
+},
+{
+  "directory": "/Users/diogokeeper12/Documents/GitHub/CG-Project/Phase 1/build",
+  "command": "/usr/bin/clang++   -g -std=gnu++11 -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX15.1.sdk -mmacosx-version-min=15.0 -o CMakeFiles/generator.dir/generator/generator.cpp.o -c \"/Users/diogokeeper12/Documents/GitHub/CG-Project/Phase 1/generator/generator.cpp\"",
+  "file": "/Users/diogokeeper12/Documents/GitHub/CG-Project/Phase 1/generator/generator.cpp",
+  "output": "CMakeFiles/generator.dir/generator/generator.cpp.o"
+},
+{
+  "directory": "/Users/diogokeeper12/Documents/GitHub/CG-Project/Phase 1/build",
+  "command": "/usr/bin/clang++   -g -std=gnu++11 -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX15.1.sdk -mmacosx-version-min=15.0 -o CMakeFiles/generator.dir/generator/generatorAux.cpp.o -c \"/Users/diogokeeper12/Documents/GitHub/CG-Project/Phase 1/generator/generatorAux.cpp\"",
+  "file": "/Users/diogokeeper12/Documents/GitHub/CG-Project/Phase 1/generator/generatorAux.cpp",
+  "output": "CMakeFiles/generator.dir/generator/generatorAux.cpp.o"
+},
+{
+  "directory": "/Users/diogokeeper12/Documents/GitHub/CG-Project/Phase 1/build",
+  "command": "/usr/bin/clang++  -I\"/Users/diogokeeper12/Documents/GitHub/CG-Project/Phase 1/engine\" -I\"/Users/diogokeeper12/Documents/GitHub/CG-Project/Phase 1/external/tinyxml2\" -iframework /Library/Developer/CommandLineTools/SDKs/MacOSX15.1.sdk/System/Library/Frameworks -isystem /Library/Developer/CommandLineTools/SDKs/MacOSX15.1.sdk/System/Library/Frameworks/GLUT.framework/Headers -g -std=gnu++11 -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX15.1.sdk -mmacosx-version-min=15.0 -o CMakeFiles/engine.dir/engine/engine.cpp.o -c \"/Users/diogokeeper12/Documents/GitHub/CG-Project/Phase 1/engine/engine.cpp\"",
+  "file": "/Users/diogokeeper12/Documents/GitHub/CG-Project/Phase 1/engine/engine.cpp",
+  "output": "CMakeFiles/engine.dir/engine/engine.cpp.o"
+},
+{
+  "directory": "/Users/diogokeeper12/Documents/GitHub/CG-Project/Phase 1/build",
+  "command": "/usr/bin/clang++  -I\"/Users/diogokeeper12/Documents/GitHub/CG-Project/Phase 1/engine\" -I\"/Users/diogokeeper12/Documents/GitHub/CG-Project/Phase 1/external/tinyxml2\" -iframework /Library/Developer/CommandLineTools/SDKs/MacOSX15.1.sdk/System/Library/Frameworks -isystem /Library/Developer/CommandLineTools/SDKs/MacOSX15.1.sdk/System/Library/Frameworks/GLUT.framework/Headers -g -std=gnu++11 -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX15.1.sdk -mmacosx-version-min=15.0 -o CMakeFiles/engine.dir/engine/xmlparser.cpp.o -c \"/Users/diogokeeper12/Documents/GitHub/CG-Project/Phase 1/engine/xmlparser.cpp\"",
+  "file": "/Users/diogokeeper12/Documents/GitHub/CG-Project/Phase 1/engine/xmlparser.cpp",
+  "output": "CMakeFiles/engine.dir/engine/xmlparser.cpp.o"
+}
+]

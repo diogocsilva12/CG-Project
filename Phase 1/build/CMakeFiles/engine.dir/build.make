@@ -76,29 +76,29 @@ CMakeFiles/engine.dir/engine/engine.cpp.o: CMakeFiles/engine.dir/flags.make
 CMakeFiles/engine.dir/engine/engine.cpp.o: /Users/diogokeeper12/Documents/GitHub/CG-Project/Phase\ 1/engine/engine.cpp
 CMakeFiles/engine.dir/engine/engine.cpp.o: CMakeFiles/engine.dir/compiler_depend.ts
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="/Users/diogokeeper12/Documents/GitHub/CG-Project/Phase 1/build/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/engine.dir/engine/engine.cpp.o"
-	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/engine.dir/engine/engine.cpp.o -MF CMakeFiles/engine.dir/engine/engine.cpp.o.d -o CMakeFiles/engine.dir/engine/engine.cpp.o -c "/Users/diogokeeper12/Documents/GitHub/CG-Project/Phase 1/engine/engine.cpp"
+	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/engine.dir/engine/engine.cpp.o -MF CMakeFiles/engine.dir/engine/engine.cpp.o.d -o CMakeFiles/engine.dir/engine/engine.cpp.o -c "/Users/diogokeeper12/Documents/GitHub/CG-Project/Phase 1/engine/engine.cpp"
 
 CMakeFiles/engine.dir/engine/engine.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/engine.dir/engine/engine.cpp.i"
-	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "/Users/diogokeeper12/Documents/GitHub/CG-Project/Phase 1/engine/engine.cpp" > CMakeFiles/engine.dir/engine/engine.cpp.i
+	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "/Users/diogokeeper12/Documents/GitHub/CG-Project/Phase 1/engine/engine.cpp" > CMakeFiles/engine.dir/engine/engine.cpp.i
 
 CMakeFiles/engine.dir/engine/engine.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/engine.dir/engine/engine.cpp.s"
-	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "/Users/diogokeeper12/Documents/GitHub/CG-Project/Phase 1/engine/engine.cpp" -o CMakeFiles/engine.dir/engine/engine.cpp.s
+	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "/Users/diogokeeper12/Documents/GitHub/CG-Project/Phase 1/engine/engine.cpp" -o CMakeFiles/engine.dir/engine/engine.cpp.s
 
 CMakeFiles/engine.dir/engine/xmlparser.cpp.o: CMakeFiles/engine.dir/flags.make
 CMakeFiles/engine.dir/engine/xmlparser.cpp.o: /Users/diogokeeper12/Documents/GitHub/CG-Project/Phase\ 1/engine/xmlparser.cpp
 CMakeFiles/engine.dir/engine/xmlparser.cpp.o: CMakeFiles/engine.dir/compiler_depend.ts
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="/Users/diogokeeper12/Documents/GitHub/CG-Project/Phase 1/build/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/engine.dir/engine/xmlparser.cpp.o"
-	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/engine.dir/engine/xmlparser.cpp.o -MF CMakeFiles/engine.dir/engine/xmlparser.cpp.o.d -o CMakeFiles/engine.dir/engine/xmlparser.cpp.o -c "/Users/diogokeeper12/Documents/GitHub/CG-Project/Phase 1/engine/xmlparser.cpp"
+	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/engine.dir/engine/xmlparser.cpp.o -MF CMakeFiles/engine.dir/engine/xmlparser.cpp.o.d -o CMakeFiles/engine.dir/engine/xmlparser.cpp.o -c "/Users/diogokeeper12/Documents/GitHub/CG-Project/Phase 1/engine/xmlparser.cpp"
 
 CMakeFiles/engine.dir/engine/xmlparser.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/engine.dir/engine/xmlparser.cpp.i"
-	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "/Users/diogokeeper12/Documents/GitHub/CG-Project/Phase 1/engine/xmlparser.cpp" > CMakeFiles/engine.dir/engine/xmlparser.cpp.i
+	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "/Users/diogokeeper12/Documents/GitHub/CG-Project/Phase 1/engine/xmlparser.cpp" > CMakeFiles/engine.dir/engine/xmlparser.cpp.i
 
 CMakeFiles/engine.dir/engine/xmlparser.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/engine.dir/engine/xmlparser.cpp.s"
-	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "/Users/diogokeeper12/Documents/GitHub/CG-Project/Phase 1/engine/xmlparser.cpp" -o CMakeFiles/engine.dir/engine/xmlparser.cpp.s
+	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "/Users/diogokeeper12/Documents/GitHub/CG-Project/Phase 1/engine/xmlparser.cpp" -o CMakeFiles/engine.dir/engine/xmlparser.cpp.s
 
 # Object files for target engine
 engine_OBJECTS = \
