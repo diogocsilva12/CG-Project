@@ -1,13 +1,12 @@
-This document provides an overview of the project, including how to build and run the generator and engine, as well as detailed usage instructions for `generator.cpp`.
+This document provides an overview of the project and instructions for running the 3D figure generator and viewer.
 
 ---
 
 ## Table of Contents
 1. [Project Overview](#project-overview)
-2. [Build Instructions](#build-instructions)
-3. [Program Usage](#program-usage) 
-4. [TODO](#todo)
-5. [Demo](#demo)
+2. [Running Instructions](#running-instructions)
+3. [Program Features](#program-features)
+4. [Demo](#demo)
 
 ---
 
@@ -19,105 +18,52 @@ This part 1 of the project consists of two main components:
 
 ---
 
-## Build Instructions
+## Running Instructions
 
-To build the project, follow these steps:
+To run the program, follow these simple steps:
 
+1. Make the script executable:
 ```bash
-# From the Phase 1 directory
-cd build
-make clean
-cmake ..
-make
+chmod +x run.sh
 ```
-This will compile both the generator and engine executables.
-
-## Program Usage
-The generator program creates 3D primitive shapes and saves them in .3d files. Below are the usage instructions for generator.cpp:
-
-- General usage:
+2. Run the script:
 ```bash
-./generator <shape> [parameters...] <output_file>
+./run.sh
 ```
 
-- Supported Shapes and Parameters:
-1. Plane
-```bash 
-./generator plane <unit> <slices> <output_file>
-```
 
-- unit: Size of the plane.
-- slices: Number of divisions.
+## Program Features
+The generator program creates 3D primitive shapes and saves them in .3d files. 
+Program Features
+The interactive menu provides the following options:
 
-Example: 
-```bash
-./generator plane 2 8 plane.3d
-```
+1. **Clean and Build**
+- Cleans the build directory
+- Rebuilds both generator and engine
 
-2. Box
-```bash
-./generator box <unit> <slices> <output_file>
-```
-- unit: Size of the box.
-- slices: Number of divisions.
-Example:
-```bash
-./generator box 2 3 box.3d
-```
+2. **Generate Figure**
+- Plane (parameters: unit size, slices)
+- Box (parameters: unit size, slices)
+- Sphere (parameters: radius, slices, stacks)
+- Cone (parameters: radius, height, slices, stacks)
 
-3. Cone
-```bash
-./generator cone <radius> <height> <slices> <stacks> <output_file>
+All generated figures are automatically saved in tests
 
-```
+3. **View Figure**
 
-- radius: Radius of the cone.
-- height: Height of the cone.
-- slices: Number of divisions around the cone.
-- stacks: Number of divisions along the height of the cone.
-Example:
-```bash
-./generator cone 1 2 4 3 cone.3d
-```
+- Lists all available generated figures
+- Renders selected figure using OpenGL
+- Config files are stored in configs
 
-4. Sphere
-```bash
-./generator sphere <radius> <slices> <stacks> <output_file>
-```
+4. **Exit**
+- Exits the program
 
-- radius: Radius of the sphere.
-- slices: Number of divisions around the sphere.
-- stacks: Number of divisions along the height of the sphere.
-Example:
-```bash
-./generator sphere 1 10 10 sphere.3d
-```
+Notes:
 
-Help Command
-To display usage instructions:
+- Generated .3d files are saved in the tests directory
+- XML configuration files are stored in configs folder 
+- Creating a new figure will override any existing file with the same name
 
-```bash
-Copy
-./generator --help
-# or
-./generator -h
-```
-
-Notes
-- Generated .3d files are saved in the generator/tests/ directory.
-- Creating a .3d file will override any existing file with the same name.
-
-Example Workflow 
-1. Generate a plane:
-```bash
-./generator plane 2 8 plane.3d
-```
-
-2. Render the plane using the engine:
-```bash
-./engine ../engine/plane_config.xml
-```
-Note: The same applies for the other shapes.
 
 ### TODO 
 - [ ] Fix some bugs

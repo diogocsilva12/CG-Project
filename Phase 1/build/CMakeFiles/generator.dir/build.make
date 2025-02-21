@@ -76,29 +76,29 @@ CMakeFiles/generator.dir/generator/generator.cpp.o: CMakeFiles/generator.dir/fla
 CMakeFiles/generator.dir/generator/generator.cpp.o: /Users/diogokeeper12/Documents/GitHub/CG-Project/Phase\ 1/generator/generator.cpp
 CMakeFiles/generator.dir/generator/generator.cpp.o: CMakeFiles/generator.dir/compiler_depend.ts
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="/Users/diogokeeper12/Documents/GitHub/CG-Project/Phase 1/build/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/generator.dir/generator/generator.cpp.o"
-	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/generator.dir/generator/generator.cpp.o -MF CMakeFiles/generator.dir/generator/generator.cpp.o.d -o CMakeFiles/generator.dir/generator/generator.cpp.o -c "/Users/diogokeeper12/Documents/GitHub/CG-Project/Phase 1/generator/generator.cpp"
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/generator.dir/generator/generator.cpp.o -MF CMakeFiles/generator.dir/generator/generator.cpp.o.d -o CMakeFiles/generator.dir/generator/generator.cpp.o -c "/Users/diogokeeper12/Documents/GitHub/CG-Project/Phase 1/generator/generator.cpp"
 
 CMakeFiles/generator.dir/generator/generator.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/generator.dir/generator/generator.cpp.i"
-	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "/Users/diogokeeper12/Documents/GitHub/CG-Project/Phase 1/generator/generator.cpp" > CMakeFiles/generator.dir/generator/generator.cpp.i
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "/Users/diogokeeper12/Documents/GitHub/CG-Project/Phase 1/generator/generator.cpp" > CMakeFiles/generator.dir/generator/generator.cpp.i
 
 CMakeFiles/generator.dir/generator/generator.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/generator.dir/generator/generator.cpp.s"
-	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "/Users/diogokeeper12/Documents/GitHub/CG-Project/Phase 1/generator/generator.cpp" -o CMakeFiles/generator.dir/generator/generator.cpp.s
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "/Users/diogokeeper12/Documents/GitHub/CG-Project/Phase 1/generator/generator.cpp" -o CMakeFiles/generator.dir/generator/generator.cpp.s
 
 CMakeFiles/generator.dir/generator/generatorAux.cpp.o: CMakeFiles/generator.dir/flags.make
 CMakeFiles/generator.dir/generator/generatorAux.cpp.o: /Users/diogokeeper12/Documents/GitHub/CG-Project/Phase\ 1/generator/generatorAux.cpp
 CMakeFiles/generator.dir/generator/generatorAux.cpp.o: CMakeFiles/generator.dir/compiler_depend.ts
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="/Users/diogokeeper12/Documents/GitHub/CG-Project/Phase 1/build/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/generator.dir/generator/generatorAux.cpp.o"
-	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/generator.dir/generator/generatorAux.cpp.o -MF CMakeFiles/generator.dir/generator/generatorAux.cpp.o.d -o CMakeFiles/generator.dir/generator/generatorAux.cpp.o -c "/Users/diogokeeper12/Documents/GitHub/CG-Project/Phase 1/generator/generatorAux.cpp"
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/generator.dir/generator/generatorAux.cpp.o -MF CMakeFiles/generator.dir/generator/generatorAux.cpp.o.d -o CMakeFiles/generator.dir/generator/generatorAux.cpp.o -c "/Users/diogokeeper12/Documents/GitHub/CG-Project/Phase 1/generator/generatorAux.cpp"
 
 CMakeFiles/generator.dir/generator/generatorAux.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/generator.dir/generator/generatorAux.cpp.i"
-	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "/Users/diogokeeper12/Documents/GitHub/CG-Project/Phase 1/generator/generatorAux.cpp" > CMakeFiles/generator.dir/generator/generatorAux.cpp.i
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "/Users/diogokeeper12/Documents/GitHub/CG-Project/Phase 1/generator/generatorAux.cpp" > CMakeFiles/generator.dir/generator/generatorAux.cpp.i
 
 CMakeFiles/generator.dir/generator/generatorAux.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/generator.dir/generator/generatorAux.cpp.s"
-	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "/Users/diogokeeper12/Documents/GitHub/CG-Project/Phase 1/generator/generatorAux.cpp" -o CMakeFiles/generator.dir/generator/generatorAux.cpp.s
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "/Users/diogokeeper12/Documents/GitHub/CG-Project/Phase 1/generator/generatorAux.cpp" -o CMakeFiles/generator.dir/generator/generatorAux.cpp.s
 
 # Object files for target generator
 generator_OBJECTS = \

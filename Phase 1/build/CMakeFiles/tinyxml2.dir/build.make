@@ -76,15 +76,15 @@ CMakeFiles/tinyxml2.dir/external/tinyxml2/tinyxml2.cpp.o: CMakeFiles/tinyxml2.di
 CMakeFiles/tinyxml2.dir/external/tinyxml2/tinyxml2.cpp.o: /Users/diogokeeper12/Documents/GitHub/CG-Project/Phase\ 1/external/tinyxml2/tinyxml2.cpp
 CMakeFiles/tinyxml2.dir/external/tinyxml2/tinyxml2.cpp.o: CMakeFiles/tinyxml2.dir/compiler_depend.ts
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="/Users/diogokeeper12/Documents/GitHub/CG-Project/Phase 1/build/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/tinyxml2.dir/external/tinyxml2/tinyxml2.cpp.o"
-	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/tinyxml2.dir/external/tinyxml2/tinyxml2.cpp.o -MF CMakeFiles/tinyxml2.dir/external/tinyxml2/tinyxml2.cpp.o.d -o CMakeFiles/tinyxml2.dir/external/tinyxml2/tinyxml2.cpp.o -c "/Users/diogokeeper12/Documents/GitHub/CG-Project/Phase 1/external/tinyxml2/tinyxml2.cpp"
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/tinyxml2.dir/external/tinyxml2/tinyxml2.cpp.o -MF CMakeFiles/tinyxml2.dir/external/tinyxml2/tinyxml2.cpp.o.d -o CMakeFiles/tinyxml2.dir/external/tinyxml2/tinyxml2.cpp.o -c "/Users/diogokeeper12/Documents/GitHub/CG-Project/Phase 1/external/tinyxml2/tinyxml2.cpp"
 
 CMakeFiles/tinyxml2.dir/external/tinyxml2/tinyxml2.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/tinyxml2.dir/external/tinyxml2/tinyxml2.cpp.i"
-	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "/Users/diogokeeper12/Documents/GitHub/CG-Project/Phase 1/external/tinyxml2/tinyxml2.cpp" > CMakeFiles/tinyxml2.dir/external/tinyxml2/tinyxml2.cpp.i
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "/Users/diogokeeper12/Documents/GitHub/CG-Project/Phase 1/external/tinyxml2/tinyxml2.cpp" > CMakeFiles/tinyxml2.dir/external/tinyxml2/tinyxml2.cpp.i
 
 CMakeFiles/tinyxml2.dir/external/tinyxml2/tinyxml2.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/tinyxml2.dir/external/tinyxml2/tinyxml2.cpp.s"
-	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "/Users/diogokeeper12/Documents/GitHub/CG-Project/Phase 1/external/tinyxml2/tinyxml2.cpp" -o CMakeFiles/tinyxml2.dir/external/tinyxml2/tinyxml2.cpp.s
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "/Users/diogokeeper12/Documents/GitHub/CG-Project/Phase 1/external/tinyxml2/tinyxml2.cpp" -o CMakeFiles/tinyxml2.dir/external/tinyxml2/tinyxml2.cpp.s
 
 # Object files for target tinyxml2
 tinyxml2_OBJECTS = \
