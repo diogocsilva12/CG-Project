@@ -1,5 +1,9 @@
 #define GL_SILENCE_DEPRECATION
+#ifdef __APPLE__
 #include <GLUT/glut.h>
+#else
+#include <GL/glut.h>
+#endif
 #include "engine.h"
 #include "xmlParser.h" 
 #include <fstream>
@@ -79,7 +83,7 @@ void changeSize(int w, int h) {
 
 int main(int argc, char** argv) {
     if (argc != 2) {
-        std::cout << "Usage: " << argv[0] << " <config.xml>" << std::endl;
+        std::cout << "Usage: " << argv[0] << " <configs/config.xml>" << std::endl;
         return 1;
     }
 
