@@ -26,19 +26,19 @@
 			{
 				"command" : 0,
 				"file" : 0,
-				"line" : 32,
+				"line" : 40,
 				"parent" : 0
 			},
 			{
 				"command" : 1,
 				"file" : 0,
-				"line" : 36,
+				"line" : 44,
 				"parent" : 0
 			},
 			{
 				"command" : 2,
 				"file" : 0,
-				"line" : 43,
+				"line" : 51,
 				"parent" : 0
 			}
 		]
@@ -49,31 +49,18 @@
 			"compileCommandFragments" : 
 			[
 				{
-					"fragment" : "-std=gnu++11 -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX15.1.sdk -mmacosx-version-min=15.0"
-				}
-			],
-			"frameworks" : 
-			[
-				{
-					"backtrace" : 2,
-					"isSystem" : true,
-					"path" : "/Library/Developer/CommandLineTools/SDKs/MacOSX15.1.sdk/System/Library/Frameworks/OpenGL.framework"
+					"fragment" : "-std=gnu++11"
 				}
 			],
 			"includes" : 
 			[
 				{
 					"backtrace" : 3,
-					"path" : "/Users/diogokeeper12/Documents/GitHub/CG-Project/Phase 1/engine"
+					"path" : "/mnt/c/Users/eduar/OneDrive/Documentos/GitHub/CG-Project/Phase 1/engine"
 				},
 				{
 					"backtrace" : 2,
-					"path" : "/Users/diogokeeper12/Documents/GitHub/CG-Project/Phase 1/external/tinyxml2"
-				},
-				{
-					"backtrace" : 2,
-					"isSystem" : true,
-					"path" : "/Library/Developer/CommandLineTools/SDKs/MacOSX15.1.sdk/System/Library/Frameworks/GLUT.framework/Headers"
+					"path" : "/mnt/c/Users/eduar/OneDrive/Documentos/GitHub/CG-Project/Phase 1/external/tinyxml2"
 				}
 			],
 			"language" : "CXX",
@@ -109,20 +96,18 @@
 				"role" : "flags"
 			},
 			{
-				"fragment" : "-framework OpenGL",
+				"backtrace" : 2,
+				"fragment" : "/usr/lib/x86_64-linux-gnu/libGL.so",
 				"role" : "libraries"
 			},
 			{
-				"fragment" : "-framework GLUT",
+				"backtrace" : 2,
+				"fragment" : "/usr/lib/x86_64-linux-gnu/libglut.so",
 				"role" : "libraries"
 			},
 			{
 				"backtrace" : 2,
 				"fragment" : "libtinyxml2.a",
-				"role" : "libraries"
-			},
-			{
-				"fragment" : "-framework Cocoa",
 				"role" : "libraries"
 			}
 		],

@@ -31,13 +31,14 @@ set_target_properties(generator PROPERTIES
 # Engine executable
 add_executable(engine
     engine/engine.cpp
-    engine/xmlparser.cpp)
-
-target_link_libraries(engine
-    PRIVATE
-    OpenGL::GL
-    GLUT::GLUT
-    tinyxml2)
+    engine/xmlParser.cpp)
 
 # Include directories for engine
-target_include_directories(engine PRIVATE engine)
+target_include_directories(engine PRIVATE engine ${OPENGL_INCLUDE_DIRS} ${GLUT_INCLUDE_DIRS})
+
+# Link libraries for engine
+target_link_libraries(engine
+    PRIVATE
+    ${OPENGL_LIBRARIES}
+    ${GLUT_LIBRARIES}
+    tinyxml2)

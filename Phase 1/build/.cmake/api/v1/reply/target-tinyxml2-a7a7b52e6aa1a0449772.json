@@ -26,13 +26,13 @@
 			{
 				"command" : 0,
 				"file" : 0,
-				"line" : 13,
+				"line" : 21,
 				"parent" : 0
 			},
 			{
 				"command" : 1,
 				"file" : 0,
-				"line" : 17,
+				"line" : 25,
 				"parent" : 0
 			}
 		]
@@ -43,14 +43,14 @@
 			"compileCommandFragments" : 
 			[
 				{
-					"fragment" : "-std=gnu++11 -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX15.1.sdk -mmacosx-version-min=15.0"
+					"fragment" : "-std=gnu++11"
 				}
 			],
 			"includes" : 
 			[
 				{
 					"backtrace" : 2,
-					"path" : "/Users/diogokeeper12/Documents/GitHub/CG-Project/Phase 1/external/tinyxml2"
+					"path" : "/mnt/c/Users/eduar/OneDrive/Documentos/GitHub/CG-Project/Phase 1/external/tinyxml2"
 				}
 			],
 			"language" : "CXX",
