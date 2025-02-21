@@ -1,13 +1,19 @@
 #define GL_SILENCE_DEPRECATION
 #ifdef __APPLE__
 #include <GLUT/glut.h>
-#else
+#elif __linux__
+#include <GL/glut.h>
+#include <GL/gl.h>
+#include <GL/glu.h>
+#else 
 #include <GL/glut.h>
 #endif
 #include "engine.h"
 #include "xmlParser.h" 
 #include <fstream>
 #include <iostream>
+#include <cmath>
+ 
 
 World world;  // Global world state
 
