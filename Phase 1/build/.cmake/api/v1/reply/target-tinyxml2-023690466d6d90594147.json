@@ -43,14 +43,22 @@
 			"compileCommandFragments" : 
 			[
 				{
-					"fragment" : "-std=gnu++11"
+					"fragment" : "-std=gnu++11 -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX15.1.sdk -mmacosx-version-min=15.0"
 				}
 			],
 			"includes" : 
 			[
 				{
 					"backtrace" : 2,
+<<<<<<< Updated upstream
+<<<<<<<< Updated upstream:Phase 1/build/.cmake/api/v1/reply/target-tinyxml2-a7a7b52e6aa1a0449772.json
 					"path" : "/mnt/c/Users/eduar/OneDrive/Documentos/GitHub/CG-Project/Phase 1/external/tinyxml2"
+========
+					"path" : "/Users/diogokeeper12/Documents/GitHub/CG-Project/Phase 1/external/tinyxml2"
+>>>>>>>> Stashed changes:Phase 1/build/.cmake/api/v1/reply/target-tinyxml2-023690466d6d90594147.json
+=======
+					"path" : "/Users/diogokeeper12/Documents/GitHub/CG-Project/Phase 1/external/tinyxml2"
+>>>>>>> Stashed changes
 				}
 			],
 			"language" : "CXX",

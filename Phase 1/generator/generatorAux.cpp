@@ -19,9 +19,7 @@ void writeVertices(const std::string& filename, const std::vector<Vertex>& verti
     if (!file.is_open()) {
         throw std::runtime_error("Error: Unable to open file " + filename);
     }
-    // Write the number of vertices as the first line
-    file << vertices.size() << "\n";
-    // Write each vertex on a new line
+    // Escreve cada vértice em uma nova linha
     for (const auto& v : vertices) {
         file << v.x << " " << v.y << " " << v.z << "\n";
     }
@@ -42,97 +40,157 @@ void plane(float unit, int slices, const std::string& filename) {
     }
 
     std::vector<Vertex> vertices;
-    float half = unit / 2.0f;
-    float step = unit / slices;
+    float comp = unit / slices;
+    float offset = unit / 2.0f;
 
-    // Generate vertices in the XZ plane (Y = 0) for a square centered at the origin
-    for (int i = 0; i <= slices; i++) {
-        for (int j = 0; j <= slices; j++) {
-            Vertex v;
-            v.x = -half + j * step;
-            v.y = 0.0f;
-            v.z = -half + i * step;
-            vertices.push_back(v);
+    for (int i = 0; i < slices; i++) {
+        for (int j = 0; j < slices; j++) {
+            float x1 = i * comp - offset;
+            float z1 = j * comp - offset;
+            float x2 = (i + 1) * comp - offset;
+            float z2 = (j + 1) * comp - offset;
+
+            // Triângulo 1
+            vertices.push_back({x1, 0.0f, z1});
+            vertices.push_back({x2, 0.0f, z2});
+            vertices.push_back({x2, 0.0f, z1});
+
+            // Triângulo 2
+            vertices.push_back({x1, 0.0f, z1});
+            vertices.push_back({x1, 0.0f, z2});
+            vertices.push_back({x2, 0.0f, z2});
         }
     }
+
     writeVertices(filename, vertices);
 }
 
-/**
- * Generates vertices for a box (cube) centered at the origin.
- *
- * @param unit The size of the box (length of each edge).
- * @param slices The number of divisions along each edge.
- * @param filename The name of the file to save the vertices.
- * @throws std::invalid_argument If unit or slices are non-positive.
- */
 void box(float unit, int slices, const std::string& filename) {
     if (unit <= 0 || slices <= 0) {
         throw std::invalid_argument("Error: Unit and slices must be positive.");
     }
 
     std::vector<Vertex> vertices;
-    float half = unit / 2.0f;
-    float step = unit / slices;
+    float comp = unit / slices;
+    float offset = unit / 2.0f;
 
-    // Front face (z = half) - plane in XY
-    for (int i = 0; i <= slices; i++) {
-        for (int j = 0; j <= slices; j++) {
-            Vertex v;
-            v.x = -half + j * step;
-            v.y = -half + i * step;
-            v.z = half;
-            vertices.push_back(v);
+    // Front face (Z = offset)
+    for (int i = 0; i < slices; i++) {
+        for (int j = 0; j < slices; j++) {
+            float x1 = i * comp - offset;
+            float z1 = j * comp - offset;
+            float x2 = (i + 1) * comp - offset;
+            float z2 = (j + 1) * comp - offset;
+
+            // Triangle 1
+            vertices.push_back({x1, offset, z1});
+            vertices.push_back({x2, offset, z2});
+            vertices.push_back({x2, offset, z1});
+
+            // Triangle 2
+            vertices.push_back({x1, offset, z1});
+            vertices.push_back({x1, offset, z2});
+            vertices.push_back({x2, offset, z2});
         }
     }
-    // Back face (z = -half) - plane in XY
-    for (int i = 0; i <= slices; i++) {
-        for (int j = 0; j <= slices; j++) {
-            Vertex v;
-            v.x = -half + j * step;
-            v.y = -half + i * step;
-            v.z = -half;
-            vertices.push_back(v);
+
+    // Back face (Z = -offset)
+    for (int i = 0; i < slices; i++) {
+        for (int j = 0; j < slices; j++) {
+            float x1 = i * comp - offset;
+            float z1 = j * comp - offset;
+            float x2 = (i + 1) * comp - offset;
+            float z2 = (j + 1) * comp - offset;
+
+            // Triangle 1
+            vertices.push_back({x2, -offset, z2});
+            vertices.push_back({x1, -offset, z1});
+            vertices.push_back({x2, -offset, z1});
+
+            // Triangle 2
+            vertices.push_back({x1, -offset, z2});
+            vertices.push_back({x1, -offset, z1});
+            vertices.push_back({x2, -offset, z2});
         }
     }
-    // Left face (x = -half) - plane in YZ
-    for (int i = 0; i <= slices; i++) {
-        for (int j = 0; j <= slices; j++) {
-            Vertex v;
-            v.x = -half;
-            v.y = -half + i * step;
-            v.z = -half + j * step;
-            vertices.push_back(v);
+
+    // Right face (X = offset)
+    for (int i = 0; i < slices; i++) {
+        for (int j = 0; j < slices; j++) {
+            float x1 = i * comp - offset;
+            float y1 = j * comp - offset;
+            float x2 = (i + 1) * comp - offset;
+            float y2 = (j + 1) * comp - offset;
+
+            // Triangle 1
+            vertices.push_back({x2, y2, offset});
+            vertices.push_back({x1, y1, offset});
+            vertices.push_back({x2, y1, offset});
+
+            // Triangle 2
+            vertices.push_back({x1, y2, offset});
+            vertices.push_back({x1, y1, offset});
+            vertices.push_back({x2, y2, offset});
         }
     }
-    // Right face (x = half) - plane in YZ
-    for (int i = 0; i <= slices; i++) {
-        for (int j = 0; j <= slices; j++) {
-            Vertex v;
-            v.x = half;
-            v.y = -half + i * step;
-            v.z = -half + j * step;
-            vertices.push_back(v);
+
+    // Left face (X = -offset)
+    for (int i = 0; i < slices; i++) {
+        for (int j = 0; j < slices; j++) {
+            float x1 = i * comp - offset;
+            float y1 = j * comp - offset;
+            float x2 = (i + 1) * comp - offset;
+            float y2 = (j + 1) * comp - offset;
+
+            // Triangle 1
+            vertices.push_back({x1, y1, -offset});
+            vertices.push_back({x2, y2, -offset});
+            vertices.push_back({x2, y1, -offset});
+
+            // Triangle 2
+            vertices.push_back({x1, y1, -offset});
+            vertices.push_back({x1, y2, -offset});
+            vertices.push_back({x2, y2, -offset});
         }
     }
-    // Top face (y = half) - plane in XZ
-    for (int i = 0; i <= slices; i++) {
-        for (int j = 0; j <= slices; j++) {
-            Vertex v;
-            v.x = -half + j * step;
-            v.y = half;
-            v.z = -half + i * step;
-            vertices.push_back(v);
+
+    // Top face (Y = offset)
+    for (int i = 0; i < slices; i++) {
+        for (int j = 0; j < slices; j++) {
+            float z1 = i * comp - offset;
+            float y1 = j * comp - offset;
+            float z2 = (i + 1) * comp - offset;
+            float y2 = (j + 1) * comp - offset;
+
+            // Triangle 1
+            vertices.push_back({offset, y1, z1});
+            vertices.push_back({offset, y2, z2});
+            vertices.push_back({offset, y1, z2});
+
+            // Triangle 2
+            vertices.push_back({offset, y1, z1});
+            vertices.push_back({offset, y2, z1});
+            vertices.push_back({offset, y2, z2});
         }
     }
-    // Bottom face (y = -half) - plane in XZ
-    for (int i = 0; i <= slices; i++) {
-        for (int j = 0; j <= slices; j++) {
-            Vertex v;
-            v.x = -half + j * step;
-            v.y = -half;
-            v.z = -half + i * step;
-            vertices.push_back(v);
+
+    // Bottom face (Y = -offset)
+    for (int i = 0; i < slices; i++) {
+        for (int j = 0; j < slices; j++) {
+            float z1 = i * comp - offset;
+            float y1 = j * comp - offset;
+            float z2 = (i + 1) * comp - offset;
+            float y2 = (j + 1) * comp - offset;
+
+            // Triangle 1
+            vertices.push_back({-offset, y2, z2});
+            vertices.push_back({-offset, y1, z1});
+            vertices.push_back({-offset, y1, z2});
+
+            // Triangle 2
+            vertices.push_back({-offset, y2, z1});
+            vertices.push_back({-offset, y1, z1});
+            vertices.push_back({-offset, y2, z2});
         }
     }
     writeVertices(filename, vertices);
@@ -154,34 +212,56 @@ void cone(float radius, float height, int slices, int stacks, const std::string&
     }
 
     std::vector<Vertex> vertices;
+    float arch_alfa = 2 * static_cast<float>(M_PI) / slices;
+    float ratio = height / radius;
+    float stack_size = height / stacks;
 
-    // Lateral Surface: generate vertices for each (stack, slice)
-    for (int i = 0; i <= stacks; i++) {
-        float t = static_cast<float>(i) / stacks;
-        float y = t * height;
-        // Linearly decrease radius from base to apex
-        float r_current = radius * (1 - t);
-        for (int j = 0; j <= slices; j++) {
-            float theta = 2 * M_PI * j / slices;
-            Vertex v;
-            v.x = r_current * cos(theta);
-            v.y = y;
-            v.z = r_current * sin(theta);
-            vertices.push_back(v);
+    // Base do cone
+    for (int i = 0; i < slices; i++) {
+        float x1 = radius * sin(arch_alfa * i);
+        float z1 = radius * cos(arch_alfa * i);
+        float x2 = radius * sin(arch_alfa * (i + 1));
+        float z2 = radius * cos(arch_alfa * (i + 1));
+
+        // Triângulo da base
+        vertices.push_back({x1, 0.0f, z1});
+        vertices.push_back({0.0f, 0.0f, 0.0f});
+        vertices.push_back({x2, 0.0f, z2});
+    }
+
+    // Lateral do cone
+    for (int i = 0; i < stacks; i++) {
+        for (int j = 0; j < slices; j++) {
+            float h1 = height - (i * stack_size);
+            float h2 = height - ((i + 1) * stack_size);
+            float r1 = h1 / ratio;
+            float r2 = h2 / ratio;
+
+            float x1 = r1 * sin(arch_alfa * j);
+            float x2 = r1 * sin(arch_alfa * (j + 1));
+            float x3 = r2 * sin(arch_alfa * (j + 1));
+            float x4 = r2 * sin(arch_alfa * j);
+            float y1 = i * stack_size;
+            float y2 = (i + 1) * stack_size;
+            float z1 = r1 * cos(arch_alfa * j);
+            float z2 = r1 * cos(arch_alfa * (j + 1));
+            float z3 = r2 * cos(arch_alfa * (j + 1));
+            float z4 = r2 * cos(arch_alfa * j);
+
+            // Triângulo 1
+            vertices.push_back({x1, y1, z1});
+            vertices.push_back({x2, y1, z2});
+            vertices.push_back({x4, y2, z4});
+
+            // Triângulo 2
+            if (j != slices - 1) {
+                vertices.push_back({x4, y2, z4});
+                vertices.push_back({x2, y1, z2});
+                vertices.push_back({x3, y2, z3});
+            }
         }
     }
 
-    // Base: generate center and circumference vertices
-    Vertex center = {0.0f, 0.0f, 0.0f};
-    vertices.push_back(center);
-    for (int j = 0; j <= slices; j++) {
-        float theta = 2 * M_PI * j / slices;
-        Vertex v;
-        v.x = radius * cos(theta);
-        v.y = 0.0f;
-        v.z = radius * sin(theta);
-        vertices.push_back(v);
-    }
     writeVertices(filename, vertices);
 }
 
@@ -200,17 +280,53 @@ void sphere(float radius, int slices, int stacks, const std::string& filename) {
     }
 
     std::vector<Vertex> vertices;
-    // Generate vertices using spherical coordinates
-    for (int i = 0; i <= stacks; i++) {
-        float theta = M_PI * i / stacks;  // theta from 0 to PI
-        for (int j = 0; j <= slices; j++) {
-            float phi = 2 * M_PI * j / slices;  // phi from 0 to 2PI
-            Vertex v;
-            v.x = radius * sin(theta) * cos(phi);
-            v.y = radius * cos(theta);
-            v.z = radius * sin(theta) * sin(phi);
-            vertices.push_back(v);
+    float arch_alfa = static_cast<float>(2 * M_PI) / slices;  // Ângulo entre fatias
+    float stack_size = static_cast<float>(M_PI) / stacks;      // Tamanho de cada stack
+
+    for (int i = 0; i < stacks; i++) {
+        float theta1 = static_cast<float>(i) * stack_size;     // Ângulo theta1
+        float theta2 = static_cast<float>(i + 1) * stack_size; // Ângulo theta2
+
+        for (int j = 0; j < slices; j++) {
+            float phi1 = static_cast<float>(j) * arch_alfa;    // Ângulo phi1
+            float phi2 = static_cast<float>(j + 1) * arch_alfa; // Ângulo phi2
+
+            // Vértices para formar dois triângulos
+            Vertex v1 = {
+                static_cast<float>(radius * sin(theta1) * cos(phi1)),
+                static_cast<float>(radius * cos(theta1)),
+                static_cast<float>(radius * sin(theta1) * sin(phi1))
+            };
+
+            Vertex v2 = {
+                static_cast<float>(radius * sin(theta1) * cos(phi2)),
+                static_cast<float>(radius * cos(theta1)),
+                static_cast<float>(radius * sin(theta1) * sin(phi2))
+            };
+
+            Vertex v3 = {
+                static_cast<float>(radius * sin(theta2) * cos(phi2)),
+                static_cast<float>(radius * cos(theta2)),
+                static_cast<float>(radius * sin(theta2) * sin(phi2))
+            };
+
+            Vertex v4 = {
+                static_cast<float>(radius * sin(theta2) * cos(phi1)),
+                static_cast<float>(radius * cos(theta2)),
+                static_cast<float>(radius * sin(theta2) * sin(phi1))
+            };
+
+            // Triângulo 1
+            vertices.push_back(v1);
+            vertices.push_back(v2);
+            vertices.push_back(v3);
+
+            // Triângulo 2
+            vertices.push_back(v1);
+            vertices.push_back(v3);
+            vertices.push_back(v4);
         }
     }
+
     writeVertices(filename, vertices);
 }

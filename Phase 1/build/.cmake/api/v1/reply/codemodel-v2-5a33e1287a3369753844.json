@@ -1,0 +1,112 @@
+{
+	"configurations" : 
+	[
+		{
+			"directories" : 
+			[
+				{
+					"build" : ".",
+					"jsonFile" : "directory-.-f5ebdc15457944623624.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.10"
+					},
+					"projectIndex" : 0,
+					"source" : ".",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2
+					]
+				}
+			],
+			"name" : "",
+			"projects" : 
+			[
+				{
+					"directoryIndexes" : 
+					[
+						0
+					],
+					"name" : "CG_Project",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2
+					]
+				}
+			],
+			"targets" : 
+			[
+				{
+					"directoryIndex" : 0,
+					"id" : "engine::@6890427a1f51a3e7e1df",
+<<<<<<< Updated upstream
+<<<<<<<< Updated upstream:Phase 1/build/.cmake/api/v1/reply/codemodel-v2-78520825b54b8ee4560a.json
+					"jsonFile" : "target-engine-79c179fafe45b1b49a40.json",
+========
+					"jsonFile" : "target-engine-0be62ab265362f8cb72b.json",
+>>>>>>>> Stashed changes:Phase 1/build/.cmake/api/v1/reply/codemodel-v2-5a33e1287a3369753844.json
+=======
+					"jsonFile" : "target-engine-0be62ab265362f8cb72b.json",
+>>>>>>> Stashed changes
+					"name" : "engine",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "generator::@6890427a1f51a3e7e1df",
+<<<<<<< Updated upstream
+<<<<<<<< Updated upstream:Phase 1/build/.cmake/api/v1/reply/codemodel-v2-78520825b54b8ee4560a.json
+					"jsonFile" : "target-generator-dfe4ab2c897a0cfaee97.json",
+========
+					"jsonFile" : "target-generator-03c25c8fe37cdaafc7ce.json",
+>>>>>>>> Stashed changes:Phase 1/build/.cmake/api/v1/reply/codemodel-v2-5a33e1287a3369753844.json
+=======
+					"jsonFile" : "target-generator-03c25c8fe37cdaafc7ce.json",
+>>>>>>> Stashed changes
+					"name" : "generator",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "tinyxml2::@6890427a1f51a3e7e1df",
+<<<<<<< Updated upstream
+<<<<<<<< Updated upstream:Phase 1/build/.cmake/api/v1/reply/codemodel-v2-78520825b54b8ee4560a.json
+					"jsonFile" : "target-tinyxml2-a7a7b52e6aa1a0449772.json",
+========
+					"jsonFile" : "target-tinyxml2-023690466d6d90594147.json",
+>>>>>>>> Stashed changes:Phase 1/build/.cmake/api/v1/reply/codemodel-v2-5a33e1287a3369753844.json
+=======
+					"jsonFile" : "target-tinyxml2-023690466d6d90594147.json",
+>>>>>>> Stashed changes
+					"name" : "tinyxml2",
+					"projectIndex" : 0
+				}
+			]
+		}
+	],
+	"kind" : "codemodel",
+	"paths" : 
+	{
+<<<<<<< Updated upstream
+<<<<<<<< Updated upstream:Phase 1/build/.cmake/api/v1/reply/codemodel-v2-78520825b54b8ee4560a.json
+		"build" : "/mnt/c/Users/eduar/OneDrive/Documentos/GitHub/CG-Project/Phase 1/build",
+		"source" : "/mnt/c/Users/eduar/OneDrive/Documentos/GitHub/CG-Project/Phase 1"
+========
+		"build" : "/Users/diogokeeper12/Documents/GitHub/CG-Project/Phase 1/build",
+		"source" : "/Users/diogokeeper12/Documents/GitHub/CG-Project/Phase 1"
+>>>>>>>> Stashed changes:Phase 1/build/.cmake/api/v1/reply/codemodel-v2-5a33e1287a3369753844.json
+=======
+		"build" : "/Users/diogokeeper12/Documents/GitHub/CG-Project/Phase 1/build",
+		"source" : "/Users/diogokeeper12/Documents/GitHub/CG-Project/Phase 1"
+>>>>>>> Stashed changes
+	},
+	"version" : 
+	{
+		"major" : 2,
+		"minor" : 7
+	}
+}
