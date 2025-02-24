@@ -5,7 +5,11 @@
 CXX_DEFINES = 
 
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 CXX_INCLUDES = -I"/mnt/c/Users/eduar/OneDrive/Documentos/GitHub/CG-Project/Phase 1/engine" -I"/mnt/c/Users/eduar/OneDrive/Documentos/GitHub/CG-Project/Phase 1/external/tinyxml2"
+=======
+CXX_INCLUDES = -I"/Users/diogokeeper12/Documents/GitHub/CG-Project/Phase 1/engine" -F/Library/Developer/CommandLineTools/SDKs/MacOSX15.1.sdk/System/Library/Frameworks -I/Library/Developer/CommandLineTools/SDKs/MacOSX15.1.sdk/System/Library/Frameworks/GLUT.framework/Headers -I"/Users/diogokeeper12/Documents/GitHub/CG-Project/Phase 1/external/tinyxml2"
+>>>>>>> Stashed changes
 =======
 CXX_INCLUDES = -I"/Users/diogokeeper12/Documents/GitHub/CG-Project/Phase 1/engine" -F/Library/Developer/CommandLineTools/SDKs/MacOSX15.1.sdk/System/Library/Frameworks -I/Library/Developer/CommandLineTools/SDKs/MacOSX15.1.sdk/System/Library/Frameworks/GLUT.framework/Headers -I"/Users/diogokeeper12/Documents/GitHub/CG-Project/Phase 1/external/tinyxml2"
 >>>>>>> Stashed changes

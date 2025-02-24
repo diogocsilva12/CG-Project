@@ -12,7 +12,11 @@
 			],
 			"type" : "STATIC",
 <<<<<<<< Updated upstream:Phase 1/build/.cmake/api/v1/reply/cache-v2-853962eaba2897196d43.json
+<<<<<<<< Updated upstream:Phase 1/build/.cmake/api/v1/reply/cache-v2-853962eaba2897196d43.json
 			"value" : "/mnt/c/Users/eduar/OneDrive/Documentos/GitHub/CG-Project/Phase 1/build"
+========
+			"value" : "/Users/diogokeeper12/Documents/GitHub/CG-Project/Phase 1/build"
+>>>>>>>> Stashed changes:Phase 1/build/.cmake/api/v1/reply/cache-v2-ee24101e31af0d4344cb.json
 ========
 			"value" : "/Users/diogokeeper12/Documents/GitHub/CG-Project/Phase 1/build"
 >>>>>>>> Stashed changes:Phase 1/build/.cmake/api/v1/reply/cache-v2-ee24101e31af0d4344cb.json
@@ -40,7 +44,11 @@
 			],
 			"type" : "STATIC",
 <<<<<<<< Updated upstream:Phase 1/build/.cmake/api/v1/reply/cache-v2-853962eaba2897196d43.json
+<<<<<<<< Updated upstream:Phase 1/build/.cmake/api/v1/reply/cache-v2-853962eaba2897196d43.json
 			"value" : "/mnt/c/Users/eduar/OneDrive/Documentos/GitHub/CG-Project/Phase 1"
+========
+			"value" : "/Users/diogokeeper12/Documents/GitHub/CG-Project/Phase 1"
+>>>>>>>> Stashed changes:Phase 1/build/.cmake/api/v1/reply/cache-v2-ee24101e31af0d4344cb.json
 ========
 			"value" : "/Users/diogokeeper12/Documents/GitHub/CG-Project/Phase 1"
 >>>>>>>> Stashed changes:Phase 1/build/.cmake/api/v1/reply/cache-v2-ee24101e31af0d4344cb.json
@@ -100,7 +108,11 @@
 			],
 			"type" : "INTERNAL",
 <<<<<<<< Updated upstream:Phase 1/build/.cmake/api/v1/reply/cache-v2-853962eaba2897196d43.json
+<<<<<<<< Updated upstream:Phase 1/build/.cmake/api/v1/reply/cache-v2-853962eaba2897196d43.json
 			"value" : "/mnt/c/Users/eduar/OneDrive/Documentos/GitHub/CG-Project/Phase 1/build"
+========
+			"value" : "/Users/diogokeeper12/Documents/GitHub/CG-Project/Phase 1/build"
+>>>>>>>> Stashed changes:Phase 1/build/.cmake/api/v1/reply/cache-v2-ee24101e31af0d4344cb.json
 ========
 			"value" : "/Users/diogokeeper12/Documents/GitHub/CG-Project/Phase 1/build"
 >>>>>>>> Stashed changes:Phase 1/build/.cmake/api/v1/reply/cache-v2-ee24101e31af0d4344cb.json
@@ -544,7 +556,11 @@
 			],
 			"type" : "STATIC",
 <<<<<<<< Updated upstream:Phase 1/build/.cmake/api/v1/reply/cache-v2-853962eaba2897196d43.json
+<<<<<<<< Updated upstream:Phase 1/build/.cmake/api/v1/reply/cache-v2-853962eaba2897196d43.json
 			"value" : "/mnt/c/Users/eduar/OneDrive/Documentos/GitHub/CG-Project/Phase 1/build/CMakeFiles/pkgRedirects"
+========
+			"value" : "/Users/diogokeeper12/Documents/GitHub/CG-Project/Phase 1/build/CMakeFiles/pkgRedirects"
+>>>>>>>> Stashed changes:Phase 1/build/.cmake/api/v1/reply/cache-v2-ee24101e31af0d4344cb.json
 ========
 			"value" : "/Users/diogokeeper12/Documents/GitHub/CG-Project/Phase 1/build/CMakeFiles/pkgRedirects"
 >>>>>>>> Stashed changes:Phase 1/build/.cmake/api/v1/reply/cache-v2-ee24101e31af0d4344cb.json
@@ -608,8 +624,11 @@
 			],
 			"type" : "INTERNAL",
 <<<<<<<< Updated upstream:Phase 1/build/.cmake/api/v1/reply/cache-v2-853962eaba2897196d43.json
+<<<<<<<< Updated upstream:Phase 1/build/.cmake/api/v1/reply/cache-v2-853962eaba2897196d43.json
 			"value" : "/mnt/c/Users/eduar/OneDrive/Documentos/GitHub/CG-Project/Phase 1"
 ========
+========
+>>>>>>>> Stashed changes:Phase 1/build/.cmake/api/v1/reply/cache-v2-ee24101e31af0d4344cb.json
 			"value" : "/Users/diogokeeper12/Documents/GitHub/CG-Project/Phase 1"
 		},
 		{
@@ -627,6 +646,9 @@
 			],
 			"type" : "FILEPATH",
 			"value" : "/usr/bin/install_name_tool"
+<<<<<<<< Updated upstream:Phase 1/build/.cmake/api/v1/reply/cache-v2-853962eaba2897196d43.json
+>>>>>>>> Stashed changes:Phase 1/build/.cmake/api/v1/reply/cache-v2-ee24101e31af0d4344cb.json
+========
 >>>>>>>> Stashed changes:Phase 1/build/.cmake/api/v1/reply/cache-v2-ee24101e31af0d4344cb.json
 		},
 		{

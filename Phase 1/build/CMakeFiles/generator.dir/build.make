@@ -54,10 +54,17 @@ EQUALS = =
 
 # The top-level source directory on which CMake was run.
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 CMAKE_SOURCE_DIR = "/mnt/c/Users/eduar/OneDrive/Documentos/GitHub/CG-Project/Phase 1"
 
 # The top-level build directory on which CMake was run.
 CMAKE_BINARY_DIR = "/mnt/c/Users/eduar/OneDrive/Documentos/GitHub/CG-Project/Phase 1/build"
+=======
+CMAKE_SOURCE_DIR = "/Users/diogokeeper12/Documents/GitHub/CG-Project/Phase 1"
+
+# The top-level build directory on which CMake was run.
+CMAKE_BINARY_DIR = "/Users/diogokeeper12/Documents/GitHub/CG-Project/Phase 1/build"
+>>>>>>> Stashed changes
 =======
 CMAKE_SOURCE_DIR = "/Users/diogokeeper12/Documents/GitHub/CG-Project/Phase 1"
 
@@ -80,6 +87,7 @@ CMakeFiles/generator.dir/codegen:
 .PHONY : CMakeFiles/generator.dir/codegen
 
 CMakeFiles/generator.dir/generator/generator.cpp.o: CMakeFiles/generator.dir/flags.make
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
 CMakeFiles/generator.dir/generator/generator.cpp.o: /mnt/c/Users/eduar/OneDrive/Documentos/GitHub/CG-Project/Phase\ 1/generator/generator.cpp
 CMakeFiles/generator.dir/generator/generator.cpp.o: CMakeFiles/generator.dir/compiler_depend.ts
@@ -135,6 +143,34 @@ CMakeFiles/generator.dir/generator/generatorAux.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/generator.dir/generator/generatorAux.cpp.s"
 	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "/Users/diogokeeper12/Documents/GitHub/CG-Project/Phase 1/generator/generatorAux.cpp" -o CMakeFiles/generator.dir/generator/generatorAux.cpp.s
 >>>>>>> Stashed changes
+=======
+CMakeFiles/generator.dir/generator/generator.cpp.o: /Users/diogokeeper12/Documents/GitHub/CG-Project/Phase\ 1/generator/generator.cpp
+CMakeFiles/generator.dir/generator/generator.cpp.o: CMakeFiles/generator.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="/Users/diogokeeper12/Documents/GitHub/CG-Project/Phase 1/build/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/generator.dir/generator/generator.cpp.o"
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/generator.dir/generator/generator.cpp.o -MF CMakeFiles/generator.dir/generator/generator.cpp.o.d -o CMakeFiles/generator.dir/generator/generator.cpp.o -c "/Users/diogokeeper12/Documents/GitHub/CG-Project/Phase 1/generator/generator.cpp"
+
+CMakeFiles/generator.dir/generator/generator.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/generator.dir/generator/generator.cpp.i"
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "/Users/diogokeeper12/Documents/GitHub/CG-Project/Phase 1/generator/generator.cpp" > CMakeFiles/generator.dir/generator/generator.cpp.i
+
+CMakeFiles/generator.dir/generator/generator.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/generator.dir/generator/generator.cpp.s"
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "/Users/diogokeeper12/Documents/GitHub/CG-Project/Phase 1/generator/generator.cpp" -o CMakeFiles/generator.dir/generator/generator.cpp.s
+
+CMakeFiles/generator.dir/generator/generatorAux.cpp.o: CMakeFiles/generator.dir/flags.make
+CMakeFiles/generator.dir/generator/generatorAux.cpp.o: /Users/diogokeeper12/Documents/GitHub/CG-Project/Phase\ 1/generator/generatorAux.cpp
+CMakeFiles/generator.dir/generator/generatorAux.cpp.o: CMakeFiles/generator.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="/Users/diogokeeper12/Documents/GitHub/CG-Project/Phase 1/build/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/generator.dir/generator/generatorAux.cpp.o"
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/generator.dir/generator/generatorAux.cpp.o -MF CMakeFiles/generator.dir/generator/generatorAux.cpp.o.d -o CMakeFiles/generator.dir/generator/generatorAux.cpp.o -c "/Users/diogokeeper12/Documents/GitHub/CG-Project/Phase 1/generator/generatorAux.cpp"
+
+CMakeFiles/generator.dir/generator/generatorAux.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/generator.dir/generator/generatorAux.cpp.i"
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "/Users/diogokeeper12/Documents/GitHub/CG-Project/Phase 1/generator/generatorAux.cpp" > CMakeFiles/generator.dir/generator/generatorAux.cpp.i
+
+CMakeFiles/generator.dir/generator/generatorAux.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/generator.dir/generator/generatorAux.cpp.s"
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "/Users/diogokeeper12/Documents/GitHub/CG-Project/Phase 1/generator/generatorAux.cpp" -o CMakeFiles/generator.dir/generator/generatorAux.cpp.s
+>>>>>>> Stashed changes
 
 # Object files for target generator
 generator_OBJECTS = \
@@ -144,6 +180,7 @@ generator_OBJECTS = \
 # External object files for target generator
 generator_EXTERNAL_OBJECTS =
 
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
 /mnt/c/Users/eduar/OneDrive/Documentos/GitHub/CG-Project/Phase\ 1/generator/generator: CMakeFiles/generator.dir/generator/generator.cpp.o
 /mnt/c/Users/eduar/OneDrive/Documentos/GitHub/CG-Project/Phase\ 1/generator/generator: CMakeFiles/generator.dir/generator/generatorAux.cpp.o
@@ -165,6 +202,17 @@ CMakeFiles/generator.dir/build: /mnt/c/Users/eduar/OneDrive/Documentos/GitHub/CG
 # Rule to build all files generated by this target.
 CMakeFiles/generator.dir/build: /Users/diogokeeper12/Documents/GitHub/CG-Project/Phase\ 1/generator/generator
 >>>>>>> Stashed changes
+=======
+/Users/diogokeeper12/Documents/GitHub/CG-Project/Phase\ 1/generator/generator: CMakeFiles/generator.dir/generator/generator.cpp.o
+/Users/diogokeeper12/Documents/GitHub/CG-Project/Phase\ 1/generator/generator: CMakeFiles/generator.dir/generator/generatorAux.cpp.o
+/Users/diogokeeper12/Documents/GitHub/CG-Project/Phase\ 1/generator/generator: CMakeFiles/generator.dir/build.make
+/Users/diogokeeper12/Documents/GitHub/CG-Project/Phase\ 1/generator/generator: CMakeFiles/generator.dir/link.txt
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir="/Users/diogokeeper12/Documents/GitHub/CG-Project/Phase 1/build/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_3) "Linking CXX executable \"/Users/diogokeeper12/Documents/GitHub/CG-Project/Phase 1/generator/generator\""
+	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/generator.dir/link.txt --verbose=$(VERBOSE)
+
+# Rule to build all files generated by this target.
+CMakeFiles/generator.dir/build: /Users/diogokeeper12/Documents/GitHub/CG-Project/Phase\ 1/generator/generator
+>>>>>>> Stashed changes
 .PHONY : CMakeFiles/generator.dir/build
 
 CMakeFiles/generator.dir/clean:
@@ -173,7 +221,11 @@ CMakeFiles/generator.dir/clean:
 
 CMakeFiles/generator.dir/depend:
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 	cd "/mnt/c/Users/eduar/OneDrive/Documentos/GitHub/CG-Project/Phase 1/build" && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" "/mnt/c/Users/eduar/OneDrive/Documentos/GitHub/CG-Project/Phase 1" "/mnt/c/Users/eduar/OneDrive/Documentos/GitHub/CG-Project/Phase 1" "/mnt/c/Users/eduar/OneDrive/Documentos/GitHub/CG-Project/Phase 1/build" "/mnt/c/Users/eduar/OneDrive/Documentos/GitHub/CG-Project/Phase 1/build" "/mnt/c/Users/eduar/OneDrive/Documentos/GitHub/CG-Project/Phase 1/build/CMakeFiles/generator.dir/DependInfo.cmake" "--color=$(COLOR)"
+=======
+	cd "/Users/diogokeeper12/Documents/GitHub/CG-Project/Phase 1/build" && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" "/Users/diogokeeper12/Documents/GitHub/CG-Project/Phase 1" "/Users/diogokeeper12/Documents/GitHub/CG-Project/Phase 1" "/Users/diogokeeper12/Documents/GitHub/CG-Project/Phase 1/build" "/Users/diogokeeper12/Documents/GitHub/CG-Project/Phase 1/build" "/Users/diogokeeper12/Documents/GitHub/CG-Project/Phase 1/build/CMakeFiles/generator.dir/DependInfo.cmake" "--color=$(COLOR)"
+>>>>>>> Stashed changes
 =======
 	cd "/Users/diogokeeper12/Documents/GitHub/CG-Project/Phase 1/build" && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" "/Users/diogokeeper12/Documents/GitHub/CG-Project/Phase 1" "/Users/diogokeeper12/Documents/GitHub/CG-Project/Phase 1" "/Users/diogokeeper12/Documents/GitHub/CG-Project/Phase 1/build" "/Users/diogokeeper12/Documents/GitHub/CG-Project/Phase 1/build" "/Users/diogokeeper12/Documents/GitHub/CG-Project/Phase 1/build/CMakeFiles/generator.dir/DependInfo.cmake" "--color=$(COLOR)"
 >>>>>>> Stashed changes

@@ -9,8 +9,13 @@ set(CMAKE_DEPENDS_LANGUAGES
 # The set of dependency files which are needed:
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
   "/mnt/c/Users/eduar/OneDrive/Documentos/GitHub/CG-Project/Phase 1/generator/generator.cpp" "CMakeFiles/generator.dir/generator/generator.cpp.o" "gcc" "CMakeFiles/generator.dir/generator/generator.cpp.o.d"
   "/mnt/c/Users/eduar/OneDrive/Documentos/GitHub/CG-Project/Phase 1/generator/generatorAux.cpp" "CMakeFiles/generator.dir/generator/generatorAux.cpp.o" "gcc" "CMakeFiles/generator.dir/generator/generatorAux.cpp.o.d"
+=======
+  "/Users/diogokeeper12/Documents/GitHub/CG-Project/Phase 1/generator/generator.cpp" "CMakeFiles/generator.dir/generator/generator.cpp.o" "gcc" "CMakeFiles/generator.dir/generator/generator.cpp.o.d"
+  "/Users/diogokeeper12/Documents/GitHub/CG-Project/Phase 1/generator/generatorAux.cpp" "CMakeFiles/generator.dir/generator/generatorAux.cpp.o" "gcc" "CMakeFiles/generator.dir/generator/generatorAux.cpp.o.d"
+>>>>>>> Stashed changes
 =======
   "/Users/diogokeeper12/Documents/GitHub/CG-Project/Phase 1/generator/generator.cpp" "CMakeFiles/generator.dir/generator/generator.cpp.o" "gcc" "CMakeFiles/generator.dir/generator/generator.cpp.o.d"
   "/Users/diogokeeper12/Documents/GitHub/CG-Project/Phase 1/generator/generatorAux.cpp" "CMakeFiles/generator.dir/generator/generatorAux.cpp.o" "gcc" "CMakeFiles/generator.dir/generator/generatorAux.cpp.o.d"

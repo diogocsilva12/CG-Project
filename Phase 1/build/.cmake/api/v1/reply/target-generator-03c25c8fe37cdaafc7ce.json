@@ -2,11 +2,15 @@
 	"artifacts" : 
 	[
 		{
+<<<<<<< Updated upstream
 <<<<<<<< Updated upstream:Phase 1/build/.cmake/api/v1/reply/target-generator-dfe4ab2c897a0cfaee97.json
 			"path" : "/mnt/c/Users/eduar/OneDrive/Documentos/GitHub/CG-Project/Phase 1/generator/generator"
 ========
 			"path" : "/Users/diogokeeper12/Documents/GitHub/CG-Project/Phase 1/generator/generator"
 >>>>>>>> Stashed changes:Phase 1/build/.cmake/api/v1/reply/target-generator-03c25c8fe37cdaafc7ce.json
+=======
+			"path" : "/Users/diogokeeper12/Documents/GitHub/CG-Project/Phase 1/generator/generator"
+>>>>>>> Stashed changes
 		}
 	],
 	"backtrace" : 1,

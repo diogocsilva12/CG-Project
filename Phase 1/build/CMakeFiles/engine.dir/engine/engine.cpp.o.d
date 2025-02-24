@@ -1,5 +1,6 @@
 CMakeFiles/engine.dir/engine/engine.cpp.o: \
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
  /mnt/c/Users/eduar/OneDrive/Documentos/GitHub/CG-Project/Phase\ 1/engine/engine.cpp \
  /usr/include/stdc-predef.h /usr/include/GL/glut.h \
  /usr/include/GL/freeglut_std.h /usr/include/GL/gl.h \
@@ -172,6 +173,8 @@ CMakeFiles/engine.dir/engine/engine.cpp.o: \
  /usr/include/x86_64-linux-gnu/bits/mathcalls-narrow.h \
  /usr/include/x86_64-linux-gnu/bits/iscanonical.h
 =======
+=======
+>>>>>>> Stashed changes
   /Users/diogokeeper12/Documents/GitHub/CG-Project/Phase\ 1/engine/engine.cpp \
   /Library/Developer/CommandLineTools/SDKs/MacOSX15.1.sdk/System/Library/Frameworks/GLUT.framework/Headers/glut.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX15.1.sdk/System/Library/Frameworks/OpenGL.framework/Headers/OpenGLAvailability.h \
@@ -1158,4 +1161,7 @@ CMakeFiles/engine.dir/engine/engine.cpp.o: \
   /Library/Developer/CommandLineTools/SDKs/MacOSX15.1.sdk/usr/include/c++/v1/__filesystem/recursive_directory_iterator.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX15.1.sdk/usr/include/c++/v1/__filesystem/u8path.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX15.1.sdk/usr/include/c++/v1/iostream
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes

@@ -1,5 +1,6 @@
 CMakeFiles/tinyxml2.dir/external/tinyxml2/tinyxml2.cpp.o: \
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
  /mnt/c/Users/eduar/OneDrive/Documentos/GitHub/CG-Project/Phase\ 1/external/tinyxml2/tinyxml2.cpp \
  /usr/include/stdc-predef.h \
  /mnt/c/Users/eduar/OneDrive/Documentos/GitHub/CG-Project/Phase\ 1/external/tinyxml2/tinyxml2.h \
@@ -78,6 +79,8 @@ CMakeFiles/tinyxml2.dir/external/tinyxml2/tinyxml2.cpp.o: \
  /usr/include/c++/13/new /usr/include/c++/13/bits/exception.h \
  /usr/include/c++/13/cstddef /usr/include/c++/13/cstdarg
 =======
+=======
+>>>>>>> Stashed changes
   /Users/diogokeeper12/Documents/GitHub/CG-Project/Phase\ 1/external/tinyxml2/tinyxml2.cpp \
   /Users/diogokeeper12/Documents/GitHub/CG-Project/Phase\ 1/external/tinyxml2/tinyxml2.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX15.1.sdk/usr/include/c++/v1/cctype \
@@ -344,4 +347,7 @@ CMakeFiles/tinyxml2.dir/external/tinyxml2/tinyxml2.cpp.o: \
   /Library/Developer/CommandLineTools/usr/lib/clang/16/include/__stdarg_va_arg.h \
   /Library/Developer/CommandLineTools/usr/lib/clang/16/include/__stdarg___va_copy.h \
   /Library/Developer/CommandLineTools/usr/lib/clang/16/include/__stdarg_va_copy.h
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes

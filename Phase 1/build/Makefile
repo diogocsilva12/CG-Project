@@ -58,10 +58,17 @@ EQUALS = =
 
 # The top-level source directory on which CMake was run.
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 CMAKE_SOURCE_DIR = "/mnt/c/Users/eduar/OneDrive/Documentos/GitHub/CG-Project/Phase 1"
 
 # The top-level build directory on which CMake was run.
 CMAKE_BINARY_DIR = "/mnt/c/Users/eduar/OneDrive/Documentos/GitHub/CG-Project/Phase 1/build"
+=======
+CMAKE_SOURCE_DIR = "/Users/diogokeeper12/Documents/GitHub/CG-Project/Phase 1"
+
+# The top-level build directory on which CMake was run.
+CMAKE_BINARY_DIR = "/Users/diogokeeper12/Documents/GitHub/CG-Project/Phase 1/build"
+>>>>>>> Stashed changes
 =======
 CMAKE_SOURCE_DIR = "/Users/diogokeeper12/Documents/GitHub/CG-Project/Phase 1"
 
@@ -95,9 +102,15 @@ rebuild_cache/fast: rebuild_cache
 # The main all target
 all: cmake_check_build_system
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 	$(CMAKE_COMMAND) -E cmake_progress_start "/mnt/c/Users/eduar/OneDrive/Documentos/GitHub/CG-Project/Phase 1/build/CMakeFiles" "/mnt/c/Users/eduar/OneDrive/Documentos/GitHub/CG-Project/Phase 1/build//CMakeFiles/progress.marks"
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 all
 	$(CMAKE_COMMAND) -E cmake_progress_start "/mnt/c/Users/eduar/OneDrive/Documentos/GitHub/CG-Project/Phase 1/build/CMakeFiles" 0
+=======
+	$(CMAKE_COMMAND) -E cmake_progress_start "/Users/diogokeeper12/Documents/GitHub/CG-Project/Phase 1/build/CMakeFiles" "/Users/diogokeeper12/Documents/GitHub/CG-Project/Phase 1/build//CMakeFiles/progress.marks"
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 all
+	$(CMAKE_COMMAND) -E cmake_progress_start "/Users/diogokeeper12/Documents/GitHub/CG-Project/Phase 1/build/CMakeFiles" 0
+>>>>>>> Stashed changes
 =======
 	$(CMAKE_COMMAND) -E cmake_progress_start "/Users/diogokeeper12/Documents/GitHub/CG-Project/Phase 1/build/CMakeFiles" "/Users/diogokeeper12/Documents/GitHub/CG-Project/Phase 1/build//CMakeFiles/progress.marks"
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 all

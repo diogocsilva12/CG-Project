@@ -58,14 +58,6 @@ void plane(float unit, int slices, const std::string& filename) {
     writeVertices(filename, vertices);
 }
 
-/**
- * Generates vertices for a box (cube) centered at the origin.
- *
- * @param unit The size of the box (length of each edge).
- * @param slices The number of divisions along each edge.
- * @param filename The name of the file to save the vertices.
- * @throws std::invalid_argument If unit or slices are non-positive.
- */
 void box(float unit, int slices, const std::string& filename) {
     if (unit <= 0 || slices <= 0) {
         throw std::invalid_argument("Error: Unit and slices must be positive.");
@@ -75,6 +67,7 @@ void box(float unit, int slices, const std::string& filename) {
     float half = unit / 2.0f;
     float step = unit / slices;
 
+<<<<<<< Updated upstream
     // Front face (z = half) - plane in XY
     for (int i = 0; i <= slices; i++) {
         for (int j = 0; j <= slices; j++) {
@@ -135,6 +128,128 @@ void box(float unit, int slices, const std::string& filename) {
             vertices.push_back(v);
         }
     }
+=======
+    // Front face (Z = offset)
+    for (int i = 0; i < slices; i++) {
+        for (int j = 0; j < slices; j++) {
+            float x1 = i * comp - offset;
+            float z1 = j * comp - offset;
+            float x2 = (i + 1) * comp - offset;
+            float z2 = (j + 1) * comp - offset;
+
+            // Triangle 1
+            vertices.push_back({x1, offset, z1});
+            vertices.push_back({x2, offset, z2});
+            vertices.push_back({x2, offset, z1});
+
+            // Triangle 2
+            vertices.push_back({x1, offset, z1});
+            vertices.push_back({x1, offset, z2});
+            vertices.push_back({x2, offset, z2});
+        }
+    }
+
+    // Back face (Z = -offset)
+    for (int i = 0; i < slices; i++) {
+        for (int j = 0; j < slices; j++) {
+            float x1 = i * comp - offset;
+            float z1 = j * comp - offset;
+            float x2 = (i + 1) * comp - offset;
+            float z2 = (j + 1) * comp - offset;
+
+            // Triangle 1
+            vertices.push_back({x2, -offset, z2});
+            vertices.push_back({x1, -offset, z1});
+            vertices.push_back({x2, -offset, z1});
+
+            // Triangle 2
+            vertices.push_back({x1, -offset, z2});
+            vertices.push_back({x1, -offset, z1});
+            vertices.push_back({x2, -offset, z2});
+        }
+    }
+
+    // Right face (X = offset)
+    for (int i = 0; i < slices; i++) {
+        for (int j = 0; j < slices; j++) {
+            float x1 = i * comp - offset;
+            float y1 = j * comp - offset;
+            float x2 = (i + 1) * comp - offset;
+            float y2 = (j + 1) * comp - offset;
+
+            // Triangle 1
+            vertices.push_back({x2, y2, offset});
+            vertices.push_back({x1, y1, offset});
+            vertices.push_back({x2, y1, offset});
+
+            // Triangle 2
+            vertices.push_back({x1, y2, offset});
+            vertices.push_back({x1, y1, offset});
+            vertices.push_back({x2, y2, offset});
+        }
+    }
+
+    // Left face (X = -offset)
+    for (int i = 0; i < slices; i++) {
+        for (int j = 0; j < slices; j++) {
+            float x1 = i * comp - offset;
+            float y1 = j * comp - offset;
+            float x2 = (i + 1) * comp - offset;
+            float y2 = (j + 1) * comp - offset;
+
+            // Triangle 1
+            vertices.push_back({x1, y1, -offset});
+            vertices.push_back({x2, y2, -offset});
+            vertices.push_back({x2, y1, -offset});
+
+            // Triangle 2
+            vertices.push_back({x1, y1, -offset});
+            vertices.push_back({x1, y2, -offset});
+            vertices.push_back({x2, y2, -offset});
+        }
+    }
+
+    // Top face (Y = offset)
+    for (int i = 0; i < slices; i++) {
+        for (int j = 0; j < slices; j++) {
+            float z1 = i * comp - offset;
+            float y1 = j * comp - offset;
+            float z2 = (i + 1) * comp - offset;
+            float y2 = (j + 1) * comp - offset;
+
+            // Triangle 1
+            vertices.push_back({offset, y1, z1});
+            vertices.push_back({offset, y2, z2});
+            vertices.push_back({offset, y1, z2});
+
+            // Triangle 2
+            vertices.push_back({offset, y1, z1});
+            vertices.push_back({offset, y2, z1});
+            vertices.push_back({offset, y2, z2});
+        }
+    }
+
+    // Bottom face (Y = -offset)
+    for (int i = 0; i < slices; i++) {
+        for (int j = 0; j < slices; j++) {
+            float z1 = i * comp - offset;
+            float y1 = j * comp - offset;
+            float z2 = (i + 1) * comp - offset;
+            float y2 = (j + 1) * comp - offset;
+
+            // Triangle 1
+            vertices.push_back({-offset, y2, z2});
+            vertices.push_back({-offset, y1, z1});
+            vertices.push_back({-offset, y1, z2});
+
+            // Triangle 2
+            vertices.push_back({-offset, y2, z1});
+            vertices.push_back({-offset, y1, z1});
+            vertices.push_back({-offset, y2, z2});
+        }
+    }
+
+>>>>>>> Stashed changes
     writeVertices(filename, vertices);
 }
 

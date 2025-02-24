@@ -9,7 +9,11 @@ set(CMAKE_DEPENDS_LANGUAGES
 # The set of dependency files which are needed:
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
   "/mnt/c/Users/eduar/OneDrive/Documentos/GitHub/CG-Project/Phase 1/external/tinyxml2/tinyxml2.cpp" "CMakeFiles/tinyxml2.dir/external/tinyxml2/tinyxml2.cpp.o" "gcc" "CMakeFiles/tinyxml2.dir/external/tinyxml2/tinyxml2.cpp.o.d"
+=======
+  "/Users/diogokeeper12/Documents/GitHub/CG-Project/Phase 1/external/tinyxml2/tinyxml2.cpp" "CMakeFiles/tinyxml2.dir/external/tinyxml2/tinyxml2.cpp.o" "gcc" "CMakeFiles/tinyxml2.dir/external/tinyxml2/tinyxml2.cpp.o.d"
+>>>>>>> Stashed changes
 =======
   "/Users/diogokeeper12/Documents/GitHub/CG-Project/Phase 1/external/tinyxml2/tinyxml2.cpp" "CMakeFiles/tinyxml2.dir/external/tinyxml2/tinyxml2.cpp.o" "gcc" "CMakeFiles/tinyxml2.dir/external/tinyxml2/tinyxml2.cpp.o.d"
 >>>>>>> Stashed changes

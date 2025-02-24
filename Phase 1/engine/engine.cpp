@@ -112,12 +112,17 @@ int main(int argc, char** argv) {
     glutDisplayFunc(renderScene);
     glutReshapeFunc(changeSize);
 
-    // OpenGL settings
     glEnable(GL_DEPTH_TEST);
     glEnable(GL_CULL_FACE);      // Enable back-face culling
+<<<<<<< Updated upstream
+=======
+    glDepthFunc(GL_LESS); 
+>>>>>>> Stashed changes
     glCullFace(GL_BACK);         // Cull back faces
     glFrontFace(GL_CCW);         // Define front faces as counter-clockwise
     glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);  // Show wireframe
+
+    // Enter GLUT's main loop
 
     // Enter GLUT's main loop
     glutMainLoop();

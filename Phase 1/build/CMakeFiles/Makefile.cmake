@@ -8,6 +8,7 @@ set(CMAKE_DEPENDS_GENERATOR "Unix Makefiles")
 set(CMAKE_MAKEFILE_DEPENDS
   "CMakeCache.txt"
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
   "/mnt/c/Users/eduar/OneDrive/Documentos/GitHub/CG-Project/Phase 1/CMakeLists.txt"
   "CMakeFiles/3.28.3/CMakeCCompiler.cmake"
   "CMakeFiles/3.28.3/CMakeCXXCompiler.cmake"
@@ -114,6 +115,8 @@ set(CMAKE_MAKEFILE_DEPENDS
   "/usr/share/cmake-3.28/Modules/Platform/UnixPaths.cmake"
   "/usr/share/cmake-3.28/Modules/SelectLibraryConfigurations.cmake"
 =======
+=======
+>>>>>>> Stashed changes
   "/Users/diogokeeper12/Documents/GitHub/CG-Project/Phase 1/CMakeLists.txt"
   "CMakeFiles/3.31.5/CMakeCCompiler.cmake"
   "CMakeFiles/3.31.5/CMakeCXXCompiler.cmake"
@@ -231,6 +234,9 @@ set(CMAKE_MAKEFILE_DEPENDS
   "/opt/homebrew/share/cmake/Modules/Platform/Linker/Apple-AppleClang.cmake"
   "/opt/homebrew/share/cmake/Modules/Platform/UnixPaths.cmake"
   "/opt/homebrew/share/cmake/Modules/SelectLibraryConfigurations.cmake"
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
   )
 

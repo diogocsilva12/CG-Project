@@ -1,5 +1,6 @@
 CMakeFiles/generator.dir/generator/generatorAux.cpp.o: \
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
  /mnt/c/Users/eduar/OneDrive/Documentos/GitHub/CG-Project/Phase\ 1/generator/generatorAux.cpp \
  /usr/include/stdc-predef.h /usr/include/c++/13/iostream \
  /usr/include/c++/13/bits/requires_hosted.h \
@@ -165,6 +166,8 @@ CMakeFiles/generator.dir/generator/generatorAux.cpp.o: \
  /usr/include/x86_64-linux-gnu/bits/iscanonical.h \
  /mnt/c/Users/eduar/OneDrive/Documentos/GitHub/CG-Project/Phase\ 1/generator/generatorAux.h
 =======
+=======
+>>>>>>> Stashed changes
   /Users/diogokeeper12/Documents/GitHub/CG-Project/Phase\ 1/generator/generatorAux.cpp \
   /Library/Developer/CommandLineTools/SDKs/MacOSX15.1.sdk/usr/include/c++/v1/iostream \
   /Library/Developer/CommandLineTools/SDKs/MacOSX15.1.sdk/usr/include/c++/v1/__assert \
@@ -1143,4 +1146,7 @@ CMakeFiles/generator.dir/generator/generatorAux.cpp.o: \
   /Library/Developer/CommandLineTools/SDKs/MacOSX15.1.sdk/usr/include/c++/v1/__filesystem/recursive_directory_iterator.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX15.1.sdk/usr/include/c++/v1/__filesystem/u8path.h \
   /Users/diogokeeper12/Documents/GitHub/CG-Project/Phase\ 1/generator/generatorAux.h
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes

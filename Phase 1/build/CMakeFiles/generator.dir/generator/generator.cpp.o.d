@@ -1,5 +1,6 @@
 CMakeFiles/generator.dir/generator/generator.cpp.o: \
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
  /mnt/c/Users/eduar/OneDrive/Documentos/GitHub/CG-Project/Phase\ 1/generator/generator.cpp \
  /usr/include/stdc-predef.h /usr/include/c++/13/iostream \
  /usr/include/c++/13/bits/requires_hosted.h \
@@ -159,6 +160,8 @@ CMakeFiles/generator.dir/generator/generator.cpp.o: \
  /usr/include/c++/13/bits/stl_bvector.h \
  /usr/include/c++/13/bits/vector.tcc
 =======
+=======
+>>>>>>> Stashed changes
   /Users/diogokeeper12/Documents/GitHub/CG-Project/Phase\ 1/generator/generator.cpp \
   /Library/Developer/CommandLineTools/SDKs/MacOSX15.1.sdk/usr/include/c++/v1/iostream \
   /Library/Developer/CommandLineTools/SDKs/MacOSX15.1.sdk/usr/include/c++/v1/__assert \
@@ -1117,4 +1120,7 @@ CMakeFiles/generator.dir/generator/generator.cpp.o: \
   /Library/Developer/CommandLineTools/SDKs/MacOSX15.1.sdk/usr/include/c++/v1/print \
   /Library/Developer/CommandLineTools/SDKs/MacOSX15.1.sdk/usr/include/unistd.h \
   /Users/diogokeeper12/Documents/GitHub/CG-Project/Phase\ 1/generator/generatorAux.h
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes

@@ -69,6 +69,7 @@
 			[
 				{
 					"backtrace" : 3,
+<<<<<<< Updated upstream
 <<<<<<<< Updated upstream:Phase 1/build/.cmake/api/v1/reply/target-engine-79c179fafe45b1b49a40.json
 					"path" : "/mnt/c/Users/eduar/OneDrive/Documentos/GitHub/CG-Project/Phase 1/engine"
 				},
@@ -86,6 +87,17 @@
 					"backtrace" : 2,
 					"path" : "/Users/diogokeeper12/Documents/GitHub/CG-Project/Phase 1/external/tinyxml2"
 >>>>>>>> Stashed changes:Phase 1/build/.cmake/api/v1/reply/target-engine-0be62ab265362f8cb72b.json
+=======
+					"path" : "/Users/diogokeeper12/Documents/GitHub/CG-Project/Phase 1/engine"
+				},
+				{
+					"backtrace" : 3,
+					"path" : "/Library/Developer/CommandLineTools/SDKs/MacOSX15.1.sdk/System/Library/Frameworks/GLUT.framework/Headers"
+				},
+				{
+					"backtrace" : 2,
+					"path" : "/Users/diogokeeper12/Documents/GitHub/CG-Project/Phase 1/external/tinyxml2"
+>>>>>>> Stashed changes
 				}
 			],
 			"language" : "CXX",
@@ -122,6 +134,7 @@
 			},
 			{
 				"fragment" : "-framework OpenGL",
+<<<<<<< Updated upstream
 				"role" : "libraries"
 			},
 			{
@@ -133,12 +146,24 @@
 				"role" : "libraries"
 			},
 			{
+=======
+				"role" : "libraries"
+			},
+			{
+				"fragment" : "-framework OpenGL",
+				"role" : "libraries"
+			},
+			{
+>>>>>>> Stashed changes
 				"fragment" : "-framework GLUT",
 				"role" : "libraries"
 			},
 			{
 				"fragment" : "-framework Cocoa",
+<<<<<<< Updated upstream
 >>>>>>>> Stashed changes:Phase 1/build/.cmake/api/v1/reply/target-engine-0be62ab265362f8cb72b.json
+=======
+>>>>>>> Stashed changes
 				"role" : "libraries"
 			},
 			{

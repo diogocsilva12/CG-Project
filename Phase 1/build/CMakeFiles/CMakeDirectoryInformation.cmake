@@ -3,8 +3,13 @@
 
 # Relative path conversion top directories.
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 set(CMAKE_RELATIVE_PATH_TOP_SOURCE "/mnt/c/Users/eduar/OneDrive/Documentos/GitHub/CG-Project/Phase 1")
 set(CMAKE_RELATIVE_PATH_TOP_BINARY "/mnt/c/Users/eduar/OneDrive/Documentos/GitHub/CG-Project/Phase 1/build")
+=======
+set(CMAKE_RELATIVE_PATH_TOP_SOURCE "/Users/diogokeeper12/Documents/GitHub/CG-Project/Phase 1")
+set(CMAKE_RELATIVE_PATH_TOP_BINARY "/Users/diogokeeper12/Documents/GitHub/CG-Project/Phase 1/build")
+>>>>>>> Stashed changes
 =======
 set(CMAKE_RELATIVE_PATH_TOP_SOURCE "/Users/diogokeeper12/Documents/GitHub/CG-Project/Phase 1")
 set(CMAKE_RELATIVE_PATH_TOP_BINARY "/Users/diogokeeper12/Documents/GitHub/CG-Project/Phase 1/build")
