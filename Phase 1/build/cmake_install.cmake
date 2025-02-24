@@ -1,12 +1,4 @@
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-# Install script for directory: /mnt/c/Users/eduar/OneDrive/Documentos/GitHub/CG-Project/Phase 1
-=======
 # Install script for directory: /Users/diogokeeper12/Documents/GitHub/CG-Project/Phase 1
->>>>>>> Stashed changes
-=======
-# Install script for directory: /Users/diogokeeper12/Documents/GitHub/CG-Project/Phase 1
->>>>>>> Stashed changes
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -47,17 +39,8 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-file(WRITE "/mnt/c/Users/eduar/OneDrive/Documentos/GitHub/CG-Project/Phase 1/build/${CMAKE_INSTALL_MANIFEST}"
-=======
 if(CMAKE_INSTALL_LOCAL_ONLY)
   file(WRITE "/Users/diogokeeper12/Documents/GitHub/CG-Project/Phase 1/build/install_local_manifest.txt"
->>>>>>> Stashed changes
-=======
-if(CMAKE_INSTALL_LOCAL_ONLY)
-  file(WRITE "/Users/diogokeeper12/Documents/GitHub/CG-Project/Phase 1/build/install_local_manifest.txt"
->>>>>>> Stashed changes
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")
 endif()
 if(CMAKE_INSTALL_COMPONENT)

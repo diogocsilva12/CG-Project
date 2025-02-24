@@ -24,12 +24,8 @@ void loadModel(Model& model) {
         return;
     }
 
-    int numVertices;
-    file >> numVertices;
-
-    for (int i = 0; i < numVertices; i++) {
-        Point vertex;
-        file >> vertex.x >> vertex.y >> vertex.z;
+    Point vertex;
+    while (file >> vertex.x >> vertex.y >> vertex.z) {
         model.vertices.push_back(vertex);
     }
 }
@@ -48,27 +44,10 @@ void renderScene() {
         const std::vector<Point>& vertices = model.vertices;
         int slices = sqrt(vertices.size()) - 1;  // Calculate slices from vertex count
 
-        // For each grid cell, create two triangles
-        for (int i = 0; i < slices; i++) {
-            for (int j = 0; j < slices; j++) {
-                // First triangle
-                Point v1 = vertices[i * (slices + 1) + j];
-                Point v2 = vertices[i * (slices + 1) + j + 1];
-                Point v3 = vertices[(i + 1) * (slices + 1) + j];
-                
-                glVertex3f(v1.x, v1.y, v1.z);
-                glVertex3f(v2.x, v2.y, v2.z);
-                glVertex3f(v3.x, v3.y, v3.z);
-
-                // Second triangle
-                Point v4 = vertices[(i + 1) * (slices + 1) + j];
-                Point v5 = vertices[i * (slices + 1) + j + 1];
-                Point v6 = vertices[(i + 1) * (slices + 1) + j + 1];
-                
-                glVertex3f(v4.x, v4.y, v4.z);
-                glVertex3f(v5.x, v5.y, v5.z);
-                glVertex3f(v6.x, v6.y, v6.z);
-            }
+        for (size_t i = 0; i < vertices.size(); i += 3) {
+            glVertex3f(vertices[i].x, vertices[i].y, vertices[i].z);
+            glVertex3f(vertices[i + 1].x, vertices[i + 1].y, vertices[i + 1].z);
+            glVertex3f(vertices[i + 2].x, vertices[i + 2].y, vertices[i + 2].z);
         }
         glEnd();
     }
@@ -114,10 +93,7 @@ int main(int argc, char** argv) {
 
     glEnable(GL_DEPTH_TEST);
     glEnable(GL_CULL_FACE);      // Enable back-face culling
-<<<<<<< Updated upstream
-=======
     glDepthFunc(GL_LESS); 
->>>>>>> Stashed changes
     glCullFace(GL_BACK);         // Cull back faces
     glFrontFace(GL_CCW);         // Define front faces as counter-clockwise
     glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);  // Show wireframe

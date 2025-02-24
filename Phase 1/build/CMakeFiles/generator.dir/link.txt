@@ -1,9 +1,1 @@
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-/usr/bin/c++ CMakeFiles/generator.dir/generator/generator.cpp.o CMakeFiles/generator.dir/generator/generatorAux.cpp.o -o "/mnt/c/Users/eduar/OneDrive/Documentos/GitHub/CG-Project/Phase 1/generator/generator" 
-=======
 /Library/Developer/CommandLineTools/usr/bin/c++  -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX15.1.sdk -mmacosx-version-min=15.0 -Wl,-search_paths_first -Wl,-headerpad_max_install_names CMakeFiles/generator.dir/generator/generator.cpp.o CMakeFiles/generator.dir/generator/generatorAux.cpp.o -o "/Users/diogokeeper12/Documents/GitHub/CG-Project/Phase 1/generator/generator"
->>>>>>> Stashed changes
-=======
-/Library/Developer/CommandLineTools/usr/bin/c++  -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX15.1.sdk -mmacosx-version-min=15.0 -Wl,-search_paths_first -Wl,-headerpad_max_install_names CMakeFiles/generator.dir/generator/generator.cpp.o CMakeFiles/generator.dir/generator/generatorAux.cpp.o -o "/Users/diogokeeper12/Documents/GitHub/CG-Project/Phase 1/generator/generator"
->>>>>>> Stashed changes

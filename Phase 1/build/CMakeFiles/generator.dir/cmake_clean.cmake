@@ -1,16 +1,6 @@
 file(REMOVE_RECURSE
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-  "/mnt/c/Users/eduar/OneDrive/Documentos/GitHub/CG-Project/Phase 1/generator/generator"
-  "/mnt/c/Users/eduar/OneDrive/Documentos/GitHub/CG-Project/Phase 1/generator/generator.pdb"
-=======
   "/Users/diogokeeper12/Documents/GitHub/CG-Project/Phase 1/generator/generator"
   "/Users/diogokeeper12/Documents/GitHub/CG-Project/Phase 1/generator/generator.pdb"
->>>>>>> Stashed changes
-=======
-  "/Users/diogokeeper12/Documents/GitHub/CG-Project/Phase 1/generator/generator"
-  "/Users/diogokeeper12/Documents/GitHub/CG-Project/Phase 1/generator/generator.pdb"
->>>>>>> Stashed changes
   "CMakeFiles/generator.dir/generator/generator.cpp.o"
   "CMakeFiles/generator.dir/generator/generator.cpp.o.d"
   "CMakeFiles/generator.dir/generator/generatorAux.cpp.o"

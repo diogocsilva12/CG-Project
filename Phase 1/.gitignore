@@ -1,0 +1,12 @@
+# Build directory
+build/
+
+# CMake generated files
+CMakeFiles/
+CMakeCache.txt
+*.cmake
+Makefile
+
+# Mac specific
+.DS_Store
+

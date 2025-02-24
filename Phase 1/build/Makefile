@@ -57,24 +57,10 @@ RM = /opt/homebrew/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-CMAKE_SOURCE_DIR = "/mnt/c/Users/eduar/OneDrive/Documentos/GitHub/CG-Project/Phase 1"
-
-# The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = "/mnt/c/Users/eduar/OneDrive/Documentos/GitHub/CG-Project/Phase 1/build"
-=======
 CMAKE_SOURCE_DIR = "/Users/diogokeeper12/Documents/GitHub/CG-Project/Phase 1"
 
 # The top-level build directory on which CMake was run.
 CMAKE_BINARY_DIR = "/Users/diogokeeper12/Documents/GitHub/CG-Project/Phase 1/build"
->>>>>>> Stashed changes
-=======
-CMAKE_SOURCE_DIR = "/Users/diogokeeper12/Documents/GitHub/CG-Project/Phase 1"
-
-# The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = "/Users/diogokeeper12/Documents/GitHub/CG-Project/Phase 1/build"
->>>>>>> Stashed changes
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -101,21 +87,9 @@ rebuild_cache/fast: rebuild_cache
 
 # The main all target
 all: cmake_check_build_system
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-	$(CMAKE_COMMAND) -E cmake_progress_start "/mnt/c/Users/eduar/OneDrive/Documentos/GitHub/CG-Project/Phase 1/build/CMakeFiles" "/mnt/c/Users/eduar/OneDrive/Documentos/GitHub/CG-Project/Phase 1/build//CMakeFiles/progress.marks"
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start "/mnt/c/Users/eduar/OneDrive/Documentos/GitHub/CG-Project/Phase 1/build/CMakeFiles" 0
-=======
 	$(CMAKE_COMMAND) -E cmake_progress_start "/Users/diogokeeper12/Documents/GitHub/CG-Project/Phase 1/build/CMakeFiles" "/Users/diogokeeper12/Documents/GitHub/CG-Project/Phase 1/build//CMakeFiles/progress.marks"
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 all
 	$(CMAKE_COMMAND) -E cmake_progress_start "/Users/diogokeeper12/Documents/GitHub/CG-Project/Phase 1/build/CMakeFiles" 0
->>>>>>> Stashed changes
-=======
-	$(CMAKE_COMMAND) -E cmake_progress_start "/Users/diogokeeper12/Documents/GitHub/CG-Project/Phase 1/build/CMakeFiles" "/Users/diogokeeper12/Documents/GitHub/CG-Project/Phase 1/build//CMakeFiles/progress.marks"
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start "/Users/diogokeeper12/Documents/GitHub/CG-Project/Phase 1/build/CMakeFiles" 0
->>>>>>> Stashed changes
 .PHONY : all
 
 # The main clean target
@@ -205,29 +179,29 @@ engine/engine.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/engine.dir/build.make CMakeFiles/engine.dir/engine/engine.cpp.s
 .PHONY : engine/engine.cpp.s
 
-engine/xmlparser.o: engine/xmlparser.cpp.o
-.PHONY : engine/xmlparser.o
+engine/xmlParser.o: engine/xmlParser.cpp.o
+.PHONY : engine/xmlParser.o
 
 # target to build an object file
-engine/xmlparser.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/engine.dir/build.make CMakeFiles/engine.dir/engine/xmlparser.cpp.o
-.PHONY : engine/xmlparser.cpp.o
+engine/xmlParser.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/engine.dir/build.make CMakeFiles/engine.dir/engine/xmlParser.cpp.o
+.PHONY : engine/xmlParser.cpp.o
 
-engine/xmlparser.i: engine/xmlparser.cpp.i
-.PHONY : engine/xmlparser.i
+engine/xmlParser.i: engine/xmlParser.cpp.i
+.PHONY : engine/xmlParser.i
 
 # target to preprocess a source file
-engine/xmlparser.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/engine.dir/build.make CMakeFiles/engine.dir/engine/xmlparser.cpp.i
-.PHONY : engine/xmlparser.cpp.i
+engine/xmlParser.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/engine.dir/build.make CMakeFiles/engine.dir/engine/xmlParser.cpp.i
+.PHONY : engine/xmlParser.cpp.i
 
-engine/xmlparser.s: engine/xmlparser.cpp.s
-.PHONY : engine/xmlparser.s
+engine/xmlParser.s: engine/xmlParser.cpp.s
+.PHONY : engine/xmlParser.s
 
 # target to generate assembly for a file
-engine/xmlparser.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/engine.dir/build.make CMakeFiles/engine.dir/engine/xmlparser.cpp.s
-.PHONY : engine/xmlparser.cpp.s
+engine/xmlParser.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/engine.dir/build.make CMakeFiles/engine.dir/engine/xmlParser.cpp.s
+.PHONY : engine/xmlParser.cpp.s
 
 external/tinyxml2/tinyxml2.o: external/tinyxml2/tinyxml2.cpp.o
 .PHONY : external/tinyxml2/tinyxml2.o
@@ -315,9 +289,9 @@ help:
 	@echo "... engine/engine.o"
 	@echo "... engine/engine.i"
 	@echo "... engine/engine.s"
-	@echo "... engine/xmlparser.o"
-	@echo "... engine/xmlparser.i"
-	@echo "... engine/xmlparser.s"
+	@echo "... engine/xmlParser.o"
+	@echo "... engine/xmlParser.i"
+	@echo "... engine/xmlParser.s"
 	@echo "... external/tinyxml2/tinyxml2.o"
 	@echo "... external/tinyxml2/tinyxml2.i"
 	@echo "... external/tinyxml2/tinyxml2.s"
