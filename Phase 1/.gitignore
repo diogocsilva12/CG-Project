@@ -7,6 +7,8 @@ CMakeCache.txt
 *.cmake
 Makefile
 
+# Generated 3D files
+*.3d
 # Mac specific
 .DS_Store
 
