@@ -3,7 +3,7 @@
 
 #include <vector>
 #include <string>
-
+#include <GL/glew.h>
 struct Point {
     float x, y, z;
 };
@@ -25,6 +25,8 @@ struct Window {
 struct Model {
     std::string filename;
     std::vector<Point> vertices;
+    GLuint vbo;  // Add VBO identifier
+    size_t vertexCount;  // Add vertex count
 };
 
 struct World {
