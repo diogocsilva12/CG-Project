@@ -23,9 +23,10 @@ void handlePlane(int argc, char** argv) {
     }
     float unit = std::stof(argv[2]);
     int slices = std::stoi(argv[3]);
-    std::string outputFile = "tests/" + std::string(argv[4]);
-    plane(unit, slices, outputFile);
-    std::cout << "Plane generated successfully! Saved to " << outputFile << "\n";
+    // Create standardized filename
+    std::string filename = "../tests/plane_" + std::string(argv[2]) + "_" + argv[3] + ".3d";
+    plane(unit, slices, filename);
+    std::cout << "Plane generated successfully! Saved to " << filename << "\n";
 }
 
 // Function to handle box generation
@@ -35,23 +36,29 @@ void handleBox(int argc, char** argv) {
     }
     float unit = std::stof(argv[2]);
     int slices = std::stoi(argv[3]);
-    std::string outputFile = "tests/" + std::string(argv[4]);
-    box(unit, slices, outputFile);
-    std::cout << "Box generated successfully! Saved to " << outputFile << "\n";
+    // Create standardized filename
+    std::string filename = "../tests/box_" + std::string(argv[2]) + "_" + argv[3] + ".3d";
+    box(unit, slices, filename);
+    std::cout << "Box generated successfully! Saved to " << filename << "\n";
 }
 
 // Function to handle cone generation
 void handleCone(int argc, char** argv) {
     if (argc != 7) {
-        throw std::invalid_argument("Error: Cone requires 5 arguments: <radius> <height> <slices> <stacks> <output_file>");
+        throw std::invalid_argument("Usage: cone radius height slices stacks filename");
     }
+    
     float radius = std::stof(argv[2]);
     float height = std::stof(argv[3]);
     int slices = std::stoi(argv[4]);
     int stacks = std::stoi(argv[5]);
-    std::string outputFile = "tests/" + std::string(argv[6]);
-    cone(radius, height, slices, stacks, outputFile);
-    std::cout << "Cone generated successfully! Saved to " << outputFile << "\n";
+    
+    // Create standardized filename with correct path
+    std::string filename = "../tests/cone_" + std::string(argv[2]) + "_" + argv[3] + "_" + 
+                          argv[4] + "_" + argv[5] + ".3d";  // Added "../" prefix
+    
+    cone(radius, height, slices, stacks, filename);
+    std::cout << "Cone generated successfully! Saved to " << filename << "\n";
 }
 
 // Function to handle sphere generation
@@ -62,9 +69,10 @@ void handleSphere(int argc, char** argv) {
     float radius = std::stof(argv[2]);
     int slices = std::stoi(argv[3]);
     int stacks = std::stoi(argv[4]);
-    std::string outputFile = "tests/" + std::string(argv[5]);
-    sphere(radius, slices, stacks, outputFile);
-    std::cout << "Sphere generated successfully! Saved to " << outputFile << "\n";
+    // Create standardized filename
+    std::string filename = "../tests/sphere_" + std::string(argv[2]) + "_" + argv[3] + "_" + argv[4] + ".3d";
+    sphere(radius, slices, stacks, filename);
+    std::cout << "Sphere generated successfully! Saved to " << filename << "\n";
 }
 
 int main(int argc, char** argv) {
