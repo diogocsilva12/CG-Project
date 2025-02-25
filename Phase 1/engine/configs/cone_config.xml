@@ -10,6 +10,7 @@
     <group>
         <models>
             <model file="../generator/tests/cone.3d" />
+            
         </models>
     </group>
 </world>

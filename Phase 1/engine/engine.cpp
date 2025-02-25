@@ -7,6 +7,7 @@
 #include <GL/glu.h>
 #else 
 #include <GL/glut.h>
+#include <GL/glew.h>
 #endif
 #include "engine.h"
 #include "xmlParser.h" 
@@ -17,6 +18,9 @@
 
 World world;  // Global world state
 
+
+
+
 void loadModel(Model& model) {
     std::ifstream file(model.filename);
     if (!file.is_open()) {
@@ -25,9 +29,18 @@ void loadModel(Model& model) {
     }
 
     Point vertex;
+    std::vector<float> vertexData;  // Store vertices contiguously
     while (file >> vertex.x >> vertex.y >> vertex.z) {
-        model.vertices.push_back(vertex);
+        vertexData.push_back(vertex.x);
+        vertexData.push_back(vertex.y);
+        vertexData.push_back(vertex.z);
     }
+    model.vertexCount = vertexData.size() / 3;
+
+    // Generate and bind VBO
+    glGenBuffers(1, &model.vbo);
+    glBindBuffer(GL_ARRAY_BUFFER, model.vbo);
+    glBufferData(GL_ARRAY_BUFFER, vertexData.size() * sizeof(float), vertexData.data(), GL_STATIC_DRAW);
 }
 
 void renderScene() {
@@ -38,18 +51,13 @@ void renderScene() {
               world.camera.lookAt.x, world.camera.lookAt.y, world.camera.lookAt.z,
               world.camera.up.x, world.camera.up.y, world.camera.up.z);
 
-    // Draw each model listed in the XML
+    // Draw each model using VBOs
     for (const Model& model : world.models) {
-        glBegin(GL_TRIANGLES);  // Changed from GL_POINTS to GL_TRIANGLES
-        const std::vector<Point>& vertices = model.vertices;
-        int slices = sqrt(vertices.size()) - 1;  // Calculate slices from vertex count
-
-        for (size_t i = 0; i < vertices.size(); i += 3) {
-            glVertex3f(vertices[i].x, vertices[i].y, vertices[i].z);
-            glVertex3f(vertices[i + 1].x, vertices[i + 1].y, vertices[i + 1].z);
-            glVertex3f(vertices[i + 2].x, vertices[i + 2].y, vertices[i + 2].z);
-        }
-        glEnd();
+        glBindBuffer(GL_ARRAY_BUFFER, model.vbo);
+        glEnableClientState(GL_VERTEX_ARRAY);
+        glVertexPointer(3, GL_FLOAT, 0, 0);
+        glDrawArrays(GL_TRIANGLES, 0, model.vertexCount);
+        glDisableClientState(GL_VERTEX_ARRAY);
     }
 
     glutSwapBuffers();
