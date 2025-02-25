@@ -66,13 +66,14 @@ Notes:
 
 
 ### TODO 
-- [ ] Fix some bugs
+- [x] Fix some bugs
 - [ ] Clean up the code
-- [ ] Fix the box shape
+- [x] Fix the box shape
 - [ ] Document the rest of the code 
 
 ### Demo
-![Demo](https://github.com/diogocsilva12/CG-Project/raw/main/Phase%201/usage_example.gif)
+https://github.com/user-attachments/assets/14cd04a5-aeee-4da1-94ab-a1172ce61677
+
 
 
 
