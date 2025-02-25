@@ -8,9 +8,15 @@ World parseXMLFile(const char* filename) {
     World world;
     XMLDocument doc;
     
+    // Get the directory of the XML file
+    std::string xmlPath = filename;
+    size_t lastSlash = xmlPath.find_last_of("/\\");
+    std::string xmlDir = (lastSlash != std::string::npos) ? 
+                        xmlPath.substr(0, lastSlash + 1) : "";
+    
     // Load XML file
     if (doc.LoadFile(filename) != XML_SUCCESS) {
-        std::cerr << "Error loading XML file!" << std::endl;
+        std::cerr << "Error loading XML file: " << filename << std::endl;
         return world;
     }
 
@@ -69,7 +75,10 @@ World parseXMLFile(const char* filename) {
                  modelElement;
                  modelElement = modelElement->NextSiblingElement("model")) {
                 Model model;
-                model.filename = modelElement->Attribute("file");
+                std::string modelFile = modelElement->Attribute("file");
+                // Look for the 3D file in the same directory as XML first
+                model.filename = "../tests/" + modelFile;
+                std::cout << "Loading model from: " << model.filename << std::endl; // Debug output
                 world.models.push_back(model);
             }
         }

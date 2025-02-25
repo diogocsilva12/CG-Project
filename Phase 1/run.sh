@@ -5,7 +5,8 @@ while true; do
     echo "====== 3D Figure Generator ======"
     echo "1. Clean and Build"
     echo "2. Generate Figure"
-    echo "3. View Figure"
+    echo "3. View Generated Figure"
+    echo "4. Run Test Files"
     echo "0. Exit"
     echo "==========================================="
     
@@ -33,9 +34,6 @@ while true; do
             echo "3. Sphere"
             echo "4. Cone"
             echo "0. Back"
-            
-            # Create tests directory in generator folder
-            mkdir -p generator/tests
             
             read -p "Select figure type: " figure
             
@@ -100,30 +98,86 @@ while true; do
                     esac
                     ;;
             
-       3)
-            echo "=== View Figure ==="
-            echo "Generated figures: "
+       
+        3)
+            echo "=== View Generated Figures ==="
+            echo "Available figures:"
             
-            for file in generator/tests/*.3d; do
-                filename=$(basename "$file" .3d)
-                echo "$filename"  # Removed -n flag and added newline
+            if [ -d "tests" ]; then
+                files=(tests/*.3d)
+                if [ ${#files[@]} -eq 0 ] || [ ! -e "${files[0]}" ]; then
+                    echo "No generated figures found."
+                else
+                    for file in "${files[@]}"; do
+                        filename=$(basename "$file")
+                        echo "- ${filename%.*}"
+                    done
+                    
+
+                    read -p "0 to go back: " figure_name
+                    
+                    case $figure_name in
+                        0)
+                            continue
+                            ;;
+                    esac
+                fi
+            else
+                echo "No figures directory found!"
+                read -p "Press Enter to continue..."
+            fi
+            ;;
+
+        4)
+    echo "=== Available Test Files ==="
+    if [ -d "engine/configs" ]; then
+        # Only show files that start with "test"
+        files=(engine/configs/test*.xml)
+        if [ ${#files[@]} -eq 0 ] || [ ! -e "${files[0]}" ]; then
+            echo "No test files found."
+        else
+            echo "Test configurations:"
+            # Create an array to store the filenames
+            declare -a test_files
+            counter=1
+            
+            # List files with numbers
+            for file in "${files[@]}"; do
+                filename=$(basename "$file" .xml)
+                echo "$counter) ${filename}"
+                test_files[$counter]=$filename
+                ((counter++))
             done
             
             echo "0. Back to main menu"
+            read -p "Select test number: " test_number
             
-            read -p "Enter the figure name (without .3d) or 0 to go back: " figure_name
-            
-            case $figure_name in
+            case $test_number in
                 0)
                     continue
                     ;;
                 *)
-                    cd build
-                    ./engine ../engine/configs/${figure_name}_config.xml
-                    cd ..
+                    if [ "$test_number" -ge 1 ] && [ "$test_number" -lt "$counter" ]; then
+                        selected_test="${test_files[$test_number]}"
+                        if [ -f "engine/configs/${selected_test}.xml" ]; then
+                            cd build
+                            ./engine "../engine/configs/${selected_test}.xml"
+                            cd ..
+                        fi
+                    else
+                        echo "Invalid test number!"
+                        read -p "Press Enter to continue..."
+                    fi
                     ;;
             esac
-            ;;
+        fi
+    else
+        echo "No test configs directory found!"
+        read -p "Press Enter to continue..."
+    fi
+    ;;
+
+
             
         0)
             echo "Exiting..."
