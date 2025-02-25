@@ -95,6 +95,15 @@ int main(int argc, char** argv) {
     glutInitWindowSize(world.window.width, world.window.height);
     glutCreateWindow("CG@DI-UM");
 
+    #ifndef __APPLE__
+    // Initialize GLEW for non-Apple platforms
+    GLenum err = glewInit();
+    if (GLEW_OK != err) {
+        fprintf(stderr, "Error: %s\n", glewGetErrorString(err));
+        return 1;
+    }
+    #endif
+
     // Callback registration
     glutDisplayFunc(renderScene);
     glutReshapeFunc(changeSize);
@@ -105,8 +114,6 @@ int main(int argc, char** argv) {
     glCullFace(GL_BACK);         // Cull back faces
     glFrontFace(GL_CCW);         // Define front faces as counter-clockwise
     glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);  // Show wireframe
-
-    // Enter GLUT's main loop
 
     // Enter GLUT's main loop
     glutMainLoop();
