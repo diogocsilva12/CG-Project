@@ -1,0 +1,74 @@
+\doxysection{engine/xml\+Parser.cpp File Reference}
+\hypertarget{xml_parser_8cpp}{}\label{xml_parser_8cpp}\index{engine/xmlParser.cpp@{engine/xmlParser.cpp}}
+
+
+XML configuration parser for 3D graphics engine.  
+
+
+{\ttfamily \#include "{}tinyxml2.\+h"{}}\newline
+{\ttfamily \#include "{}engine.\+h"{}}\newline
+{\ttfamily \#include $<$iostream$>$}\newline
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{struct_world}{World}} \mbox{\hyperlink{xml_parser_8cpp_a8eb321e7a45f6bb54cb9cf6eb3fe8e6e}{parse\+XMLFile}} (const char \texorpdfstring{$\ast$}{*}filename)
+\begin{DoxyCompactList}\small\item\em Parses an XML configuration file and constructs a \doxylink{struct_world}{World} object. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+XML configuration parser for 3D graphics engine. 
+
+This file implements functionality to parse XML configuration files that define camera settings, window dimensions, and 3D model references for the rendering engine. 
+
+Definition in file \mbox{\hyperlink{xml_parser_8cpp_source}{xml\+Parser.\+cpp}}.
+
+
+
+\doxysubsection{Function Documentation}
+\Hypertarget{xml_parser_8cpp_a8eb321e7a45f6bb54cb9cf6eb3fe8e6e}\index{xmlParser.cpp@{xmlParser.cpp}!parseXMLFile@{parseXMLFile}}
+\index{parseXMLFile@{parseXMLFile}!xmlParser.cpp@{xmlParser.cpp}}
+\doxysubsubsection{\texorpdfstring{parseXMLFile()}{parseXMLFile()}}
+{\footnotesize\ttfamily \label{xml_parser_8cpp_a8eb321e7a45f6bb54cb9cf6eb3fe8e6e} 
+\mbox{\hyperlink{struct_world}{World}} parse\+XMLFile (\begin{DoxyParamCaption}\item[{const char \texorpdfstring{$\ast$}{*}}]{filename}{}\end{DoxyParamCaption})}
+
+
+
+Parses an XML configuration file and constructs a \doxylink{struct_world}{World} object. 
+
+This function reads an XML file that defines\+:
+\begin{DoxyItemize}
+\item \doxylink{struct_window}{Window} dimensions (width and height)
+\item \doxylink{struct_camera}{Camera} parameters (position, look\+At point, up vector, projection settings)
+\item 3D models to be rendered
+\end{DoxyItemize}
+
+XML structure expected\+: $<$world$>$ $<$window width="{}\+X"{} height="{}\+Y"{} $>$ $<$camera$>$ $<$position x="{}\+X"{} y="{}\+Y"{} z="{}\+Z"{} $>$ $<$look\+At x="{}\+X"{} y="{}\+Y"{} z="{}\+Z"{} $>$ $<$up x="{}\+X"{} y="{}\+Y"{} z="{}\+Z"{} $>$ $<$projection fov="{}\+F"{} near="{}\+N"{} far="{}\+F"{} $>$ $<$/camera$>$ $<$group$>$ $<$models$>$ $<$model file="{}filename.\+3d"{} $>$ ... $<$/models$>$ $<$/group$>$ $<$/world$>$
+
+
+\begin{DoxyParams}{Parameters}
+{\em filename} & Path to the XML configuration file \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+\doxylink{struct_world}{World} object containing parsed configuration data 
+\end{DoxyReturn}
+Parse window settings
+
+Example\+: $<$window width="{}512"{} height="{}512"{} $>$
+
+Extracts width and height attributes to define the window dimensions.
+
+Parse camera settings
+
+Example\+: $<$camera$>$ $<$position x="{}5"{} y="{}-\/2"{} z="{}3"{} $>$ $<$look\+At x="{}0"{} y="{}0"{} z="{}0"{} $>$ $<$up x="{}0"{} y="{}1"{} z="{}0"{} $>$ $<$projection fov="{}60"{} near="{}1"{} far="{}1000"{} $>$ $<$/camera$>$
+
+Extracts camera position, look\+At point, up vector, and projection parameters.
+
+Parse 3D model references
+
+Example\+: $<$group$>$ $<$models$>$ $<$model file="{}cone\+\_\+1\+\_\+2\+\_\+4\+\_\+3.\+3d"{} $>$ $<$/models$>$ $<$/group$>$
+
+Extracts model filenames and constructs paths to the 3D model files.
+
+Definition at line \mbox{\hyperlink{xml_parser_8cpp_source_l00043}{43}} of file \mbox{\hyperlink{xml_parser_8cpp_source}{xml\+Parser.\+cpp}}.
+

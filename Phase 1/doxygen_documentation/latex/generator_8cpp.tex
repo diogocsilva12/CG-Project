@@ -1,0 +1,198 @@
+\doxysection{generator/generator.cpp File Reference}
+\hypertarget{generator_8cpp}{}\label{generator_8cpp}\index{generator/generator.cpp@{generator/generator.cpp}}
+
+
+3D primitive shape generator implementation  
+
+
+{\ttfamily \#include $<$iostream$>$}\newline
+{\ttfamily \#include $<$string$>$}\newline
+{\ttfamily \#include $<$unordered\+\_\+map$>$}\newline
+{\ttfamily \#include $<$stdexcept$>$}\newline
+{\ttfamily \#include "{}generator\+Aux.\+h"{}}\newline
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{generator_8cpp_aed243734882fe73d91c51ee7d3a68732}{show\+Usage}} (const std\+::string \&program\+Name)
+\begin{DoxyCompactList}\small\item\em Displays usage instructions for the generator program. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{generator_8cpp_ab306fd5c0914171580b668ec0aae8c9a}{handle\+Plane}} (int argc, char \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}argv)
+\begin{DoxyCompactList}\small\item\em Handles the generation of a plane primitive. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{generator_8cpp_aeab6a52b3ff5c61189dd829863d700fb}{handle\+Box}} (int argc, char \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}argv)
+\begin{DoxyCompactList}\small\item\em Handles the generation of a box primitive. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{generator_8cpp_a9b75a89ed2cbcc4ce8f4485ffc067797}{handle\+Cone}} (int argc, char \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}argv)
+\begin{DoxyCompactList}\small\item\em Handles the generation of a cone primitive. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{generator_8cpp_a8d793a92a61043defce808bd5d2aabe6}{handle\+Sphere}} (int argc, char \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}argv)
+\begin{DoxyCompactList}\small\item\em Handles the generation of a sphere primitive. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{generator_8cpp_a3c04138a5bfe5d72780bb7e82a18e627}{main}} (int argc, char \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}argv)
+\begin{DoxyCompactList}\small\item\em Main function -\/ program entry point. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+3D primitive shape generator implementation 
+
+This file implements a command-\/line application for generating 3D primitive shapes (plane, box, cone, sphere) and saving them to .3d files for use in the rendering engine. Each primitive can be customized with different parameters to control its dimensions and complexity. 
+
+Definition in file \mbox{\hyperlink{generator_8cpp_source}{generator.\+cpp}}.
+
+
+
+\doxysubsection{Function Documentation}
+\Hypertarget{generator_8cpp_aeab6a52b3ff5c61189dd829863d700fb}\index{generator.cpp@{generator.cpp}!handleBox@{handleBox}}
+\index{handleBox@{handleBox}!generator.cpp@{generator.cpp}}
+\doxysubsubsection{\texorpdfstring{handleBox()}{handleBox()}}
+{\footnotesize\ttfamily \label{generator_8cpp_aeab6a52b3ff5c61189dd829863d700fb} 
+void handle\+Box (\begin{DoxyParamCaption}\item[{int}]{argc}{, }\item[{char \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}}]{argv}{}\end{DoxyParamCaption})}
+
+
+
+Handles the generation of a box primitive. 
+
+Creates a box centered at the origin with specified dimensions and complexity. Each face of the box is divided according to the slices parameter.
+
+
+\begin{DoxyParams}{Parameters}
+{\em argc} & The total number of command line arguments \\
+\hline
+{\em argv} & The array of command line arguments argv\mbox{[}2\mbox{]}\+: unit -\/ The half-\/length of the box sides argv\mbox{[}3\mbox{]}\+: slices -\/ The number of divisions along each axis of each face argv\mbox{[}4\mbox{]}\+: output filename (ignored; standardized name is used) \\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyExceptions}{Exceptions}
+{\em std\+::invalid\+\_\+argument} & If the required parameters are missing or invalid \\
+\hline
+\end{DoxyExceptions}
+
+
+Definition at line \mbox{\hyperlink{generator_8cpp_source_l00073}{73}} of file \mbox{\hyperlink{generator_8cpp_source}{generator.\+cpp}}.
+
+\Hypertarget{generator_8cpp_a9b75a89ed2cbcc4ce8f4485ffc067797}\index{generator.cpp@{generator.cpp}!handleCone@{handleCone}}
+\index{handleCone@{handleCone}!generator.cpp@{generator.cpp}}
+\doxysubsubsection{\texorpdfstring{handleCone()}{handleCone()}}
+{\footnotesize\ttfamily \label{generator_8cpp_a9b75a89ed2cbcc4ce8f4485ffc067797} 
+void handle\+Cone (\begin{DoxyParamCaption}\item[{int}]{argc}{, }\item[{char \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}}]{argv}{}\end{DoxyParamCaption})}
+
+
+
+Handles the generation of a cone primitive. 
+
+Creates a cone with its base centered at the origin and apex along the positive Y axis. The cone\textquotesingle{}s complexity is controlled by slices (around the circular base) and stacks (along height).
+
+
+\begin{DoxyParams}{Parameters}
+{\em argc} & The total number of command line arguments \\
+\hline
+{\em argv} & The array of command line arguments argv\mbox{[}2\mbox{]}\+: radius -\/ The radius of the cone base argv\mbox{[}3\mbox{]}\+: height -\/ The height of the cone argv\mbox{[}4\mbox{]}\+: slices -\/ The number of divisions around the circular base argv\mbox{[}5\mbox{]}\+: stacks -\/ The number of divisions along the height argv\mbox{[}6\mbox{]}\+: output filename (ignored; standardized name is used) \\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyExceptions}{Exceptions}
+{\em std\+::invalid\+\_\+argument} & If the required parameters are missing or invalid \\
+\hline
+\end{DoxyExceptions}
+
+
+Definition at line \mbox{\hyperlink{generator_8cpp_source_l00100}{100}} of file \mbox{\hyperlink{generator_8cpp_source}{generator.\+cpp}}.
+
+\Hypertarget{generator_8cpp_ab306fd5c0914171580b668ec0aae8c9a}\index{generator.cpp@{generator.cpp}!handlePlane@{handlePlane}}
+\index{handlePlane@{handlePlane}!generator.cpp@{generator.cpp}}
+\doxysubsubsection{\texorpdfstring{handlePlane()}{handlePlane()}}
+{\footnotesize\ttfamily \label{generator_8cpp_ab306fd5c0914171580b668ec0aae8c9a} 
+void handle\+Plane (\begin{DoxyParamCaption}\item[{int}]{argc}{, }\item[{char \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}}]{argv}{}\end{DoxyParamCaption})}
+
+
+
+Handles the generation of a plane primitive. 
+
+Creates a plane centered at the origin with specified dimensions and complexity. The plane is constructed in the XZ plane (with Y as up axis).
+
+
+\begin{DoxyParams}{Parameters}
+{\em argc} & The total number of command line arguments \\
+\hline
+{\em argv} & The array of command line arguments argv\mbox{[}2\mbox{]}\+: unit -\/ The half-\/length of the plane sides argv\mbox{[}3\mbox{]}\+: slices -\/ The number of divisions along each axis argv\mbox{[}4\mbox{]}\+: output filename (ignored; standardized name is used) \\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyExceptions}{Exceptions}
+{\em std\+::invalid\+\_\+argument} & If the required parameters are missing or invalid \\
+\hline
+\end{DoxyExceptions}
+
+
+Definition at line \mbox{\hyperlink{generator_8cpp_source_l00048}{48}} of file \mbox{\hyperlink{generator_8cpp_source}{generator.\+cpp}}.
+
+\Hypertarget{generator_8cpp_a8d793a92a61043defce808bd5d2aabe6}\index{generator.cpp@{generator.cpp}!handleSphere@{handleSphere}}
+\index{handleSphere@{handleSphere}!generator.cpp@{generator.cpp}}
+\doxysubsubsection{\texorpdfstring{handleSphere()}{handleSphere()}}
+{\footnotesize\ttfamily \label{generator_8cpp_a8d793a92a61043defce808bd5d2aabe6} 
+void handle\+Sphere (\begin{DoxyParamCaption}\item[{int}]{argc}{, }\item[{char \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}}]{argv}{}\end{DoxyParamCaption})}
+
+
+
+Handles the generation of a sphere primitive. 
+
+Creates a sphere centered at the origin with specified radius and complexity. The sphere\textquotesingle{}s complexity is controlled by slices (longitude) and stacks (latitude).
+
+
+\begin{DoxyParams}{Parameters}
+{\em argc} & The total number of command line arguments \\
+\hline
+{\em argv} & The array of command line arguments argv\mbox{[}2\mbox{]}\+: radius -\/ The radius of the sphere argv\mbox{[}3\mbox{]}\+: slices -\/ The number of divisions along the longitude (around vertical axis) argv\mbox{[}4\mbox{]}\+: stacks -\/ The number of divisions along the latitude (from pole to pole) argv\mbox{[}5\mbox{]}\+: output filename (ignored; standardized name is used) \\
+\hline
+\end{DoxyParams}
+
+\begin{DoxyExceptions}{Exceptions}
+{\em std\+::invalid\+\_\+argument} & If the required parameters are missing or invalid \\
+\hline
+\end{DoxyExceptions}
+
+
+Definition at line \mbox{\hyperlink{generator_8cpp_source_l00132}{132}} of file \mbox{\hyperlink{generator_8cpp_source}{generator.\+cpp}}.
+
+\Hypertarget{generator_8cpp_a3c04138a5bfe5d72780bb7e82a18e627}\index{generator.cpp@{generator.cpp}!main@{main}}
+\index{main@{main}!generator.cpp@{generator.cpp}}
+\doxysubsubsection{\texorpdfstring{main()}{main()}}
+{\footnotesize\ttfamily \label{generator_8cpp_a3c04138a5bfe5d72780bb7e82a18e627} 
+int main (\begin{DoxyParamCaption}\item[{int}]{argc}{, }\item[{char \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}}]{argv}{}\end{DoxyParamCaption})}
+
+
+
+Main function -\/ program entry point. 
+
+Parses command-\/line arguments and dispatches to the appropriate shape handler function. Uses a map to associate primitive names with their handler functions for extensibility.
+
+
+\begin{DoxyParams}{Parameters}
+{\em argc} & The total number of command line arguments \\
+\hline
+{\em argv} & The array of command line arguments argv\mbox{[}0\mbox{]}\+: program name argv\mbox{[}1\mbox{]}\+: shape type (plane, box, cone, sphere) argv\mbox{[}2+\mbox{]}\+: shape-\/specific parameters \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+0 on successful execution, 1 on error 
+\end{DoxyReturn}
+
+
+Definition at line \mbox{\hyperlink{generator_8cpp_source_l00158}{158}} of file \mbox{\hyperlink{generator_8cpp_source}{generator.\+cpp}}.
+
+\Hypertarget{generator_8cpp_aed243734882fe73d91c51ee7d3a68732}\index{generator.cpp@{generator.cpp}!showUsage@{showUsage}}
+\index{showUsage@{showUsage}!generator.cpp@{generator.cpp}}
+\doxysubsubsection{\texorpdfstring{showUsage()}{showUsage()}}
+{\footnotesize\ttfamily \label{generator_8cpp_aed243734882fe73d91c51ee7d3a68732} 
+void show\+Usage (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{program\+Name}{}\end{DoxyParamCaption})}
+
+
+
+Displays usage instructions for the generator program. 
+
+Outputs a help message showing the available shapes, their required parameters, and example usage to guide users in correctly invoking the program.
+
+
+\begin{DoxyParams}{Parameters}
+{\em program\+Name} & The name of the executable (argv\mbox{[}0\mbox{]}) \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line \mbox{\hyperlink{generator_8cpp_source_l00024}{24}} of file \mbox{\hyperlink{generator_8cpp_source}{generator.\+cpp}}.
+

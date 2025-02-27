@@ -1,10 +1,26 @@
+/**
+ * @file generator.cpp
+ * @brief 3D primitive shape generator implementation
+ * 
+ * This file implements a command-line application for generating 3D primitive shapes
+ * (plane, box, cone, sphere) and saving them to .3d files for use in the rendering engine.
+ * Each primitive can be customized with different parameters to control its dimensions and complexity.
+ */
+
 #include <iostream>
 #include <string>
 #include <unordered_map>
 #include <stdexcept>
 #include "generatorAux.h"
 
-// Function to display usage instructions
+/**
+ * @brief Displays usage instructions for the generator program
+ * 
+ * Outputs a help message showing the available shapes, their required parameters,
+ * and example usage to guide users in correctly invoking the program.
+ * 
+ * @param programName The name of the executable (argv[0])
+ */
 void showUsage(const std::string& programName) {
     std::cout << "Usage: " << programName << " <shape> [parameters...]\n";
     std::cout << "Shapes and their parameters:\n";
@@ -16,7 +32,19 @@ void showUsage(const std::string& programName) {
     std::cout << "NOTE: Creating a 3d file will override the previous one!\n";
 }
 
-// Function to handle plane generation
+/**
+ * @brief Handles the generation of a plane primitive
+ * 
+ * Creates a plane centered at the origin with specified dimensions and complexity.
+ * The plane is constructed in the XZ plane (with Y as up axis).
+ * 
+ * @param argc The total number of command line arguments
+ * @param argv The array of command line arguments
+ *        argv[2]: unit - The half-length of the plane sides
+ *        argv[3]: slices - The number of divisions along each axis
+ *        argv[4]: output filename (ignored; standardized name is used)
+ * @throws std::invalid_argument If the required parameters are missing or invalid
+ */
 void handlePlane(int argc, char** argv) {
     if (argc != 5) {
         throw std::invalid_argument("Error: Plane requires 3 arguments: <unit> <slices> <output_file>");
@@ -29,7 +57,19 @@ void handlePlane(int argc, char** argv) {
     std::cout << "Plane generated successfully! Saved to " << filename << "\n";
 }
 
-// Function to handle box generation
+/**
+ * @brief Handles the generation of a box primitive
+ * 
+ * Creates a box centered at the origin with specified dimensions and complexity.
+ * Each face of the box is divided according to the slices parameter.
+ * 
+ * @param argc The total number of command line arguments
+ * @param argv The array of command line arguments
+ *        argv[2]: unit - The half-length of the box sides
+ *        argv[3]: slices - The number of divisions along each axis of each face
+ *        argv[4]: output filename (ignored; standardized name is used)
+ * @throws std::invalid_argument If the required parameters are missing or invalid
+ */
 void handleBox(int argc, char** argv) {
     if (argc != 5) {
         throw std::invalid_argument("Error: Box requires 3 arguments: <unit> <slices> <output_file>");
@@ -42,7 +82,21 @@ void handleBox(int argc, char** argv) {
     std::cout << "Box generated successfully! Saved to " << filename << "\n";
 }
 
-// Function to handle cone generation
+/**
+ * @brief Handles the generation of a cone primitive
+ * 
+ * Creates a cone with its base centered at the origin and apex along the positive Y axis.
+ * The cone's complexity is controlled by slices (around the circular base) and stacks (along height).
+ * 
+ * @param argc The total number of command line arguments
+ * @param argv The array of command line arguments
+ *        argv[2]: radius - The radius of the cone base
+ *        argv[3]: height - The height of the cone
+ *        argv[4]: slices - The number of divisions around the circular base
+ *        argv[5]: stacks - The number of divisions along the height
+ *        argv[6]: output filename (ignored; standardized name is used)
+ * @throws std::invalid_argument If the required parameters are missing or invalid
+ */
 void handleCone(int argc, char** argv) {
     if (argc != 7) {
         throw std::invalid_argument("Usage: cone radius height slices stacks filename");
@@ -61,7 +115,20 @@ void handleCone(int argc, char** argv) {
     std::cout << "Cone generated successfully! Saved to " << filename << "\n";
 }
 
-// Function to handle sphere generation
+/**
+ * @brief Handles the generation of a sphere primitive
+ * 
+ * Creates a sphere centered at the origin with specified radius and complexity.
+ * The sphere's complexity is controlled by slices (longitude) and stacks (latitude).
+ * 
+ * @param argc The total number of command line arguments
+ * @param argv The array of command line arguments
+ *        argv[2]: radius - The radius of the sphere
+ *        argv[3]: slices - The number of divisions along the longitude (around vertical axis)
+ *        argv[4]: stacks - The number of divisions along the latitude (from pole to pole)
+ *        argv[5]: output filename (ignored; standardized name is used) 
+ * @throws std::invalid_argument If the required parameters are missing or invalid
+ */
 void handleSphere(int argc, char** argv) {
     if (argc != 6) {
         throw std::invalid_argument("Error: Sphere requires 4 arguments: <radius> <slices> <stacks> <output_file>");
@@ -75,6 +142,19 @@ void handleSphere(int argc, char** argv) {
     std::cout << "Sphere generated successfully! Saved to " << filename << "\n";
 }
 
+/**
+ * @brief Main function - program entry point
+ * 
+ * Parses command-line arguments and dispatches to the appropriate shape handler function.
+ * Uses a map to associate primitive names with their handler functions for extensibility.
+ * 
+ * @param argc The total number of command line arguments
+ * @param argv The array of command line arguments
+ *        argv[0]: program name
+ *        argv[1]: shape type (plane, box, cone, sphere)
+ *        argv[2+]: shape-specific parameters
+ * @return 0 on successful execution, 1 on error
+ */
 int main(int argc, char** argv) {
     // Create a map to associate primitive names with handler functions
     std::unordered_map<std::string, void (*)(int, char**)> shapeHandlers;
