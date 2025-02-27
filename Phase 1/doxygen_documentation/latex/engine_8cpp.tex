@@ -1,0 +1,160 @@
+\doxysection{engine/engine.cpp File Reference}
+\hypertarget{engine_8cpp}{}\label{engine_8cpp}\index{engine/engine.cpp@{engine/engine.cpp}}
+
+
+Main rendering engine for 3D graphics application.  
+
+
+{\ttfamily \#include $<$GL/glut.\+h$>$}\newline
+{\ttfamily \#include "{}engine.\+h"{}}\newline
+{\ttfamily \#include "{}xml\+Parser.\+h"{}}\newline
+{\ttfamily \#include $<$fstream$>$}\newline
+{\ttfamily \#include $<$iostream$>$}\newline
+{\ttfamily \#include $<$cmath$>$}\newline
+\doxysubsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{engine_8cpp_a1ce7c516538704e5b04a99450edc572f}{GL\+\_\+\+SILENCE\+\_\+\+DEPRECATION}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{engine_8cpp_a242fce04950c3304eeef3783d395dfba}{load\+Model}} (\mbox{\hyperlink{struct_model}{Model}} \&model)
+\begin{DoxyCompactList}\small\item\em Loads a 3D model from a file into memory. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{engine_8cpp_a91c42686f3245f22fb6b17ba5372d92c}{render\+Scene}} ()
+\begin{DoxyCompactList}\small\item\em Main rendering function called by GLUT for each frame. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{engine_8cpp_a33e20b37682a0492a9e95d13bef17f02}{change\+Size}} (int w, int h)
+\begin{DoxyCompactList}\small\item\em \doxylink{struct_window}{Window} resize callback function. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{engine_8cpp_a3c04138a5bfe5d72780bb7e82a18e627}{main}} (int argc, char \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}argv)
+\begin{DoxyCompactList}\small\item\em Main function -\/ program entry point. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{struct_world}{World}} \mbox{\hyperlink{engine_8cpp_a8524210767eebeb4926a5f30f8bbbb68}{world}}
+\begin{DoxyCompactList}\small\item\em Global world state containing all scene information. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Main rendering engine for 3D graphics application. 
+
+This file implements the core rendering engine that processes 3D models defined in XML configuration files, and renders them using Open\+GL. 
+
+Definition in file \mbox{\hyperlink{engine_8cpp_source}{engine.\+cpp}}.
+
+
+
+\doxysubsection{Macro Definition Documentation}
+\Hypertarget{engine_8cpp_a1ce7c516538704e5b04a99450edc572f}\index{engine.cpp@{engine.cpp}!GL\_SILENCE\_DEPRECATION@{GL\_SILENCE\_DEPRECATION}}
+\index{GL\_SILENCE\_DEPRECATION@{GL\_SILENCE\_DEPRECATION}!engine.cpp@{engine.cpp}}
+\doxysubsubsection{\texorpdfstring{GL\_SILENCE\_DEPRECATION}{GL\_SILENCE\_DEPRECATION}}
+{\footnotesize\ttfamily \label{engine_8cpp_a1ce7c516538704e5b04a99450edc572f} 
+\#define GL\+\_\+\+SILENCE\+\_\+\+DEPRECATION}
+
+
+
+Definition at line \mbox{\hyperlink{engine_8cpp_source_l00010}{10}} of file \mbox{\hyperlink{engine_8cpp_source}{engine.\+cpp}}.
+
+
+
+\doxysubsection{Function Documentation}
+\Hypertarget{engine_8cpp_a33e20b37682a0492a9e95d13bef17f02}\index{engine.cpp@{engine.cpp}!changeSize@{changeSize}}
+\index{changeSize@{changeSize}!engine.cpp@{engine.cpp}}
+\doxysubsubsection{\texorpdfstring{changeSize()}{changeSize()}}
+{\footnotesize\ttfamily \label{engine_8cpp_a33e20b37682a0492a9e95d13bef17f02} 
+void change\+Size (\begin{DoxyParamCaption}\item[{int}]{w}{, }\item[{int}]{h}{}\end{DoxyParamCaption})}
+
+
+
+\doxylink{struct_window}{Window} resize callback function. 
+
+Handles viewport and projection matrix updates when the window is resized. Maintains the correct aspect ratio for the perspective projection.
+
+
+\begin{DoxyParams}{Parameters}
+{\em w} & New window width in pixels \\
+\hline
+{\em h} & New window height in pixels \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line \mbox{\hyperlink{engine_8cpp_source_l00106}{106}} of file \mbox{\hyperlink{engine_8cpp_source}{engine.\+cpp}}.
+
+\Hypertarget{engine_8cpp_a242fce04950c3304eeef3783d395dfba}\index{engine.cpp@{engine.cpp}!loadModel@{loadModel}}
+\index{loadModel@{loadModel}!engine.cpp@{engine.cpp}}
+\doxysubsubsection{\texorpdfstring{loadModel()}{loadModel()}}
+{\footnotesize\ttfamily \label{engine_8cpp_a242fce04950c3304eeef3783d395dfba} 
+void load\+Model (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_model}{Model}} \&}]{model}{}\end{DoxyParamCaption})}
+
+
+
+Loads a 3D model from a file into memory. 
+
+Reads vertex data from the specified file and stores it in the model\textquotesingle{}s vertices vector. Each vertex consists of x, y, z coordinates.
+
+
+\begin{DoxyParams}{Parameters}
+{\em model} & Reference to the \doxylink{struct_model}{Model} object to populate with vertex data \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line \mbox{\hyperlink{engine_8cpp_source_l00045}{45}} of file \mbox{\hyperlink{engine_8cpp_source}{engine.\+cpp}}.
+
+\Hypertarget{engine_8cpp_a3c04138a5bfe5d72780bb7e82a18e627}\index{engine.cpp@{engine.cpp}!main@{main}}
+\index{main@{main}!engine.cpp@{engine.cpp}}
+\doxysubsubsection{\texorpdfstring{main()}{main()}}
+{\footnotesize\ttfamily \label{engine_8cpp_a3c04138a5bfe5d72780bb7e82a18e627} 
+int main (\begin{DoxyParamCaption}\item[{int}]{argc}{, }\item[{char \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}}]{argv}{}\end{DoxyParamCaption})}
+
+
+
+Main function -\/ program entry point. 
+
+Initializes GLUT, loads XML configuration and model data, sets up rendering parameters, and starts the main rendering loop.
+
+
+\begin{DoxyParams}{Parameters}
+{\em argc} & Command line argument count \\
+\hline
+{\em argv} & Command line argument values \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+0 on successful execution, 1 on error 
+\end{DoxyReturn}
+
+
+Definition at line \mbox{\hyperlink{engine_8cpp_source_l00135}{135}} of file \mbox{\hyperlink{engine_8cpp_source}{engine.\+cpp}}.
+
+\Hypertarget{engine_8cpp_a91c42686f3245f22fb6b17ba5372d92c}\index{engine.cpp@{engine.cpp}!renderScene@{renderScene}}
+\index{renderScene@{renderScene}!engine.cpp@{engine.cpp}}
+\doxysubsubsection{\texorpdfstring{renderScene()}{renderScene()}}
+{\footnotesize\ttfamily \label{engine_8cpp_a91c42686f3245f22fb6b17ba5372d92c} 
+void render\+Scene (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Main rendering function called by GLUT for each frame. 
+
+Clears the screen, sets up the camera view based on world configuration, and renders all models in wireframe mode using GL\+\_\+\+TRIANGLES. 
+
+Definition at line \mbox{\hyperlink{engine_8cpp_source_l00064}{64}} of file \mbox{\hyperlink{engine_8cpp_source}{engine.\+cpp}}.
+
+
+
+\doxysubsection{Variable Documentation}
+\Hypertarget{engine_8cpp_a8524210767eebeb4926a5f30f8bbbb68}\index{engine.cpp@{engine.cpp}!world@{world}}
+\index{world@{world}!engine.cpp@{engine.cpp}}
+\doxysubsubsection{\texorpdfstring{world}{world}}
+{\footnotesize\ttfamily \label{engine_8cpp_a8524210767eebeb4926a5f30f8bbbb68} 
+\mbox{\hyperlink{struct_world}{World}} world}
+
+
+
+Global world state containing all scene information. 
+
+This includes models, camera configuration, and window settings loaded from the XML configuration file. 
+
+Definition at line \mbox{\hyperlink{engine_8cpp_source_l00035}{35}} of file \mbox{\hyperlink{engine_8cpp_source}{engine.\+cpp}}.
+

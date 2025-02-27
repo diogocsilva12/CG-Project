@@ -1,0 +1,337 @@
+\doxysection{tinyxml2\+::XMLUtil Class Reference}
+\hypertarget{classtinyxml2_1_1_x_m_l_util}{}\label{classtinyxml2_1_1_x_m_l_util}\index{tinyxml2::XMLUtil@{tinyxml2::XMLUtil}}
+
+
+{\ttfamily \#include $<$tinyxml2.\+h$>$}
+
+\doxysubsubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static const char \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classtinyxml2_1_1_x_m_l_util_ac9946290e942fbf226a6520bb6a4988f}{Skip\+White\+Space}} (const char \texorpdfstring{$\ast$}{*}p, int \texorpdfstring{$\ast$}{*}cur\+Line\+Num\+Ptr)
+\item 
+static char \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classtinyxml2_1_1_x_m_l_util_aeac9e3b7ab41cc4551467a4b81de28d7}{Skip\+White\+Space}} (char \texorpdfstring{$\ast$}{*}const p, int \texorpdfstring{$\ast$}{*}cur\+Line\+Num\+Ptr)
+\item 
+static bool \mbox{\hyperlink{classtinyxml2_1_1_x_m_l_util_a357ec3af8fc433d19023a815f45e8e33}{Is\+White\+Space}} (char p)
+\item 
+static bool \mbox{\hyperlink{classtinyxml2_1_1_x_m_l_util_abe106a69ac4d942a4381a4d9dfd0e0bd}{Is\+Name\+Start\+Char}} (unsigned char ch)
+\item 
+static bool \mbox{\hyperlink{classtinyxml2_1_1_x_m_l_util_a04b17341538fa11752f24b4301d19485}{Is\+Name\+Char}} (unsigned char ch)
+\item 
+static bool \mbox{\hyperlink{classtinyxml2_1_1_x_m_l_util_a28c5a73c3d557ae0090191ef31d2f59a}{Is\+Prefix\+Hex}} (const char \texorpdfstring{$\ast$}{*}p)
+\item 
+static bool \mbox{\hyperlink{classtinyxml2_1_1_x_m_l_util_acfcd287cacfd2533e1bc9ea4dfb56602}{String\+Equal}} (const char \texorpdfstring{$\ast$}{*}p, const char \texorpdfstring{$\ast$}{*}q, int n\+Char=INT\+\_\+\+MAX)
+\item 
+static bool \mbox{\hyperlink{classtinyxml2_1_1_x_m_l_util_a9780b5926e30fe6222e10f0e6cf5a04a}{Is\+UTF8\+Continuation}} (const char p)
+\item 
+static const char \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classtinyxml2_1_1_x_m_l_util_ae9bcb2bc3cd6475fdc644c8c17790555}{Read\+BOM}} (const char \texorpdfstring{$\ast$}{*}p, bool \texorpdfstring{$\ast$}{*}has\+BOM)
+\item 
+static const char \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classtinyxml2_1_1_x_m_l_util_a5a96e5144a8d693dc4bcd783d9964648}{Get\+Character\+Ref}} (const char \texorpdfstring{$\ast$}{*}p, char \texorpdfstring{$\ast$}{*}value, int \texorpdfstring{$\ast$}{*}length)
+\item 
+static void \mbox{\hyperlink{classtinyxml2_1_1_x_m_l_util_a31c00d5c5dfb38382de1dfcaf4be3595}{Convert\+UTF32\+To\+UTF8}} (unsigned long input, char \texorpdfstring{$\ast$}{*}output, int \texorpdfstring{$\ast$}{*}length)
+\item 
+static void \mbox{\hyperlink{classtinyxml2_1_1_x_m_l_util_a3cd6c703d49b9d51bdf0f4ff6aa021c7}{To\+Str}} (int v, char \texorpdfstring{$\ast$}{*}buffer, int buffer\+Size)
+\item 
+static void \mbox{\hyperlink{classtinyxml2_1_1_x_m_l_util_ac00c2e52c1c36dab3ff41d86a9bf60f9}{To\+Str}} (unsigned v, char \texorpdfstring{$\ast$}{*}buffer, int buffer\+Size)
+\item 
+static void \mbox{\hyperlink{classtinyxml2_1_1_x_m_l_util_adba0718527ae9e80f663a71ea325cb11}{To\+Str}} (bool v, char \texorpdfstring{$\ast$}{*}buffer, int buffer\+Size)
+\item 
+static void \mbox{\hyperlink{classtinyxml2_1_1_x_m_l_util_a8957ad44fee5fa02ba52d73aad4d0a31}{To\+Str}} (float v, char \texorpdfstring{$\ast$}{*}buffer, int buffer\+Size)
+\item 
+static void \mbox{\hyperlink{classtinyxml2_1_1_x_m_l_util_a1cd141e50980fcddd6bf9af5de4b1db7}{To\+Str}} (double v, char \texorpdfstring{$\ast$}{*}buffer, int buffer\+Size)
+\item 
+static void \mbox{\hyperlink{classtinyxml2_1_1_x_m_l_util_a26a8cb5b833ad587b3af39469c8111de}{To\+Str}} (int64\+\_\+t v, char \texorpdfstring{$\ast$}{*}buffer, int buffer\+Size)
+\item 
+static void \mbox{\hyperlink{classtinyxml2_1_1_x_m_l_util_a51fe7464aeb97c83be0cbc071c72404e}{To\+Str}} (uint64\+\_\+t v, char \texorpdfstring{$\ast$}{*}buffer, int buffer\+Size)
+\item 
+static bool \mbox{\hyperlink{classtinyxml2_1_1_x_m_l_util_ad4df4023d11ee3fca9689c49b9707323}{To\+Int}} (const char \texorpdfstring{$\ast$}{*}str, int \texorpdfstring{$\ast$}{*}value)
+\item 
+static bool \mbox{\hyperlink{classtinyxml2_1_1_x_m_l_util_a210c8637d5eb4ce3d4625294af0efc2f}{To\+Unsigned}} (const char \texorpdfstring{$\ast$}{*}str, unsigned \texorpdfstring{$\ast$}{*}value)
+\item 
+static bool \mbox{\hyperlink{classtinyxml2_1_1_x_m_l_util_ae5b03e0a1ca5d42052a7ac540f7aa12a}{To\+Bool}} (const char \texorpdfstring{$\ast$}{*}str, bool \texorpdfstring{$\ast$}{*}value)
+\item 
+static bool \mbox{\hyperlink{classtinyxml2_1_1_x_m_l_util_a399e71edb5f29d61ea81d91ee0332bb9}{To\+Float}} (const char \texorpdfstring{$\ast$}{*}str, float \texorpdfstring{$\ast$}{*}value)
+\item 
+static bool \mbox{\hyperlink{classtinyxml2_1_1_x_m_l_util_ad8f75ac140fb19c1c6e164a957c4cd53}{To\+Double}} (const char \texorpdfstring{$\ast$}{*}str, double \texorpdfstring{$\ast$}{*}value)
+\item 
+static bool \mbox{\hyperlink{classtinyxml2_1_1_x_m_l_util_afe2ea09257431cd2b4b6d440552e4195}{To\+Int64}} (const char \texorpdfstring{$\ast$}{*}str, int64\+\_\+t \texorpdfstring{$\ast$}{*}value)
+\item 
+static bool \mbox{\hyperlink{classtinyxml2_1_1_x_m_l_util_ae1a49d5df42fbd5dbb36c2261f7e8aaf}{To\+Unsigned64}} (const char \texorpdfstring{$\ast$}{*}str, uint64\+\_\+t \texorpdfstring{$\ast$}{*}value)
+\item 
+static void \mbox{\hyperlink{classtinyxml2_1_1_x_m_l_util_af98a6a80dbeec4679366c1aba4c5b747}{Set\+Bool\+Serialization}} (const char \texorpdfstring{$\ast$}{*}write\+True, const char \texorpdfstring{$\ast$}{*}write\+False)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+Definition at line \mbox{\hyperlink{tinyxml2_8h_source_l00547}{547}} of file \mbox{\hyperlink{tinyxml2_8h_source}{tinyxml2.\+h}}.
+
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classtinyxml2_1_1_x_m_l_util_a31c00d5c5dfb38382de1dfcaf4be3595}\index{tinyxml2::XMLUtil@{tinyxml2::XMLUtil}!ConvertUTF32ToUTF8@{ConvertUTF32ToUTF8}}
+\index{ConvertUTF32ToUTF8@{ConvertUTF32ToUTF8}!tinyxml2::XMLUtil@{tinyxml2::XMLUtil}}
+\doxysubsubsection{\texorpdfstring{ConvertUTF32ToUTF8()}{ConvertUTF32ToUTF8()}}
+{\footnotesize\ttfamily \label{classtinyxml2_1_1_x_m_l_util_a31c00d5c5dfb38382de1dfcaf4be3595} 
+void tinyxml2\+::\+XMLUtil\+::\+Convert\+UTF32\+To\+UTF8 (\begin{DoxyParamCaption}\item[{unsigned long}]{input}{, }\item[{char \texorpdfstring{$\ast$}{*}}]{output}{, }\item[{int \texorpdfstring{$\ast$}{*}}]{length}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Definition at line \mbox{\hyperlink{tinyxml2_8cpp_source_l00417}{417}} of file \mbox{\hyperlink{tinyxml2_8cpp_source}{tinyxml2.\+cpp}}.
+
+\Hypertarget{classtinyxml2_1_1_x_m_l_util_a5a96e5144a8d693dc4bcd783d9964648}\index{tinyxml2::XMLUtil@{tinyxml2::XMLUtil}!GetCharacterRef@{GetCharacterRef}}
+\index{GetCharacterRef@{GetCharacterRef}!tinyxml2::XMLUtil@{tinyxml2::XMLUtil}}
+\doxysubsubsection{\texorpdfstring{GetCharacterRef()}{GetCharacterRef()}}
+{\footnotesize\ttfamily \label{classtinyxml2_1_1_x_m_l_util_a5a96e5144a8d693dc4bcd783d9964648} 
+const char \texorpdfstring{$\ast$}{*} tinyxml2\+::\+XMLUtil\+::\+Get\+Character\+Ref (\begin{DoxyParamCaption}\item[{const char \texorpdfstring{$\ast$}{*}}]{p}{, }\item[{char \texorpdfstring{$\ast$}{*}}]{value}{, }\item[{int \texorpdfstring{$\ast$}{*}}]{length}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Definition at line \mbox{\hyperlink{tinyxml2_8cpp_source_l00470}{470}} of file \mbox{\hyperlink{tinyxml2_8cpp_source}{tinyxml2.\+cpp}}.
+
+\Hypertarget{classtinyxml2_1_1_x_m_l_util_a04b17341538fa11752f24b4301d19485}\index{tinyxml2::XMLUtil@{tinyxml2::XMLUtil}!IsNameChar@{IsNameChar}}
+\index{IsNameChar@{IsNameChar}!tinyxml2::XMLUtil@{tinyxml2::XMLUtil}}
+\doxysubsubsection{\texorpdfstring{IsNameChar()}{IsNameChar()}}
+{\footnotesize\ttfamily \label{classtinyxml2_1_1_x_m_l_util_a04b17341538fa11752f24b4301d19485} 
+static bool tinyxml2\+::\+XMLUtil\+::\+Is\+Name\+Char (\begin{DoxyParamCaption}\item[{unsigned char}]{ch}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
+
+
+Definition at line \mbox{\hyperlink{tinyxml2_8h_source_l00583}{583}} of file \mbox{\hyperlink{tinyxml2_8h_source}{tinyxml2.\+h}}.
+
+\Hypertarget{classtinyxml2_1_1_x_m_l_util_abe106a69ac4d942a4381a4d9dfd0e0bd}\index{tinyxml2::XMLUtil@{tinyxml2::XMLUtil}!IsNameStartChar@{IsNameStartChar}}
+\index{IsNameStartChar@{IsNameStartChar}!tinyxml2::XMLUtil@{tinyxml2::XMLUtil}}
+\doxysubsubsection{\texorpdfstring{IsNameStartChar()}{IsNameStartChar()}}
+{\footnotesize\ttfamily \label{classtinyxml2_1_1_x_m_l_util_abe106a69ac4d942a4381a4d9dfd0e0bd} 
+static bool tinyxml2\+::\+XMLUtil\+::\+Is\+Name\+Start\+Char (\begin{DoxyParamCaption}\item[{unsigned char}]{ch}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
+
+
+Definition at line \mbox{\hyperlink{tinyxml2_8h_source_l00572}{572}} of file \mbox{\hyperlink{tinyxml2_8h_source}{tinyxml2.\+h}}.
+
+\Hypertarget{classtinyxml2_1_1_x_m_l_util_a28c5a73c3d557ae0090191ef31d2f59a}\index{tinyxml2::XMLUtil@{tinyxml2::XMLUtil}!IsPrefixHex@{IsPrefixHex}}
+\index{IsPrefixHex@{IsPrefixHex}!tinyxml2::XMLUtil@{tinyxml2::XMLUtil}}
+\doxysubsubsection{\texorpdfstring{IsPrefixHex()}{IsPrefixHex()}}
+{\footnotesize\ttfamily \label{classtinyxml2_1_1_x_m_l_util_a28c5a73c3d557ae0090191ef31d2f59a} 
+static bool tinyxml2\+::\+XMLUtil\+::\+Is\+Prefix\+Hex (\begin{DoxyParamCaption}\item[{const char \texorpdfstring{$\ast$}{*}}]{p}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
+
+
+Definition at line \mbox{\hyperlink{tinyxml2_8h_source_l00590}{590}} of file \mbox{\hyperlink{tinyxml2_8h_source}{tinyxml2.\+h}}.
+
+\Hypertarget{classtinyxml2_1_1_x_m_l_util_a9780b5926e30fe6222e10f0e6cf5a04a}\index{tinyxml2::XMLUtil@{tinyxml2::XMLUtil}!IsUTF8Continuation@{IsUTF8Continuation}}
+\index{IsUTF8Continuation@{IsUTF8Continuation}!tinyxml2::XMLUtil@{tinyxml2::XMLUtil}}
+\doxysubsubsection{\texorpdfstring{IsUTF8Continuation()}{IsUTF8Continuation()}}
+{\footnotesize\ttfamily \label{classtinyxml2_1_1_x_m_l_util_a9780b5926e30fe6222e10f0e6cf5a04a} 
+static bool tinyxml2\+::\+XMLUtil\+::\+Is\+UTF8\+Continuation (\begin{DoxyParamCaption}\item[{const char}]{p}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
+
+
+Definition at line \mbox{\hyperlink{tinyxml2_8h_source_l00605}{605}} of file \mbox{\hyperlink{tinyxml2_8h_source}{tinyxml2.\+h}}.
+
+\Hypertarget{classtinyxml2_1_1_x_m_l_util_a357ec3af8fc433d19023a815f45e8e33}\index{tinyxml2::XMLUtil@{tinyxml2::XMLUtil}!IsWhiteSpace@{IsWhiteSpace}}
+\index{IsWhiteSpace@{IsWhiteSpace}!tinyxml2::XMLUtil@{tinyxml2::XMLUtil}}
+\doxysubsubsection{\texorpdfstring{IsWhiteSpace()}{IsWhiteSpace()}}
+{\footnotesize\ttfamily \label{classtinyxml2_1_1_x_m_l_util_a357ec3af8fc433d19023a815f45e8e33} 
+static bool tinyxml2\+::\+XMLUtil\+::\+Is\+White\+Space (\begin{DoxyParamCaption}\item[{char}]{p}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
+
+
+Definition at line \mbox{\hyperlink{tinyxml2_8h_source_l00568}{568}} of file \mbox{\hyperlink{tinyxml2_8h_source}{tinyxml2.\+h}}.
+
+\Hypertarget{classtinyxml2_1_1_x_m_l_util_ae9bcb2bc3cd6475fdc644c8c17790555}\index{tinyxml2::XMLUtil@{tinyxml2::XMLUtil}!ReadBOM@{ReadBOM}}
+\index{ReadBOM@{ReadBOM}!tinyxml2::XMLUtil@{tinyxml2::XMLUtil}}
+\doxysubsubsection{\texorpdfstring{ReadBOM()}{ReadBOM()}}
+{\footnotesize\ttfamily \label{classtinyxml2_1_1_x_m_l_util_ae9bcb2bc3cd6475fdc644c8c17790555} 
+const char \texorpdfstring{$\ast$}{*} tinyxml2\+::\+XMLUtil\+::\+Read\+BOM (\begin{DoxyParamCaption}\item[{const char \texorpdfstring{$\ast$}{*}}]{p}{, }\item[{bool \texorpdfstring{$\ast$}{*}}]{has\+BOM}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Definition at line \mbox{\hyperlink{tinyxml2_8cpp_source_l00399}{399}} of file \mbox{\hyperlink{tinyxml2_8cpp_source}{tinyxml2.\+cpp}}.
+
+\Hypertarget{classtinyxml2_1_1_x_m_l_util_af98a6a80dbeec4679366c1aba4c5b747}\index{tinyxml2::XMLUtil@{tinyxml2::XMLUtil}!SetBoolSerialization@{SetBoolSerialization}}
+\index{SetBoolSerialization@{SetBoolSerialization}!tinyxml2::XMLUtil@{tinyxml2::XMLUtil}}
+\doxysubsubsection{\texorpdfstring{SetBoolSerialization()}{SetBoolSerialization()}}
+{\footnotesize\ttfamily \label{classtinyxml2_1_1_x_m_l_util_af98a6a80dbeec4679366c1aba4c5b747} 
+void tinyxml2\+::\+XMLUtil\+::\+Set\+Bool\+Serialization (\begin{DoxyParamCaption}\item[{const char \texorpdfstring{$\ast$}{*}}]{write\+True}{, }\item[{const char \texorpdfstring{$\ast$}{*}}]{write\+False}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Definition at line \mbox{\hyperlink{tinyxml2_8cpp_source_l00389}{389}} of file \mbox{\hyperlink{tinyxml2_8cpp_source}{tinyxml2.\+cpp}}.
+
+\Hypertarget{classtinyxml2_1_1_x_m_l_util_aeac9e3b7ab41cc4551467a4b81de28d7}\index{tinyxml2::XMLUtil@{tinyxml2::XMLUtil}!SkipWhiteSpace@{SkipWhiteSpace}}
+\index{SkipWhiteSpace@{SkipWhiteSpace}!tinyxml2::XMLUtil@{tinyxml2::XMLUtil}}
+\doxysubsubsection{\texorpdfstring{SkipWhiteSpace()}{SkipWhiteSpace()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{classtinyxml2_1_1_x_m_l_util_aeac9e3b7ab41cc4551467a4b81de28d7} 
+static char \texorpdfstring{$\ast$}{*} tinyxml2\+::\+XMLUtil\+::\+Skip\+White\+Space (\begin{DoxyParamCaption}\item[{char \texorpdfstring{$\ast$}{*}const}]{p}{, }\item[{int \texorpdfstring{$\ast$}{*}}]{cur\+Line\+Num\+Ptr}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
+
+
+Definition at line \mbox{\hyperlink{tinyxml2_8h_source_l00562}{562}} of file \mbox{\hyperlink{tinyxml2_8h_source}{tinyxml2.\+h}}.
+
+\Hypertarget{classtinyxml2_1_1_x_m_l_util_ac9946290e942fbf226a6520bb6a4988f}\index{tinyxml2::XMLUtil@{tinyxml2::XMLUtil}!SkipWhiteSpace@{SkipWhiteSpace}}
+\index{SkipWhiteSpace@{SkipWhiteSpace}!tinyxml2::XMLUtil@{tinyxml2::XMLUtil}}
+\doxysubsubsection{\texorpdfstring{SkipWhiteSpace()}{SkipWhiteSpace()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{classtinyxml2_1_1_x_m_l_util_ac9946290e942fbf226a6520bb6a4988f} 
+static const char \texorpdfstring{$\ast$}{*} tinyxml2\+::\+XMLUtil\+::\+Skip\+White\+Space (\begin{DoxyParamCaption}\item[{const char \texorpdfstring{$\ast$}{*}}]{p}{, }\item[{int \texorpdfstring{$\ast$}{*}}]{cur\+Line\+Num\+Ptr}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
+
+
+Definition at line \mbox{\hyperlink{tinyxml2_8h_source_l00550}{550}} of file \mbox{\hyperlink{tinyxml2_8h_source}{tinyxml2.\+h}}.
+
+\Hypertarget{classtinyxml2_1_1_x_m_l_util_acfcd287cacfd2533e1bc9ea4dfb56602}\index{tinyxml2::XMLUtil@{tinyxml2::XMLUtil}!StringEqual@{StringEqual}}
+\index{StringEqual@{StringEqual}!tinyxml2::XMLUtil@{tinyxml2::XMLUtil}}
+\doxysubsubsection{\texorpdfstring{StringEqual()}{StringEqual()}}
+{\footnotesize\ttfamily \label{classtinyxml2_1_1_x_m_l_util_acfcd287cacfd2533e1bc9ea4dfb56602} 
+static bool tinyxml2\+::\+XMLUtil\+::\+String\+Equal (\begin{DoxyParamCaption}\item[{const char \texorpdfstring{$\ast$}{*}}]{p}{, }\item[{const char \texorpdfstring{$\ast$}{*}}]{q}{, }\item[{int}]{n\+Char}{ = {\ttfamily INT\+\_\+MAX}}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}
+
+
+
+Definition at line \mbox{\hyperlink{tinyxml2_8h_source_l00595}{595}} of file \mbox{\hyperlink{tinyxml2_8h_source}{tinyxml2.\+h}}.
+
+\Hypertarget{classtinyxml2_1_1_x_m_l_util_ae5b03e0a1ca5d42052a7ac540f7aa12a}\index{tinyxml2::XMLUtil@{tinyxml2::XMLUtil}!ToBool@{ToBool}}
+\index{ToBool@{ToBool}!tinyxml2::XMLUtil@{tinyxml2::XMLUtil}}
+\doxysubsubsection{\texorpdfstring{ToBool()}{ToBool()}}
+{\footnotesize\ttfamily \label{classtinyxml2_1_1_x_m_l_util_ae5b03e0a1ca5d42052a7ac540f7aa12a} 
+bool tinyxml2\+::\+XMLUtil\+::\+To\+Bool (\begin{DoxyParamCaption}\item[{const char \texorpdfstring{$\ast$}{*}}]{str}{, }\item[{bool \texorpdfstring{$\ast$}{*}}]{value}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Definition at line \mbox{\hyperlink{tinyxml2_8cpp_source_l00628}{628}} of file \mbox{\hyperlink{tinyxml2_8cpp_source}{tinyxml2.\+cpp}}.
+
+\Hypertarget{classtinyxml2_1_1_x_m_l_util_ad8f75ac140fb19c1c6e164a957c4cd53}\index{tinyxml2::XMLUtil@{tinyxml2::XMLUtil}!ToDouble@{ToDouble}}
+\index{ToDouble@{ToDouble}!tinyxml2::XMLUtil@{tinyxml2::XMLUtil}}
+\doxysubsubsection{\texorpdfstring{ToDouble()}{ToDouble()}}
+{\footnotesize\ttfamily \label{classtinyxml2_1_1_x_m_l_util_ad8f75ac140fb19c1c6e164a957c4cd53} 
+bool tinyxml2\+::\+XMLUtil\+::\+To\+Double (\begin{DoxyParamCaption}\item[{const char \texorpdfstring{$\ast$}{*}}]{str}{, }\item[{double \texorpdfstring{$\ast$}{*}}]{value}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Definition at line \mbox{\hyperlink{tinyxml2_8cpp_source_l00663}{663}} of file \mbox{\hyperlink{tinyxml2_8cpp_source}{tinyxml2.\+cpp}}.
+
+\Hypertarget{classtinyxml2_1_1_x_m_l_util_a399e71edb5f29d61ea81d91ee0332bb9}\index{tinyxml2::XMLUtil@{tinyxml2::XMLUtil}!ToFloat@{ToFloat}}
+\index{ToFloat@{ToFloat}!tinyxml2::XMLUtil@{tinyxml2::XMLUtil}}
+\doxysubsubsection{\texorpdfstring{ToFloat()}{ToFloat()}}
+{\footnotesize\ttfamily \label{classtinyxml2_1_1_x_m_l_util_a399e71edb5f29d61ea81d91ee0332bb9} 
+bool tinyxml2\+::\+XMLUtil\+::\+To\+Float (\begin{DoxyParamCaption}\item[{const char \texorpdfstring{$\ast$}{*}}]{str}{, }\item[{float \texorpdfstring{$\ast$}{*}}]{value}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Definition at line \mbox{\hyperlink{tinyxml2_8cpp_source_l00654}{654}} of file \mbox{\hyperlink{tinyxml2_8cpp_source}{tinyxml2.\+cpp}}.
+
+\Hypertarget{classtinyxml2_1_1_x_m_l_util_ad4df4023d11ee3fca9689c49b9707323}\index{tinyxml2::XMLUtil@{tinyxml2::XMLUtil}!ToInt@{ToInt}}
+\index{ToInt@{ToInt}!tinyxml2::XMLUtil@{tinyxml2::XMLUtil}}
+\doxysubsubsection{\texorpdfstring{ToInt()}{ToInt()}}
+{\footnotesize\ttfamily \label{classtinyxml2_1_1_x_m_l_util_ad4df4023d11ee3fca9689c49b9707323} 
+bool tinyxml2\+::\+XMLUtil\+::\+To\+Int (\begin{DoxyParamCaption}\item[{const char \texorpdfstring{$\ast$}{*}}]{str}{, }\item[{int \texorpdfstring{$\ast$}{*}}]{value}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Definition at line \mbox{\hyperlink{tinyxml2_8cpp_source_l00603}{603}} of file \mbox{\hyperlink{tinyxml2_8cpp_source}{tinyxml2.\+cpp}}.
+
+\Hypertarget{classtinyxml2_1_1_x_m_l_util_afe2ea09257431cd2b4b6d440552e4195}\index{tinyxml2::XMLUtil@{tinyxml2::XMLUtil}!ToInt64@{ToInt64}}
+\index{ToInt64@{ToInt64}!tinyxml2::XMLUtil@{tinyxml2::XMLUtil}}
+\doxysubsubsection{\texorpdfstring{ToInt64()}{ToInt64()}}
+{\footnotesize\ttfamily \label{classtinyxml2_1_1_x_m_l_util_afe2ea09257431cd2b4b6d440552e4195} 
+bool tinyxml2\+::\+XMLUtil\+::\+To\+Int64 (\begin{DoxyParamCaption}\item[{const char \texorpdfstring{$\ast$}{*}}]{str}{, }\item[{int64\+\_\+t \texorpdfstring{$\ast$}{*}}]{value}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Definition at line \mbox{\hyperlink{tinyxml2_8cpp_source_l00672}{672}} of file \mbox{\hyperlink{tinyxml2_8cpp_source}{tinyxml2.\+cpp}}.
+
+\Hypertarget{classtinyxml2_1_1_x_m_l_util_adba0718527ae9e80f663a71ea325cb11}\index{tinyxml2::XMLUtil@{tinyxml2::XMLUtil}!ToStr@{ToStr}}
+\index{ToStr@{ToStr}!tinyxml2::XMLUtil@{tinyxml2::XMLUtil}}
+\doxysubsubsection{\texorpdfstring{ToStr()}{ToStr()}\hspace{0.1cm}{\footnotesize\ttfamily [1/7]}}
+{\footnotesize\ttfamily \label{classtinyxml2_1_1_x_m_l_util_adba0718527ae9e80f663a71ea325cb11} 
+void tinyxml2\+::\+XMLUtil\+::\+To\+Str (\begin{DoxyParamCaption}\item[{bool}]{v}{, }\item[{char \texorpdfstring{$\ast$}{*}}]{buffer}{, }\item[{int}]{buffer\+Size}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Definition at line \mbox{\hyperlink{tinyxml2_8cpp_source_l00570}{570}} of file \mbox{\hyperlink{tinyxml2_8cpp_source}{tinyxml2.\+cpp}}.
+
+\Hypertarget{classtinyxml2_1_1_x_m_l_util_a1cd141e50980fcddd6bf9af5de4b1db7}\index{tinyxml2::XMLUtil@{tinyxml2::XMLUtil}!ToStr@{ToStr}}
+\index{ToStr@{ToStr}!tinyxml2::XMLUtil@{tinyxml2::XMLUtil}}
+\doxysubsubsection{\texorpdfstring{ToStr()}{ToStr()}\hspace{0.1cm}{\footnotesize\ttfamily [2/7]}}
+{\footnotesize\ttfamily \label{classtinyxml2_1_1_x_m_l_util_a1cd141e50980fcddd6bf9af5de4b1db7} 
+void tinyxml2\+::\+XMLUtil\+::\+To\+Str (\begin{DoxyParamCaption}\item[{double}]{v}{, }\item[{char \texorpdfstring{$\ast$}{*}}]{buffer}{, }\item[{int}]{buffer\+Size}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Definition at line \mbox{\hyperlink{tinyxml2_8cpp_source_l00585}{585}} of file \mbox{\hyperlink{tinyxml2_8cpp_source}{tinyxml2.\+cpp}}.
+
+\Hypertarget{classtinyxml2_1_1_x_m_l_util_a8957ad44fee5fa02ba52d73aad4d0a31}\index{tinyxml2::XMLUtil@{tinyxml2::XMLUtil}!ToStr@{ToStr}}
+\index{ToStr@{ToStr}!tinyxml2::XMLUtil@{tinyxml2::XMLUtil}}
+\doxysubsubsection{\texorpdfstring{ToStr()}{ToStr()}\hspace{0.1cm}{\footnotesize\ttfamily [3/7]}}
+{\footnotesize\ttfamily \label{classtinyxml2_1_1_x_m_l_util_a8957ad44fee5fa02ba52d73aad4d0a31} 
+void tinyxml2\+::\+XMLUtil\+::\+To\+Str (\begin{DoxyParamCaption}\item[{float}]{v}{, }\item[{char \texorpdfstring{$\ast$}{*}}]{buffer}{, }\item[{int}]{buffer\+Size}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Definition at line \mbox{\hyperlink{tinyxml2_8cpp_source_l00579}{579}} of file \mbox{\hyperlink{tinyxml2_8cpp_source}{tinyxml2.\+cpp}}.
+
+\Hypertarget{classtinyxml2_1_1_x_m_l_util_a3cd6c703d49b9d51bdf0f4ff6aa021c7}\index{tinyxml2::XMLUtil@{tinyxml2::XMLUtil}!ToStr@{ToStr}}
+\index{ToStr@{ToStr}!tinyxml2::XMLUtil@{tinyxml2::XMLUtil}}
+\doxysubsubsection{\texorpdfstring{ToStr()}{ToStr()}\hspace{0.1cm}{\footnotesize\ttfamily [4/7]}}
+{\footnotesize\ttfamily \label{classtinyxml2_1_1_x_m_l_util_a3cd6c703d49b9d51bdf0f4ff6aa021c7} 
+void tinyxml2\+::\+XMLUtil\+::\+To\+Str (\begin{DoxyParamCaption}\item[{int}]{v}{, }\item[{char \texorpdfstring{$\ast$}{*}}]{buffer}{, }\item[{int}]{buffer\+Size}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Definition at line \mbox{\hyperlink{tinyxml2_8cpp_source_l00558}{558}} of file \mbox{\hyperlink{tinyxml2_8cpp_source}{tinyxml2.\+cpp}}.
+
+\Hypertarget{classtinyxml2_1_1_x_m_l_util_a26a8cb5b833ad587b3af39469c8111de}\index{tinyxml2::XMLUtil@{tinyxml2::XMLUtil}!ToStr@{ToStr}}
+\index{ToStr@{ToStr}!tinyxml2::XMLUtil@{tinyxml2::XMLUtil}}
+\doxysubsubsection{\texorpdfstring{ToStr()}{ToStr()}\hspace{0.1cm}{\footnotesize\ttfamily [5/7]}}
+{\footnotesize\ttfamily \label{classtinyxml2_1_1_x_m_l_util_a26a8cb5b833ad587b3af39469c8111de} 
+void tinyxml2\+::\+XMLUtil\+::\+To\+Str (\begin{DoxyParamCaption}\item[{int64\+\_\+t}]{v}{, }\item[{char \texorpdfstring{$\ast$}{*}}]{buffer}{, }\item[{int}]{buffer\+Size}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Definition at line \mbox{\hyperlink{tinyxml2_8cpp_source_l00591}{591}} of file \mbox{\hyperlink{tinyxml2_8cpp_source}{tinyxml2.\+cpp}}.
+
+\Hypertarget{classtinyxml2_1_1_x_m_l_util_a51fe7464aeb97c83be0cbc071c72404e}\index{tinyxml2::XMLUtil@{tinyxml2::XMLUtil}!ToStr@{ToStr}}
+\index{ToStr@{ToStr}!tinyxml2::XMLUtil@{tinyxml2::XMLUtil}}
+\doxysubsubsection{\texorpdfstring{ToStr()}{ToStr()}\hspace{0.1cm}{\footnotesize\ttfamily [6/7]}}
+{\footnotesize\ttfamily \label{classtinyxml2_1_1_x_m_l_util_a51fe7464aeb97c83be0cbc071c72404e} 
+void tinyxml2\+::\+XMLUtil\+::\+To\+Str (\begin{DoxyParamCaption}\item[{uint64\+\_\+t}]{v}{, }\item[{char \texorpdfstring{$\ast$}{*}}]{buffer}{, }\item[{int}]{buffer\+Size}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Definition at line \mbox{\hyperlink{tinyxml2_8cpp_source_l00597}{597}} of file \mbox{\hyperlink{tinyxml2_8cpp_source}{tinyxml2.\+cpp}}.
+
+\Hypertarget{classtinyxml2_1_1_x_m_l_util_ac00c2e52c1c36dab3ff41d86a9bf60f9}\index{tinyxml2::XMLUtil@{tinyxml2::XMLUtil}!ToStr@{ToStr}}
+\index{ToStr@{ToStr}!tinyxml2::XMLUtil@{tinyxml2::XMLUtil}}
+\doxysubsubsection{\texorpdfstring{ToStr()}{ToStr()}\hspace{0.1cm}{\footnotesize\ttfamily [7/7]}}
+{\footnotesize\ttfamily \label{classtinyxml2_1_1_x_m_l_util_ac00c2e52c1c36dab3ff41d86a9bf60f9} 
+void tinyxml2\+::\+XMLUtil\+::\+To\+Str (\begin{DoxyParamCaption}\item[{unsigned}]{v}{, }\item[{char \texorpdfstring{$\ast$}{*}}]{buffer}{, }\item[{int}]{buffer\+Size}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Definition at line \mbox{\hyperlink{tinyxml2_8cpp_source_l00564}{564}} of file \mbox{\hyperlink{tinyxml2_8cpp_source}{tinyxml2.\+cpp}}.
+
+\Hypertarget{classtinyxml2_1_1_x_m_l_util_a210c8637d5eb4ce3d4625294af0efc2f}\index{tinyxml2::XMLUtil@{tinyxml2::XMLUtil}!ToUnsigned@{ToUnsigned}}
+\index{ToUnsigned@{ToUnsigned}!tinyxml2::XMLUtil@{tinyxml2::XMLUtil}}
+\doxysubsubsection{\texorpdfstring{ToUnsigned()}{ToUnsigned()}}
+{\footnotesize\ttfamily \label{classtinyxml2_1_1_x_m_l_util_a210c8637d5eb4ce3d4625294af0efc2f} 
+bool tinyxml2\+::\+XMLUtil\+::\+To\+Unsigned (\begin{DoxyParamCaption}\item[{const char \texorpdfstring{$\ast$}{*}}]{str}{, }\item[{unsigned \texorpdfstring{$\ast$}{*}}]{value}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Definition at line \mbox{\hyperlink{tinyxml2_8cpp_source_l00620}{620}} of file \mbox{\hyperlink{tinyxml2_8cpp_source}{tinyxml2.\+cpp}}.
+
+\Hypertarget{classtinyxml2_1_1_x_m_l_util_ae1a49d5df42fbd5dbb36c2261f7e8aaf}\index{tinyxml2::XMLUtil@{tinyxml2::XMLUtil}!ToUnsigned64@{ToUnsigned64}}
+\index{ToUnsigned64@{ToUnsigned64}!tinyxml2::XMLUtil@{tinyxml2::XMLUtil}}
+\doxysubsubsection{\texorpdfstring{ToUnsigned64()}{ToUnsigned64()}}
+{\footnotesize\ttfamily \label{classtinyxml2_1_1_x_m_l_util_ae1a49d5df42fbd5dbb36c2261f7e8aaf} 
+bool tinyxml2\+::\+XMLUtil\+::\+To\+Unsigned64 (\begin{DoxyParamCaption}\item[{const char \texorpdfstring{$\ast$}{*}}]{str}{, }\item[{uint64\+\_\+t \texorpdfstring{$\ast$}{*}}]{value}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Definition at line \mbox{\hyperlink{tinyxml2_8cpp_source_l00692}{692}} of file \mbox{\hyperlink{tinyxml2_8cpp_source}{tinyxml2.\+cpp}}.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+external/tinyxml2/\mbox{\hyperlink{tinyxml2_8h}{tinyxml2.\+h}}\item 
+external/tinyxml2/\mbox{\hyperlink{tinyxml2_8cpp}{tinyxml2.\+cpp}}\end{DoxyCompactItemize}
