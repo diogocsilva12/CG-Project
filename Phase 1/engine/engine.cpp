@@ -158,7 +158,7 @@ int main(int argc, char** argv) {
     glutInitWindowSize(world.window.width, world.window.height);
     
     // Create the rendering window
-    glutCreateWindow("CG@DI-UM");
+    glutCreateWindow("CG@Fase 1 - G18");
 
     // Register callback functions
     glutDisplayFunc(renderScene);  // For rendering frames
