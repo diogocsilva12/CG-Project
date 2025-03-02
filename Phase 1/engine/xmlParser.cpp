@@ -44,13 +44,13 @@ World parseXMLFile(const char* filename) {
     World world;
     XMLDocument doc;
     
-    // Get the directory of the XML file
+    //Procura o ficheiro XML 
     std::string xmlPath = filename;
     size_t lastSlash = xmlPath.find_last_of("/\\");
     std::string xmlDir = (lastSlash != std::string::npos) ? 
                         xmlPath.substr(0, lastSlash + 1) : "";
     
-    // Load XML file
+    //Carrega o ficheiro XML 
     if (doc.LoadFile(filename) != XML_SUCCESS) {
         std::cerr << "Error loading XML file: " << filename << std::endl;
         return world;
@@ -144,13 +144,10 @@ World parseXMLFile(const char* filename) {
                 Model model;
                 std::string modelFile = modelElement->Attribute("file");
                 
-                // Set path to the model file in the tests directory
                 model.filename = "../tests/" + modelFile;
                 
-                // Debug output to verify model loading
                 std::cout << "Loading model from: " << model.filename << std::endl;
                 
-                // Add the model to the world's model collection
                 world.models.push_back(model);
             }
         }
@@ -158,22 +155,3 @@ World parseXMLFile(const char* filename) {
 
     return world;
 }
-
-/**
- * This XML parser extracts the following data structures:
- * 
- * 1. Window settings:
- *    - Width and height in pixels
- * 
- * 2. Camera parameters:
- *    - Position (x,y,z): The camera's location in 3D space
- *    - LookAt (x,y,z): The point that the camera is facing
- *    - Up vector (x,y,z): The direction considered as "up" for the camera
- *    - Projection settings: Field of view (degrees), near and far clipping planes
- * 
- * 3. Model references:
- *    - Filenames of 3D model files to load and render
- * 
- * This data is stored in a World structure that contains all information
- * needed by the rendering engine.
- */

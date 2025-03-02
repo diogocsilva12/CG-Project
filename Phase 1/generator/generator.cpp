@@ -1,36 +1,10 @@
-/**
- * @file generator.cpp
- * @brief 3D primitive shape generator implementation
- * 
- * This file implements a command-line application for generating 3D primitive shapes
- * (plane, box, cone, sphere) and saving them to .3d files for use in the rendering engine.
- * Each primitive can be customized with different parameters to control its dimensions and complexity.
- */
-
 #include <iostream>
 #include <string>
 #include <unordered_map>
 #include <stdexcept>
 #include "generatorAux.h"
 
-/**
- * @brief Displays usage instructions for the generator program
- * 
- * Outputs a help message showing the available shapes, their required parameters,
- * and example usage to guide users in correctly invoking the program.
- * 
- * @param programName The name of the executable (argv[0])
- */
-void showUsage(const std::string& programName) {
-    std::cout << "Usage: " << programName << " <shape> [parameters...]\n";
-    std::cout << "Shapes and their parameters:\n";
-    std::cout << "  plane <unit> <slices> <plane.3d>\n";
-    std::cout << "  box <unit> <slices> <box.3d>\n";
-    std::cout << "  cone <radius> <height> <slices> <stacks> <cone.3d\n";
-    std::cout << "  sphere <radius> <slices> <stacks> <sphere.3d>\n";
-    std::cout << "Example: " << programName << " plane 10 5 plane.3d\n";
-    std::cout << "NOTE: Creating a 3d file will override the previous one!\n";
-}
+
 
 /**
  * @brief Handles the generation of a plane primitive
@@ -156,37 +130,29 @@ void handleSphere(int argc, char** argv) {
  * @return 0 on successful execution, 1 on error
  */
 int main(int argc, char** argv) {
-    // Create a map to associate primitive names with handler functions
     std::unordered_map<std::string, void (*)(int, char**)> shapeHandlers;
     shapeHandlers["plane"] = handlePlane;
     shapeHandlers["box"] = handleBox;
     shapeHandlers["cone"] = handleCone;
     shapeHandlers["sphere"] = handleSphere;
 
-    // Check if the user requested help
-    if (argc == 2 && (std::string(argv[1]) == "--help" || std::string(argv[1]) == "-h")) {
-        showUsage(argv[0]);
-        return 0;
-    }
-
-    // Check if the user provided at least the shape name
+    //Controle de erros
     if (argc < 2) {
         std::cerr << "Error: No shape specified.\n";
         showUsage(argv[0]);
         return 1;
     }
 
-    // Get the shape name
     std::string shape = argv[1];
 
-    // Check if the shape is valid
+    //Valida um input
     if (shapeHandlers.find(shape) == shapeHandlers.end()) {
         std::cerr << "Error: Invalid shape '" << shape << "'.\n";
         showUsage(argv[0]);
         return 1;
     }
 
-    // Call the appropriate handler function
+    //
     try {
         shapeHandlers[shape](argc, argv);
     } catch (const std::exception& e) {

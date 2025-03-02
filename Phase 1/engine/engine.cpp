@@ -6,10 +6,7 @@
  * defined in XML configuration files, and renders them using OpenGL.
  */
 
-// Suppress deprecation warnings on macOS
 #define GL_SILENCE_DEPRECATION
-
-// Platform-specific OpenGL includes
 #ifdef __APPLE__
 #include <GLUT/glut.h>
 #elif __linux__
@@ -62,26 +59,24 @@ void loadModel(Model& model) {
  * and renders all models in wireframe mode using GL_TRIANGLES.
  */
 void renderScene() {
-    // Clear the color and depth buffers
+    //Limpa a cor e o buffer 
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-    // Reset the modelview matrix
     glLoadIdentity();
     
-    // Set up camera position, look-at point, and up vector
+    //Posiciona a camara na cena
     gluLookAt(world.camera.position.x, world.camera.position.y, world.camera.position.z,
               world.camera.lookAt.x, world.camera.lookAt.y, world.camera.lookAt.z,
               world.camera.up.x, world.camera.up.y, world.camera.up.z);
 
-    // Draw each model listed in the XML
+    //Desenha o modelo do XML 
     for (const Model& model : world.models) {
-        glBegin(GL_TRIANGLES);  // Drawing triangles for 3D models
+        glBegin(GL_TRIANGLES);
         const std::vector<Point>& vertices = model.vertices;
         
-        // Calculate slices from vertex count (for debugging purposes)
+        //Calcula o número de slices para debug
         int slices = sqrt(vertices.size()) - 1;  
 
-        // Process vertices in groups of 3 to form triangles
+        //Desenho dos triângulos
         for (size_t i = 0; i < vertices.size(); i += 3) {
             glVertex3f(vertices[i].x, vertices[i].y, vertices[i].z);
             glVertex3f(vertices[i + 1].x, vertices[i + 1].y, vertices[i + 1].z);
@@ -89,8 +84,6 @@ void renderScene() {
         }
         glEnd();
     }
-
-    // Swap front and back buffers (double buffering)
     glutSwapBuffers();
 }
 
@@ -104,21 +97,15 @@ void renderScene() {
  * @param h New window height in pixels
  */
 void changeSize(int w, int h) {
-    // Prevent division by zero
     if (h == 0) h = 1;
-    
-    // Calculate the new aspect ratio
     float ratio = w * 1.0f / h;
 
-    // Set up the projection matrix
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
     glViewport(0, 0, w, h);
     
-    // Set up perspective projection using parameters from XML
     gluPerspective(world.camera.fov, ratio, world.camera.near, world.camera.far);
     
-    // Return to modelview matrix for rendering
     glMatrixMode(GL_MODELVIEW);
 }
 
@@ -133,51 +120,43 @@ void changeSize(int w, int h) {
  * @return 0 on successful execution, 1 on error
  */
 int main(int argc, char** argv) {
-    // Check command line arguments
+    //Operação controlo erros
     if (argc != 2) {
         std::cout << "Usage: " << argv[0] << " <configs/config.xml>" << std::endl;
         return 1;
     }
 
-    // Parse XML and load world configuration
+    // Faz parsing do ficheiro XML e carrega as configurações da cena
     world = parseXMLFile(argv[1]);
 
-    // Load all model files referenced in the XML
+    //Carrega os modelos do ficheiro XML
     for (Model& model : world.models) {
         loadModel(model);
     }
 
-    // Initialize GLUT
     glutInit(&argc, argv);
     
-    // Set display mode (depth testing, double buffering, RGB color)
     glutInitDisplayMode(GLUT_DEPTH | GLUT_DOUBLE | GLUT_RGBA);
     
-    // Set initial window position and size from XML configuration
     glutInitWindowPosition(100, 100);
     glutInitWindowSize(world.window.width, world.window.height);
     
-    // Create the rendering window
-    glutCreateWindow("CG@DI-UM");
+    glutCreateWindow("CG@Fase 1 - G18");
 
-    // Register callback functions
-    glutDisplayFunc(renderScene);  // For rendering frames
-    glutReshapeFunc(changeSize);   // For window resizing
+    glutDisplayFunc(renderScene); 
+    glutReshapeFunc(changeSize);  
 
-    // Enable depth testing to properly handle occlusion
     glEnable(GL_DEPTH_TEST);
     
-    // Enable back-face culling for improved performance
+   
     glEnable(GL_CULL_FACE);
-    glDepthFunc(GL_LESS);       // Depth comparison function
-    glCullFace(GL_BACK);        // Cull back faces
-    glFrontFace(GL_CCW);        // Define front faces as counter-clockwise
+    glDepthFunc(GL_LESS);       
+    glCullFace(GL_BACK);        
+    glFrontFace(GL_CCW); 
     
-    // Use wireframe rendering mode
     glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
-    // Enter GLUT's main event processing loop
-    // (This will handle rendering and user input until program exit)
+
     glutMainLoop();
 
     return 0;

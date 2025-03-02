@@ -19,21 +19,14 @@ void writeVertices(const std::string& filename, const std::vector<Vertex>& verti
     if (!file.is_open()) {
         throw std::runtime_error("Error: Unable to open file " + filename);
     }
-    // Escreve cada vértice em uma nova linha
+    // Escreve cada vértice numa nova linha
     for (const auto& v : vertices) {
         file << v.x << " " << v.y << " " << v.z << "\n";
     }
     file.close();
 }
 
-/**
- * Generates vertices for a plane in the XZ plane, centered at the origin.
- *
- * @param unit The size of the plane (length of each side).
- * @param slices The number of divisions along each axis.
- * @param filename The name of the file to save the vertices.
- * @throws std::invalid_argument If unit or slices are non-positive.
- */
+
 void plane(float unit, int slices, const std::string& filename) {
     if (unit <= 0 || slices <= 0) {
         throw std::invalid_argument("Error: Unit and slices must be positive.");
@@ -196,16 +189,6 @@ void box(float unit, int slices, const std::string& filename) {
     writeVertices(filename, vertices);
 }
 
-/**
- * Generates vertices for a cone with a circular base and a pointed apex.
- *
- * @param radius The radius of the base of the cone.
- * @param height The height of the cone.
- * @param slices The number of divisions around the circumference.
- * @param stacks The number of divisions along the height.
- * @param filename The name of the file to save the vertices.
- * @throws std::invalid_argument If radius, height, slices, or stacks are non-positive.
- */
 void cone(float radius, float height, int slices, int stacks, const std::string& filename) {
     if (radius <= 0 || height <= 0 || slices <= 0 || stacks <= 0) {
         throw std::invalid_argument("Error: Radius, height, slices, and stacks must be positive.");
@@ -265,31 +248,23 @@ void cone(float radius, float height, int slices, int stacks, const std::string&
     writeVertices(filename, vertices);
 }
 
-/**
- * Generates vertices for a sphere using spherical coordinates.
- *
- * @param radius The radius of the sphere.
- * @param slices The number of divisions around the equator.
- * @param stacks The number of divisions from pole to pole.
- * @param filename The name of the file to save the vertices.
- * @throws std::invalid_argument If radius, slices, or stacks are non-positive.
- */
+
 void sphere(float radius, int slices, int stacks, const std::string& filename) {
     if (radius <= 0 || slices <= 0 || stacks <= 0) {
         throw std::invalid_argument("Error: Radius, slices, and stacks must be positive.");
     }
 
     std::vector<Vertex> vertices;
-    float arch_alfa = static_cast<float>(2 * M_PI) / slices;  // Ângulo entre fatias
+    float arch_alfa = static_cast<float>(2 * M_PI) / slices;  // angulo entre slices
     float stack_size = static_cast<float>(M_PI) / stacks;      // Tamanho de cada stack
 
     for (int i = 0; i < stacks; i++) {
-        float theta1 = static_cast<float>(i) * stack_size;     // Ângulo theta1
-        float theta2 = static_cast<float>(i + 1) * stack_size; // Ângulo theta2
+        float theta1 = static_cast<float>(i) * stack_size;     // angulo theta1
+        float theta2 = static_cast<float>(i + 1) * stack_size; // angulo theta2
 
         for (int j = 0; j < slices; j++) {
-            float phi1 = static_cast<float>(j) * arch_alfa;    // Ângulo phi1
-            float phi2 = static_cast<float>(j + 1) * arch_alfa; // Ângulo phi2
+            float phi1 = static_cast<float>(j) * arch_alfa;    // angulo phi1
+            float phi2 = static_cast<float>(j + 1) * arch_alfa; // angulo phi2
 
             // Vértices para formar dois triângulos
             Vertex v1 = {
