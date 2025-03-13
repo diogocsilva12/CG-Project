@@ -1,0 +1,22 @@
+# Ignorar a pasta "node_modules"
+node_modules/
+
+# Ignorar arquivos de logs
+logs/
+*.log
+
+# Ignorar arquivos temporários do sistema
+.DS_Store
+Thumbs.db
+
+# Ignorar configurações do VS Code e IntelliJ
+.vscode/
+.idea/
+
+"Phase 1"/cmake_install.cmake
+"Phase 1"/CMakeCache.txt
+"Phase 1"/CMakeFiles/
+"Phase 1"/Makefile
+"Phase 1"/external/
+
+
