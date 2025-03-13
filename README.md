@@ -1,9 +1,18 @@
 **CG-Project**
+
 3D Objects - Generating, Rendering and Drawing using OpenGL
-**Phase 1**
 
-**Phase 2**
+<u>**Phase 1**</u>
 
-**Phase 3**
+<u>**Phase 2**</u>
 
-**Phase 4**
+<u>**Phase 3**</u>
+
+<u>**Phase 4**</u>
+
+
+
+
+
+
+
