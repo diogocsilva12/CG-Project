@@ -4,6 +4,14 @@
 #include <stdexcept>
 #include "generatorAux.h"
 
+void showUsage(const char* programName) {
+    std::cout << "Usage: " << programName << " <shape> [parameters...]\n"
+              << "Shapes:\n"
+              << "  plane <unit> <slices>\n"
+              << "  box <unit> <slices>\n"
+              << "  sphere <radius> <slices> <stacks>\n"
+              << "  cone <radius> <height> <slices> <stacks>\n";
+}
 
 
 /**
