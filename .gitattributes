@@ -1,3 +1,4 @@
+*.3d linguist-vendored
 *.sql linguist-detectable
 *.json linguist-vendored
 *.xml linguist-vendored
