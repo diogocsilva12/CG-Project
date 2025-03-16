@@ -1,4 +1,3 @@
-* linguist-language=SQL
 *.sql linguist-detectable
 *.json linguist-vendored
 *.xml linguist-vendored
@@ -6,4 +5,4 @@
 *.png linguist-generated
 *.jpg linguist-generated
 *.md linguist-documentation
-*.3d linguist-documentation
+* linguist-language=C++
