@@ -139,7 +139,6 @@ int main(int argc, char** argv) {
     //Controle de erros
     if (argc < 2) {
         std::cerr << "Error: No shape specified.\n";
-        showUsage(argv[0]);
         return 1;
     }
 
@@ -148,7 +147,6 @@ int main(int argc, char** argv) {
     //Valida um input
     if (shapeHandlers.find(shape) == shapeHandlers.end()) {
         std::cerr << "Error: Invalid shape '" << shape << "'.\n";
-        showUsage(argv[0]);
         return 1;
     }
 
@@ -157,7 +155,6 @@ int main(int argc, char** argv) {
         shapeHandlers[shape](argc, argv);
     } catch (const std::exception& e) {
         std::cerr << e.what() << "\n";
-        showUsage(argv[0]);
         return 1;
     }
 
