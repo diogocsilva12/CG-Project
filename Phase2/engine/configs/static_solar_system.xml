@@ -1,0 +1,221 @@
+<world>
+    <window width="800" height="600" />
+    <camera> 
+        <position x="120" y="70" z="120" />
+        <lookAt x="0" y="0" z="0" />
+        <up x="0" y="1" z="0" />
+        <projection fov="60" near="1" far="1000" />
+    </camera>
+
+    <!-- Solar System -->
+    <group>
+        <!-- Sun (at the center) -->
+        <group>
+            <transform>
+                <scale x="20" y="20" z="20" />
+            </transform>
+            <models>
+                <model file="sphere_1_8_8.3d" /> <!-- Sun -->
+            </models>
+            
+            <!-- Mercury -->
+            <group>
+                <transform>
+                    <rotate angle="30" x="0" y="1" z="0" />
+                    <translate x="30" y="0" z="0" />
+                    <scale x="0.5" y="0.5" z="0.5" />
+                </transform>
+                <models>
+                    <model file="sphere_1_8_8.3d" />
+                </models>
+            </group>
+
+            <!-- Venus -->
+            <group>
+                <transform>
+                    <rotate angle="80" x="0" y="1" z="0" />
+                    <translate x="40" y="0" z="0" />
+                    <scale x="0.8" y="0.8" z="0.8" />
+                </transform>
+                <models>
+                    <model file="sphere_1_8_8.3d" />
+                </models>
+            </group>
+            
+            <!-- Earth with Moon -->
+            <group>
+                <transform>
+                    <rotate angle="120" x="0" y="1" z="0" />
+                    <translate x="50" y="0" z="0" />
+                </transform>
+                <group>
+                    <transform>
+                        <scale x="1" y="1" z="1" />
+                    </transform>
+                    <models>
+                        <model file="sphere_1_8_8.3d" /> <!-- Earth -->
+                    </models>
+                </group>
+                <group>
+                    <transform>
+                        <rotate angle="45" x="0" y="1" z="0" />
+                        <translate x="3" y="0" z="0" />
+                        <scale x="0.2" y="0.2" z="0.2" />
+                    </transform>
+                    <models>
+                        <model file="sphere_1_8_8.3d" /> <!-- Moon -->
+                    </models>
+                </group>
+            </group>
+            
+            <!-- Mars with two moons -->
+            <group>
+                <transform>
+                    <rotate angle="190" x="0" y="1" z="0" />
+                    <translate x="60" y="0" z="0" />
+                    <scale x="0.7" y="0.7" z="0.7" />
+                </transform>
+                <models>
+                    <model file="sphere_1_8_8.3d" /> <!-- Mars -->
+                </models>
+                <group>
+                    <transform>
+                        <rotate angle="45" x="0" y="1" z="0" />
+                        <translate x="2.5" y="0" z="0" />
+                        <scale x="0.2" y="0.2" z="0.2" />
+                    </transform>
+                    <models>
+                        <model file="sphere_1_8_8.3d" /> <!-- Phobos -->
+                    </models>
+                </group>
+                <group>
+                    <transform>
+                        <rotate angle="135" x="0" y="1" z="0" />
+                        <translate x="3.5" y="0" z="0" />
+                        <scale x="0.15" y="0.15" z="0.15" />
+                    </transform>
+                    <models>
+                        <model file="sphere_1_8_8.3d" /> <!-- Deimos -->
+                    </models>
+                </group>
+            </group>
+            
+            <!-- Jupiter with four moons -->
+            <group>
+                <transform>
+                    <rotate angle="240" x="0" y="1" z="0" />
+                    <translate x="75" y="0" z="0" />
+                    <scale x="3" y="3" z="3" />
+                </transform>
+                <models>
+                    <model file="sphere_1_8_8.3d" /> <!-- Jupiter -->
+                </models>
+                
+                <!-- Galilean moons -->
+                <group>
+                    <transform>
+                        <rotate angle="20" x="0" y="1" z="0" />
+                        <translate x="2.5" y="0" z="0" />
+                        <scale x="0.1" y="0.1" z="0.1" />
+                    </transform>
+                    <models>
+                        <model file="sphere_1_8_8.3d" /> <!-- Io -->
+                    </models>
+                </group>
+                <group>
+                    <transform>
+                        <rotate angle="90" x="0" y="1" z="0" />
+                        <translate x="3" y="0" z="0" />
+                        <scale x="0.15" y="0.15" z="0.15" />
+                    </transform>
+                    <models>
+                        <model file="sphere_1_8_8.3d" /> <!-- Europa -->
+                    </models>
+                </group>
+                <group>
+                    <transform>
+                        <rotate angle="180" x="0" y="1" z="0" />
+                        <translate x="3.5" y="0" z="0" />
+                        <scale x="0.25" y="0.25" z="0.25" />
+                    </transform>
+                    <models>
+                        <model file="sphere_1_8_8.3d" /> <!-- Ganymede -->
+                    </models>
+                </group>
+                <group>
+                    <transform>
+                        <rotate angle="270" x="0" y="1" z="0" />
+                        <translate x="4" y="0" z="0" />
+                        <scale x="0.2" y="0.2" z="0.2" />
+                    </transform>
+                    <models>
+                        <model file="sphere_1_8_8.3d" /> <!-- Callisto -->
+                    </models>
+                </group>
+            </group>
+
+            <!-- Saturn with rings and a moon -->
+            <group>
+                <transform>
+                    <rotate angle="300" x="0" y="1" z="0" />
+                    <translate x="90" y="0" z="0" />
+                </transform>
+                <group>
+                    <transform>
+                        <scale x="2.5" y="2.5" z="2.5" />
+                    </transform>
+                    <models>
+                        <model file="sphere_1_8_8.3d" /> <!-- Saturn -->
+                    </models>
+                </group>
+                <!-- Saturn's rings -->
+                <group>
+                    <transform>
+                        <rotate angle="90" x="1" y="0" z="0" />
+                        <scale x="5" y="5" z="0.1" />
+                    </transform>
+                    <models>
+                        <model file="torus_1_0.5_16_8.3d" /> <!-- Use a torus for rings -->
+                    </models>
+                </group>
+                <!-- Titan (Saturn's largest moon) -->
+                <group>
+                    <transform>
+                        <rotate angle="45" x="0" y="1" z="0" />
+                        <translate x="4" y="0" z="0" />
+                        <scale x="0.4" y="0.4" z="0.4" />
+                    </transform>
+                    <models>
+                        <model file="sphere_1_8_8.3d" />
+                    </models>
+                </group>
+            </group>
+            
+            <!-- Uranus -->
+            <group>
+                <transform>
+                    <rotate angle="10" x="0" y="1" z="0" />
+                    <translate x="102" y="0" z="0" />
+                    <scale x="1.8" y="1.8" z="1.8" />
+                    <!-- Uranus rotates on its side -->
+                    <rotate angle="90" x="0" y="0" z="1" />
+                </transform>
+                <models>
+                    <model file="sphere_1_8_8.3d" />
+                </models>
+            </group>
+            
+            <!-- Neptune -->
+            <group>
+                <transform>
+                    <rotate angle="150" x="0" y="1" z="0" />
+                    <translate x="110" y="0" z="0" />
+                    <scale x="1.7" y="1.7" z="1.7" />
+                </transform>
+                <models>
+                    <model file="sphere_1_8_8.3d" />
+                </models>
+            </group>
+        </group>
+    </group>
+</world>
