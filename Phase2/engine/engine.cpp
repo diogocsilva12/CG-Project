@@ -56,24 +56,27 @@ void loadModel(Model& model) {
 void renderGroup(const Group& group) {
     glPushMatrix(); // Save the current transformation matrix
     
-    // Apply transformations in the SAME order as they appear in the XML
-    // OpenGL will apply them in reverse order internally
+    // Apply transformations in the EXACT order they appear in the XML file
     
-    // First apply translation (appears first in XML)
-    glTranslatef(group.transform.translateX, 
-                group.transform.translateY, 
-                group.transform.translateZ);
-    
-    // Then apply rotation (appears second in XML)
-    if (group.transform.rotateAngle != 0.0f) {
-        glRotatef(group.transform.rotateAngle, 
-                  group.transform.rotateX, 
-                  group.transform.rotateY, 
-                  group.transform.rotateZ);
+    // In XML parsing, store the order of transformations
+    for (const auto& transform : group.transformOrder) {
+        if (transform == "translate") {
+            glTranslatef(group.transform.translateX, 
+                        group.transform.translateY, 
+                        group.transform.translateZ);
+        }
+        else if (transform == "rotate") {
+            if (group.transform.rotateAngle != 0.0f) {
+                glRotatef(group.transform.rotateAngle, 
+                          group.transform.rotateX, 
+                          group.transform.rotateY, 
+                          group.transform.rotateZ);
+            }
+        }
+        else if (transform == "scale") {
+            glScalef(group.transform.scaleX, group.transform.scaleY, group.transform.scaleZ);
+        }
     }
-    
-    // Finally apply scale (appears last in XML)
-    glScalef(group.transform.scaleX, group.transform.scaleY, group.transform.scaleZ);
     
     // Render all models in this group
     for (const Model& model : group.models) {

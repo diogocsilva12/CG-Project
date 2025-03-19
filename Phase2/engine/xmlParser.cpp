@@ -18,29 +18,29 @@ void parseGroup(XMLElement* groupElement, Group& group, const std::string& xmlDi
     // Parse transform elements
     XMLElement* transformElement = groupElement->FirstChildElement("transform");
     if (transformElement) {
-        // Parse translate
-        XMLElement* translateElement = transformElement->FirstChildElement("translate");
-        if (translateElement) {
-            group.transform.translateX = translateElement->FloatAttribute("x", 0.0f);
-            group.transform.translateY = translateElement->FloatAttribute("y", 0.0f);
-            group.transform.translateZ = translateElement->FloatAttribute("z", 0.0f);
-        }
-        
-        // Parse rotate
-        XMLElement* rotateElement = transformElement->FirstChildElement("rotate");
-        if (rotateElement) {
-            group.transform.rotateAngle = rotateElement->FloatAttribute("angle", 0.0f);
-            group.transform.rotateX = rotateElement->FloatAttribute("x", 0.0f);
-            group.transform.rotateY = rotateElement->FloatAttribute("y", 0.0f);
-            group.transform.rotateZ = rotateElement->FloatAttribute("z", 0.0f);
-        }
-        
-        // Parse scale
-        XMLElement* scaleElement = transformElement->FirstChildElement("scale");
-        if (scaleElement) {
-            group.transform.scaleX = scaleElement->FloatAttribute("x", 1.0f);
-            group.transform.scaleY = scaleElement->FloatAttribute("y", 1.0f);
-            group.transform.scaleZ = scaleElement->FloatAttribute("z", 1.0f);
+        // Process all child elements in order
+        for (XMLElement* elem = transformElement->FirstChildElement(); elem; elem = elem->NextSiblingElement()) {
+            std::string elemName = elem->Name();
+            
+            if (elemName == "translate") {
+                group.transform.translateX = elem->FloatAttribute("x", 0.0f);
+                group.transform.translateY = elem->FloatAttribute("y", 0.0f);
+                group.transform.translateZ = elem->FloatAttribute("z", 0.0f);
+                group.transformOrder.push_back("translate");
+            }
+            else if (elemName == "rotate") {
+                group.transform.rotateAngle = elem->FloatAttribute("angle", 0.0f);
+                group.transform.rotateX = elem->FloatAttribute("x", 0.0f);
+                group.transform.rotateY = elem->FloatAttribute("y", 0.0f);
+                group.transform.rotateZ = elem->FloatAttribute("z", 0.0f);
+                group.transformOrder.push_back("rotate");
+            }
+            else if (elemName == "scale") {
+                group.transform.scaleX = elem->FloatAttribute("x", 1.0f);
+                group.transform.scaleY = elem->FloatAttribute("y", 1.0f);
+                group.transform.scaleZ = elem->FloatAttribute("z", 1.0f);
+                group.transformOrder.push_back("scale");
+            }
         }
     }
     

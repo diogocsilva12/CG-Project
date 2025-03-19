@@ -49,6 +49,7 @@ struct Group {
     std::vector<Model> models;
     std::vector<Group> childGroups;
     Transform transform;
+    std::vector<std::string> transformOrder; // Store the order of transformations
 };
 
 struct World {
