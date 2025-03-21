@@ -8,8 +8,11 @@
 CMakeLists.txt linguist-vendored
 *.cmake linguist-vendored
 Makefile linguist-vendored
+*.mk linguist-vendored
 *.md linguist-documentation
 *.cpp linguist-detectable
 *.h linguist-detectable
 *.hpp linguist-detectable
 *.c linguist-detectable
+*.tex linguist-vendored
+*.bib linguist-vendored
