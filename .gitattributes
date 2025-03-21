@@ -6,4 +6,7 @@
 *.png linguist-generated
 *.jpg linguist-generated
 *.md linguist-documentation
-* linguist-language=C++
+*.cpp linguist-detectable
+*.h linguist-detectable
+*.hpp linguist-detectable
+*.c linguist-detectable
