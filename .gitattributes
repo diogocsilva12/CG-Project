@@ -5,6 +5,9 @@
 *.pdf linguist-generated
 *.png linguist-generated
 *.jpg linguist-generated
+CMakeLists.txt linguist-vendored
+*.cmake linguist-vendored
+Makefile linguist-vendored
 *.md linguist-documentation
 *.cpp linguist-detectable
 *.h linguist-detectable
