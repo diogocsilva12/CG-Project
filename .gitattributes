@@ -1,10 +1,8 @@
-# Mark C++ files as detectable (primary language)
 *.cpp linguist-detectable=true
 *.h linguist-detectable=true
 *.hpp linguist-detectable=true
 *.c linguist-detectable=true
 
-# Mark build system files as vendored (not counted in language statistics)
 Makefile linguist-vendored=true
 *.mk linguist-vendored=true
 *.cmake linguist-vendored=true
@@ -13,7 +11,6 @@ CMakeLists.txt linguist-vendored=true
 *.mak linguist-vendored=true
 *.am linguist-vendored=true
 
-# Other files to ignore or mark as vendored
 *.3d linguist-vendored
 *.json linguist-vendored
 *.xml linguist-vendored
