@@ -9,6 +9,7 @@ CMakeLists.txt linguist-vendored
 *.cmake linguist-vendored
 Makefile linguist-vendored
 *.mk linguist-vendored
+*.make linguist-vendored
 *.md linguist-documentation
 *.cpp linguist-detectable
 *.h linguist-detectable
@@ -16,3 +17,6 @@ Makefile linguist-vendored
 *.c linguist-detectable
 *.tex linguist-vendored
 *.bib linguist-vendored
+Makefile linguist-vendored
+*.mk linguist-vendored
+*.make linguist-vendored
