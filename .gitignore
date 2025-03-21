@@ -25,4 +25,12 @@ Thumbs.db
 "Phase 2"/Makefile
 "Phase 2"/external/
 
+Makefile
+*/Makefile
+**/Makefile
+*.make
+cmake_install.cmake
+CMakeCache.txt
+CMakeFiles/
+external/
 
