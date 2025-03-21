@@ -22,7 +22,24 @@
 #include <fstream>
 #include <iostream>
 #include <cmath>
- 
+#include <vector>
+
+// Add these globals to track camera state and movement
+float cameraSpeed = 0.5f;      // Movement speed
+float rotationSpeed = 2.0f;    // Rotation speed in degrees
+bool keys[256] = {false};      // Track which keys are pressed
+
+// Camera orbit variables
+float camRadius = 0.0f;        // Will be computed based on initial camera position
+float camAlpha = 0.0f;         // Horizontal angle
+float camBeta = 0.0f;          // Vertical angle
+
+// Add these globals for mouse control
+int mouseX = 0, mouseY = 0;         // Last mouse position
+bool mousePressed = false;          // Is mouse button pressed?
+bool rightMousePressed = false;     // Is right mouse button pressed?
+float mouseSensitivity = 0.2f;      // Mouse rotation sensitivity
+
 /**
  * @brief Global world state containing all scene information
  * 
@@ -100,8 +117,293 @@ void renderGroup(const Group& group) {
     glPopMatrix(); // Restore the transformation matrix
 }
 
-// Update your renderScene function to use the new rendering approach
+// Update camera position based on orbit angles
+void updateOrbit() {
+    // Convert angles from degrees to radians
+    float alphaRad = camAlpha * M_PI / 180.0f;
+    float betaRad = camBeta * M_PI / 180.0f;
+    
+    // Calculate new camera position in spherical coordinates
+    world.camera.position.x = world.camera.lookAt.x + camRadius * cos(betaRad) * cos(alphaRad);
+    world.camera.position.y = world.camera.lookAt.y + camRadius * sin(betaRad);
+    world.camera.position.z = world.camera.lookAt.z + camRadius * cos(betaRad) * sin(alphaRad);
+}
+
+// Initialize camera angles based on the starting position
+void initCameraAngles() {
+    // Calculate the radius (distance from lookAt point)
+    float dx = world.camera.position.x - world.camera.lookAt.x;
+    float dy = world.camera.position.y - world.camera.lookAt.y;
+    float dz = world.camera.position.z - world.camera.lookAt.z;
+    camRadius = sqrt(dx*dx + dy*dy + dz*dz);
+    
+    // Calculate the initial angles
+    camBeta = asin((world.camera.position.y - world.camera.lookAt.y) / camRadius) * 180.0f / M_PI;
+    camAlpha = atan2(world.camera.position.z - world.camera.lookAt.z, 
+                     world.camera.position.x - world.camera.lookAt.x) * 180.0f / M_PI;
+}
+
+// This updates camera position based on keys and orbit angles
+void updateCamera() {
+    // Get direction vector from camera to look-at point
+    float dirX = world.camera.lookAt.x - world.camera.position.x;
+    float dirY = world.camera.lookAt.y - world.camera.position.y;
+    float dirZ = world.camera.lookAt.z - world.camera.position.z;
+    
+    // Normalize the direction vector
+    float length = sqrt(dirX*dirX + dirY*dirY + dirZ*dirZ);
+    dirX /= length;
+    dirY /= length;
+    dirZ /= length;
+    
+    // Calculate right vector (cross product of direction and up)
+    float rightX = dirZ * world.camera.up.y - dirY * world.camera.up.z;
+    float rightY = dirX * world.camera.up.z - dirZ * world.camera.up.x;
+    float rightZ = dirY * world.camera.up.x - dirX * world.camera.up.y;
+    
+    // Normalize right vector
+    length = sqrt(rightX*rightX + rightY*rightY + rightZ*rightZ);
+    rightX /= length;
+    rightY /= length;
+    rightZ /= length;
+    
+    // Handle key presses for movement
+    if (keys['w'] || keys['W']) {  // Move forward
+        world.camera.position.x += dirX * cameraSpeed;
+        world.camera.position.y += dirY * cameraSpeed;
+        world.camera.position.z += dirZ * cameraSpeed;
+        
+        world.camera.lookAt.x += dirX * cameraSpeed;
+        world.camera.lookAt.y += dirY * cameraSpeed;
+        world.camera.lookAt.z += dirZ * cameraSpeed;
+    }
+    
+    if (keys['s'] || keys['S']) {  // Move backward
+        world.camera.position.x -= dirX * cameraSpeed;
+        world.camera.position.y -= dirY * cameraSpeed;
+        world.camera.position.z -= dirZ * cameraSpeed;
+        
+        world.camera.lookAt.x -= dirX * cameraSpeed;
+        world.camera.lookAt.y -= dirY * cameraSpeed;
+        world.camera.lookAt.z -= dirZ * cameraSpeed;
+    }
+    
+    if (keys['a'] || keys['A']) {  // Strafe left
+        world.camera.position.x -= rightX * cameraSpeed;
+        world.camera.position.y -= rightY * cameraSpeed;
+        world.camera.position.z -= rightZ * cameraSpeed;
+        
+        world.camera.lookAt.x -= rightX * cameraSpeed;
+        world.camera.lookAt.y -= rightY * cameraSpeed;
+        world.camera.lookAt.z -= rightZ * cameraSpeed;
+    }
+    
+    if (keys['d'] || keys['D']) {  // Strafe right
+        world.camera.position.x += rightX * cameraSpeed;
+        world.camera.position.y += rightY * cameraSpeed;
+        world.camera.position.z += rightZ * cameraSpeed;
+        
+        world.camera.lookAt.x += rightX * cameraSpeed;
+        world.camera.lookAt.y += rightY * cameraSpeed;
+        world.camera.lookAt.z += rightZ * cameraSpeed;
+    }
+    
+    if (keys['q'] || keys['Q']) {  // Move up
+        world.camera.position.x += world.camera.up.x * cameraSpeed;
+        world.camera.position.y += world.camera.up.y * cameraSpeed;
+        world.camera.position.z += world.camera.up.z * cameraSpeed;
+        
+        world.camera.lookAt.x += world.camera.up.x * cameraSpeed;
+        world.camera.lookAt.y += world.camera.up.y * cameraSpeed;
+        world.camera.lookAt.z += world.camera.up.z * cameraSpeed;
+    }
+    
+    if (keys['e'] || keys['E']) {  // Move down
+        world.camera.position.x -= world.camera.up.x * cameraSpeed;
+        world.camera.position.y -= world.camera.up.y * cameraSpeed;
+        world.camera.position.z -= world.camera.up.z * cameraSpeed;
+        
+        world.camera.lookAt.x -= world.camera.up.x * cameraSpeed;
+        world.camera.lookAt.y -= world.camera.up.y * cameraSpeed;
+        world.camera.lookAt.z -= world.camera.up.z * cameraSpeed;
+    }
+    
+    // Zoom in/out - adjusting orbit radius
+    if (keys['+'] || keys['=']) {  // Zoom in
+        camRadius *= 0.95;  // Reduce radius by 5%
+        // Recalculate camera position
+        updateOrbit();
+    }
+    
+    if (keys['-'] || keys['_']) {  // Zoom out
+        camRadius *= 1.05;  // Increase radius by 5%
+        // Recalculate camera position 
+        updateOrbit();
+    }
+    
+    // Handle camera rotation keys
+    if (keys['j'] || keys['J']) {  // Rotate left around Y-axis
+        camAlpha -= rotationSpeed;
+        updateOrbit();
+    }
+    
+    if (keys['l'] || keys['L']) {  // Rotate right around Y-axis
+        camAlpha += rotationSpeed;
+        updateOrbit();
+    }
+    
+    if (keys['i'] || keys['I']) {  // Rotate up
+        camBeta += rotationSpeed;
+        // Limit vertical rotation to -89 and 89 degrees
+        if (camBeta > 89.0f) camBeta = 89.0f;
+        updateOrbit();
+    }
+    
+    if (keys['k'] || keys['K']) {  // Rotate down
+        camBeta -= rotationSpeed;
+        // Limit vertical rotation to -89 and 89 degrees
+        if (camBeta < -89.0f) camBeta = -89.0f;
+        updateOrbit();
+    }
+    
+    // Reset camera position with R key
+    if (keys['r'] || keys['R']) {
+        // Reset to default position
+        world.camera.position.x = 20;
+        world.camera.position.y = 25;
+        world.camera.position.z = 20;
+        world.camera.lookAt.x = 0;
+        world.camera.lookAt.y = 0;
+        world.camera.lookAt.z = 0;
+        
+        // Recalculate orbit parameters
+        initCameraAngles();
+    }
+    
+    // Toggle wireframe mode with F key
+    static bool wireframeMode = true;  // Start in wireframe mode
+    static bool togglePressed = false;
+    if (keys['f'] || keys['F']) {
+        if (!togglePressed) {
+            wireframeMode = !wireframeMode;
+            if (wireframeMode) {
+                glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+            } else {
+                glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+            }
+            togglePressed = true;
+        }
+    } else {
+        togglePressed = false;
+    }
+}
+
+// Mouse button handler
+void mouseButton(int button, int state, int x, int y) {
+    if (button == GLUT_LEFT_BUTTON) {
+        if (state == GLUT_DOWN) {
+            mousePressed = true;
+            mouseX = x;
+            mouseY = y;
+        }
+        else if (state == GLUT_UP) {
+            mousePressed = false;
+        }
+    }
+    else if (button == GLUT_RIGHT_BUTTON) {
+        if (state == GLUT_DOWN) {
+            rightMousePressed = true;
+            mouseX = x;
+            mouseY = y;
+        }
+        else if (state == GLUT_UP) {
+            rightMousePressed = false;
+        }
+    }
+}
+
+// Mouse motion handler
+void mouseMotion(int x, int y) {
+    if (mousePressed) {
+        // Calculate change in mouse position
+        int deltaX = x - mouseX;
+        int deltaY = y - mouseY;
+        
+        // Update camera angles based on mouse movement
+        camAlpha += deltaX * mouseSensitivity;
+        camBeta += deltaY * mouseSensitivity;
+        
+        // Limit vertical angle to prevent camera flipping
+        if (camBeta > 89.0f) camBeta = 89.0f;
+        if (camBeta < -89.0f) camBeta = -89.0f;
+        
+        // Update camera position
+        updateOrbit();
+    }
+    else if (rightMousePressed) {
+        // Calculate change in mouse position for zoom
+        int deltaY = y - mouseY;
+        
+        // Update camera radius (zoom) based on vertical mouse movement
+        camRadius += deltaY * mouseSensitivity * 0.5f;
+        
+        // Prevent zooming too close or too far
+        if (camRadius < 5.0f) camRadius = 5.0f;
+        if (camRadius > 500.0f) camRadius = 500.0f;
+        
+        // Update camera position
+        updateOrbit();
+    }
+    
+    // Save the current mouse position
+    mouseX = x;
+    mouseY = y;
+    
+    glutPostRedisplay();
+}
+
+// Mouse wheel handler (if supported by your GLUT implementation)
+void mouseWheel(int button, int dir, int x, int y) {
+    // Zoom in/out with mouse wheel
+    if (dir > 0) {
+        // Zoom in
+        camRadius *= 0.9f;
+    } else {
+        // Zoom out
+        camRadius *= 1.1f;
+    }
+    
+    // Prevent zooming too close or too far
+    if (camRadius < 5.0f) camRadius = 5.0f;
+    if (camRadius > 500.0f) camRadius = 500.0f;
+    
+    // Update camera position
+    updateOrbit();
+    
+    glutPostRedisplay();
+}
+
+// Add key press handler
+void keyPressed(unsigned char key, int x, int y) {
+    keys[key] = true;
+    
+    // Additional special keys
+    if (key == 27)  // ESC key - quit
+        exit(0);
+        
+    glutPostRedisplay();
+}
+
+// Add key release handler
+void keyReleased(unsigned char key, int x, int y) {
+    keys[key] = false;
+}
+
+// Update renderScene to call updateCamera
 void renderScene() {
+    // Update camera based on keys
+    updateCamera();
+    
     // Clear the screen and set up camera as before
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glLoadIdentity();
@@ -152,6 +454,11 @@ void changeSize(int w, int h) {
     glMatrixMode(GL_MODELVIEW);
 }
 
+// Add idle function to handle continuous movement
+void idleFunction() {
+    glutPostRedisplay();  // Request a redraw
+}
+
 /**
  * @brief Main function - program entry point
  * 
@@ -171,6 +478,9 @@ int main(int argc, char** argv) {
 
     // Faz parsing do ficheiro XML e carrega as configurações da cena
     world = parseXMLFile(argv[1]);
+    
+    // Initialize camera orbit parameters
+    initCameraAngles();
 
     // Load all models
     loadModels(world.rootGroup);
@@ -182,21 +492,36 @@ int main(int argc, char** argv) {
     glutInitWindowPosition(100, 100);
     glutInitWindowSize(world.window.width, world.window.height);
     
-    glutCreateWindow("CG@Fase 1 - G18");
+    glutCreateWindow("CG@Fase 2 - G18");
 
-    glutDisplayFunc(renderScene); 
-    glutReshapeFunc(changeSize);  
-
+    glutDisplayFunc(renderScene);
+    glutReshapeFunc(changeSize);
+    
+    // Keyboard controls
+    glutKeyboardFunc(keyPressed);
+    glutKeyboardUpFunc(keyReleased);
+    
+    // Mouse controls
+    glutMouseFunc(mouseButton);
+    glutMotionFunc(mouseMotion);
+    
+    // Mouse wheel (if supported by your GLUT implementation)
+    // If this doesn't work on macOS, you can comment it out
+    #ifdef GLUT_MOUSEWHEEL
+    glutMouseWheelFunc(mouseWheel);
+    #endif
+    
+    glutIdleFunc(idleFunction);
+    
+    // OpenGL setup
     glEnable(GL_DEPTH_TEST);
-    
-   
     glEnable(GL_CULL_FACE);
-    glDepthFunc(GL_LESS);       
-    glCullFace(GL_BACK);        
-    glFrontFace(GL_CCW); 
+    glDepthFunc(GL_LESS);
+    glCullFace(GL_BACK);
+    glFrontFace(GL_CCW);
     
+    // Start in wireframe mode
     glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-
 
     glutMainLoop();
 
