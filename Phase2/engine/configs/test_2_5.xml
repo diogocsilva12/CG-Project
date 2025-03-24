@@ -1,0 +1,132 @@
+<world>
+    <window width="800" height="600" />
+    <camera>
+        <position x="15" y="15" z="15" />
+        <lookAt x="0" y="0" z="0" />
+        <up x="0" y="1" z="0" />
+        <projection fov="60" near="1" far="1000" />
+    </camera>
+
+    <group>
+        <!-- Basic torus at center -->
+        <group>
+            <transform>
+                <!-- No transformation - default position -->
+            </transform>
+            <models>
+                <model file="torus_1_0.5_16_8.3d" />
+            </models>
+        </group>
+
+        <!-- Scaled torus -->
+        <group>
+            <transform>
+                <translate x="5" y="0" z="0" />
+                <scale x="2" y="2" z="2" />
+            </transform>
+            <models>
+                <model file="torus_1_0.5_16_8.3d" />
+            </models>
+        </group>
+
+        <!-- Rotated torus (around X axis) -->
+        <group>
+            <transform>
+                <translate x="-5" y="0" z="0" />
+                <rotate angle="90" x="1" y="0" z="0" />
+            </transform>
+            <models>
+                <model file="torus_1_0.5_16_8.3d" />
+            </models>
+        </group>
+
+        <!-- Scaled non-uniformly (flattened) -->
+        <group>
+            <transform>
+                <translate x="0" y="5" z="0" />
+                <scale x="2" y="0.5" z="2" />
+            </transform>
+            <models>
+                <model file="torus_1_0.5_16_8.3d" />
+            </models>
+        </group>
+
+        <!-- Rotated 45 degrees around two axes -->
+        <group>
+            <transform>
+                <translate x="0" y="-5" z="0" />
+                <rotate angle="45" x="1" y="0" z="1" />
+            </transform>
+            <models>
+                <model file="torus_1_0.5_16_8.3d" />
+            </models>
+        </group>
+
+        <!-- Torus with different thickness ratio -->
+        <group>
+            <transform>
+                <translate x="0" y="0" z="5" />
+                <!-- This doesn't actually change the thickness ratio (that's built into the model),
+                     but demonstrates how a different torus model would be positioned -->
+            </transform>
+            <models>
+                <model file="torus_1_0.5_16_8.3d" />
+            </models>
+        </group>
+
+        <!-- Torus with combined transformations -->
+        <group>
+            <transform>
+                <translate x="0" y="0" z="-5" />
+                <rotate angle="30" x="0" y="1" z="0" />
+                <scale x="1.5" y="1" z="1.5" />
+            </transform>
+            <models>
+                <model file="torus_1_0.5_16_8.3d" />
+            </models>
+        </group>
+
+        <!-- Nested tori (Saturn-like) -->
+        <group>
+            <transform>
+                <translate x="10" y="0" z="0" />
+            </transform>
+            <models>
+                <model file="sphere_1_8_8.3d" /> <!-- Center sphere -->
+            </models>
+            
+            <!-- Inner ring -->
+            <group>
+                <transform>
+                    <rotate angle="90" x="1" y="0" z="0" />
+                    <scale x="1.2" y="1.2" z="0.1" />
+                </transform>
+                <models>
+                    <model file="torus_1_0.5_16_8.3d" />
+                </models>
+            </group>
+            
+            <!-- Middle ring -->
+            <group>
+                <transform>
+                    <rotate angle="90" x="1" y="0" z="0" />
+                    <scale x="1.5" y="1.5" z="0.1" />
+                </transform>
+                <models>
+                    <model file="torus_1_0.5_16_8.3d" />
+                </models>
+            </group>
+            
+            <!-- Outer ring -->
+            <group>
+                <transform>
+                    <rotate angle="90" x="1" y="0" z="0" />
+                    <scale x="1.8" y="1.8" z="0.1" />
+                </transform>
+                <models>
+                    <model file="torus_1_0.5_16_8.3d" />
+                </models>
+            </group>
+        </group>
+    </group>
+</world>
