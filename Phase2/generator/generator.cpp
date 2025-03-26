@@ -149,33 +149,7 @@ void handleTorus(int argc, char** argv) {
     std::cout << "Torus generated successfully! Saved to " << filename << "\n";
 }
 
-/**
- * @brief Handles the generation of a circle primitive
- * 
- * Creates a circle centered at the origin with specified radius and complexity.
- * The circle's complexity is controlled by segments (number of segments around the circle).
- * 
- * @param argc The total number of command line arguments
- * @param argv The array of command line arguments
- *        argv[2]: radius - The radius of the circle
- *        argv[3]: segments - The number of segments around the circle
- *        argv[4]: output filename (ignored; standardized name is used)
- * @throws std::invalid_argument If the required parameters are missing or invalid
- */
-void handleCircle(int argc, char** argv) {
-    if (argc != 5) {
-        throw std::invalid_argument("Error: Circle requires 3 arguments: <radius> <segments> <output_file>");
-    }
-    
-    float radius = std::stof(argv[2]);
-    int segments = std::stoi(argv[3]);
-    
-    // Create standardized filename
-    std::string filename = "../tests/circle_" + std::string(argv[2]) + "_" + argv[3] + ".3d";
-    
-    circle(radius, segments, filename);
-    std::cout << "Circle generated successfully! Saved to " << filename << "\n";
-}
+
 
 /**
  * @brief Main function - program entry point
@@ -197,7 +171,6 @@ int main(int argc, char** argv) {
     shapeHandlers["cone"] = handleCone;
     shapeHandlers["sphere"] = handleSphere;
     shapeHandlers["torus"] = handleTorus;
-    shapeHandlers["circle"] = handleCircle;  // Add this line
 
     //Controle de erros
     if (argc < 2) {
