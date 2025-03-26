@@ -445,7 +445,7 @@ void torus(float outerRadius, float innerRadius, int sides, int rings, const std
  */
 /**
  * Generates a filled circle using matrix transformations
- */
+ 
 void circle(float radius, int segments, const std::string& filename) {
     if (radius <= 0 || segments < 3) {
         throw std::invalid_argument("Error: Radius must be positive and segments must be at least 3.");
@@ -482,3 +482,4 @@ void circle(float radius, int segments, const std::string& filename) {
 
     writeVertices(filename, vertices);
 }
+    */
