@@ -47,3 +47,14 @@ CMakeCache.txt
 CMakeFiles/
 external/
 
+# Ignorar qualquer pasta CMakeFiles em qualquer diretório
+**/CMakeFiles/
+**/CMakeFiles/**
+
+# Ignorar qualquer caminho que contenha .cmake/
+**/.cmake/
+**/.cmake/**
+
+# Ignorar todos os arquivos .cmake no projeto
+**/*.cmake
+
