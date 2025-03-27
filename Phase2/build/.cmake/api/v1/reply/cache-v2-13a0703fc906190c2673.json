@@ -815,7 +815,7 @@
 				}
 			],
 			"type" : "STRING",
-			"value" : "15.0"
+			"value" : ""
 		},
 		{
 			"name" : "CMAKE_OSX_SYSROOT",
@@ -827,7 +827,7 @@
 				}
 			],
 			"type" : "PATH",
-			"value" : "/Library/Developer/CommandLineTools/SDKs/MacOSX15.1.sdk"
+			"value" : "/Library/Developer/CommandLineTools/SDKs/MacOSX15.2.sdk"
 		},
 		{
 			"name" : "CMAKE_PLATFORM_INFO_INITIALIZED",
@@ -1183,7 +1183,7 @@
 				}
 			],
 			"type" : "INTERNAL",
-			"value" : "[/Library/Developer/CommandLineTools/SDKs/MacOSX15.1.sdk/System/Library/Frameworks/GLUT.framework][/Library/Developer/CommandLineTools/SDKs/MacOSX15.1.sdk/System/Library/Frameworks/GLUT.framework/Headers][v()]"
+			"value" : "[/Library/Developer/CommandLineTools/SDKs/MacOSX15.2.sdk/System/Library/Frameworks/GLUT.framework][/Library/Developer/CommandLineTools/SDKs/MacOSX15.2.sdk/System/Library/Frameworks/GLUT.framework/Headers][v()]"
 		},
 		{
 			"name" : "FIND_PACKAGE_MESSAGE_DETAILS_OpenGL",
@@ -1195,7 +1195,7 @@
 				}
 			],
 			"type" : "INTERNAL",
-			"value" : "[/Library/Developer/CommandLineTools/SDKs/MacOSX15.1.sdk/System/Library/Frameworks/OpenGL.framework][/Library/Developer/CommandLineTools/SDKs/MacOSX15.1.sdk/System/Library/Frameworks/OpenGL.framework][c ][v()]"
+			"value" : "[/Library/Developer/CommandLineTools/SDKs/MacOSX15.2.sdk/System/Library/Frameworks/OpenGL.framework][/Library/Developer/CommandLineTools/SDKs/MacOSX15.2.sdk/System/Library/Frameworks/OpenGL.framework][c ][v()]"
 		},
 		{
 			"name" : "GLUT_INCLUDE_DIR",
@@ -1211,7 +1211,7 @@
 				}
 			],
 			"type" : "PATH",
-			"value" : "/Library/Developer/CommandLineTools/SDKs/MacOSX15.1.sdk/System/Library/Frameworks/GLUT.framework/Headers"
+			"value" : "/Library/Developer/CommandLineTools/SDKs/MacOSX15.2.sdk/System/Library/Frameworks/GLUT.framework/Headers"
 		},
 		{
 			"name" : "GLUT_cocoa_LIBRARY",
@@ -1227,7 +1227,7 @@
 				}
 			],
 			"type" : "FILEPATH",
-			"value" : "/Library/Developer/CommandLineTools/SDKs/MacOSX15.1.sdk/System/Library/Frameworks/Cocoa.framework"
+			"value" : "/Library/Developer/CommandLineTools/SDKs/MacOSX15.2.sdk/System/Library/Frameworks/Cocoa.framework"
 		},
 		{
 			"name" : "GLUT_glut_LIBRARY",
@@ -1243,7 +1243,7 @@
 				}
 			],
 			"type" : "FILEPATH",
-			"value" : "/Library/Developer/CommandLineTools/SDKs/MacOSX15.1.sdk/System/Library/Frameworks/GLUT.framework"
+			"value" : "/Library/Developer/CommandLineTools/SDKs/MacOSX15.2.sdk/System/Library/Frameworks/GLUT.framework"
 		},
 		{
 			"name" : "OPENGL_GLU_INCLUDE_DIR",
@@ -1259,7 +1259,7 @@
 				}
 			],
 			"type" : "PATH",
-			"value" : "/Library/Developer/CommandLineTools/SDKs/MacOSX15.1.sdk/System/Library/Frameworks/OpenGL.framework"
+			"value" : "/Library/Developer/CommandLineTools/SDKs/MacOSX15.2.sdk/System/Library/Frameworks/OpenGL.framework"
 		},
 		{
 			"name" : "OPENGL_INCLUDE_DIR",
@@ -1275,7 +1275,7 @@
 				}
 			],
 			"type" : "PATH",
-			"value" : "/Library/Developer/CommandLineTools/SDKs/MacOSX15.1.sdk/System/Library/Frameworks/OpenGL.framework"
+			"value" : "/Library/Developer/CommandLineTools/SDKs/MacOSX15.2.sdk/System/Library/Frameworks/OpenGL.framework"
 		},
 		{
 			"name" : "OPENGL_gl_LIBRARY",
@@ -1291,7 +1291,7 @@
 				}
 			],
 			"type" : "FILEPATH",
-			"value" : "/Library/Developer/CommandLineTools/SDKs/MacOSX15.1.sdk/System/Library/Frameworks/OpenGL.framework"
+			"value" : "/Library/Developer/CommandLineTools/SDKs/MacOSX15.2.sdk/System/Library/Frameworks/OpenGL.framework"
 		},
 		{
 			"name" : "OPENGL_glu_LIBRARY",
@@ -1307,7 +1307,7 @@
 				}
 			],
 			"type" : "FILEPATH",
-			"value" : "/Library/Developer/CommandLineTools/SDKs/MacOSX15.1.sdk/System/Library/Frameworks/OpenGL.framework"
+			"value" : "/Library/Developer/CommandLineTools/SDKs/MacOSX15.2.sdk/System/Library/Frameworks/OpenGL.framework"
 		},
 		{
 			"name" : "PKG_CONFIG_ARGN",
