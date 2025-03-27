@@ -13,6 +13,16 @@ Thumbs.db
 .vscode/
 .idea/
 
+# Ignorar todos os arquivos e diretórios relacionados ao CMake
+**/CMakeFiles/
+**/.cmake/
+**/*.cmake
+**/CMakeCache.txt
+**/cmake_install.cmake
+**/CTestTestfile.cmake
+**/*.internal
+**/compile_commands.json
+
 "Phase 1"/cmake_install.cmake
 "Phase 1"/CMakeCache.txt
 "Phase 1"/CMakeFiles/
