@@ -49,20 +49,20 @@
 			"compileCommandFragments" : 
 			[
 				{
-					"fragment" : "-std=gnu++11 -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX15.1.sdk -mmacosx-version-min=15.0"
+					"fragment" : "-std=gnu++11 -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX15.2.sdk"
 				}
 			],
 			"frameworks" : 
 			[
 				{
 					"backtrace" : 3,
-					"path" : "/Library/Developer/CommandLineTools/SDKs/MacOSX15.1.sdk/System/Library/Frameworks/OpenGL.framework"
+					"path" : "/Library/Developer/CommandLineTools/SDKs/MacOSX15.2.sdk/System/Library/Frameworks/OpenGL.framework"
 				},
 				{
-					"path" : "/Library/Developer/CommandLineTools/SDKs/MacOSX15.1.sdk/System/Library/Frameworks/GLUT.framework"
+					"path" : "/Library/Developer/CommandLineTools/SDKs/MacOSX15.2.sdk/System/Library/Frameworks/GLUT.framework"
 				},
 				{
-					"path" : "/Library/Developer/CommandLineTools/SDKs/MacOSX15.1.sdk/System/Library/Frameworks/Cocoa.framework"
+					"path" : "/Library/Developer/CommandLineTools/SDKs/MacOSX15.2.sdk/System/Library/Frameworks/Cocoa.framework"
 				}
 			],
 			"includes" : 
@@ -73,7 +73,7 @@
 				},
 				{
 					"backtrace" : 3,
-					"path" : "/Library/Developer/CommandLineTools/SDKs/MacOSX15.1.sdk/System/Library/Frameworks/GLUT.framework/Headers"
+					"path" : "/Library/Developer/CommandLineTools/SDKs/MacOSX15.2.sdk/System/Library/Frameworks/GLUT.framework/Headers"
 				},
 				{
 					"backtrace" : 2,
