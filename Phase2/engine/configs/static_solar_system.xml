@@ -124,7 +124,7 @@
     				<rotate angle="-15" x="1" y="0" z="1" />
     			</transform>
 					<models> 
-						<model file="()" /> <!-- ./generator torus 15 14 20 20 torus_15_14_20_20.3d -->
+						<model file="torus_15_14_20_20.3d" /> <!-- ./generator torus 15 14 20 20 torus_15_14_20_20.3d -->
 					</models>
 			</group>
 			<group> <!-- SATURNO LUA -->
