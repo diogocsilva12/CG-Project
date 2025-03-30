@@ -72,8 +72,7 @@ Notes:
 - [ ] Document the rest of the code 
 
 ### Demo
-![Demo](https://github.com/diogocsilva12/CG-Project/blob/9a2d0f71306a7a6b5c4671d0377e751600867192/Phase2/usage_example.gif)
-
+![Demo](https://github.com/diogocsilva12/CG-Project/raw/9a2d0f71306a7a6b5c4671d0377e751600867192/Phase2/usage_example.gif)
 
 
 ### Code Review
