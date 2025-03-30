@@ -72,7 +72,7 @@ Notes:
 - [ ] Document the rest of the code 
 
 ### Demo
-![Demo](https://github.com/diogocsilva12/CG-Project/raw/main/Phase%201/usage_example.gif)
+![Demo](https://github.com/diogocsilva12/CG-Project/raw/main/Phase%202/usage_example.gif)
 
 
 
