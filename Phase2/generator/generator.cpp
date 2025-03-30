@@ -141,7 +141,6 @@ void handleTorus(int argc, char** argv) {
     int sides = std::stoi(argv[4]);
     int rings = std::stoi(argv[5]);
     
-    // Create standardized filename
     std::string filename = "../tests/torus_" + std::string(argv[2]) + "_" + argv[3] + "_" + 
                           argv[4] + "_" + argv[5] + ".3d";
     
