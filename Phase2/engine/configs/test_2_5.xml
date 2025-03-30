@@ -8,17 +8,14 @@
     </camera>
 
     <group>
-        <!-- Basic torus at center -->
         <group>
             <transform>
-                <!-- No transformation - default position -->
             </transform>
             <models>
                 <model file="torus_1_0.5_16_8.3d" />
             </models>
         </group>
 
-        <!-- Scaled torus -->
         <group>
             <transform>
                 <translate x="5" y="0" z="0" />
@@ -29,7 +26,6 @@
             </models>
         </group>
 
-        <!-- Rotated torus (around X axis) -->
         <group>
             <transform>
                 <translate x="-5" y="0" z="0" />
@@ -40,7 +36,6 @@
             </models>
         </group>
 
-        <!-- Scaled non-uniformly (flattened) -->
         <group>
             <transform>
                 <translate x="0" y="5" z="0" />
@@ -51,7 +46,6 @@
             </models>
         </group>
 
-        <!-- Rotated 45 degrees around two axes -->
         <group>
             <transform>
                 <translate x="0" y="-5" z="0" />
@@ -62,19 +56,16 @@
             </models>
         </group>
 
-        <!-- Torus with different thickness ratio -->
         <group>
             <transform>
                 <translate x="0" y="0" z="5" />
-                <!-- This doesn't actually change the thickness ratio (that's built into the model),
-                     but demonstrates how a different torus model would be positioned -->
+                
             </transform>
             <models>
                 <model file="torus_1_0.5_16_8.3d" />
             </models>
         </group>
 
-        <!-- Torus with combined transformations -->
         <group>
             <transform>
                 <translate x="0" y="0" z="-5" />
@@ -86,16 +77,14 @@
             </models>
         </group>
 
-        <!-- Nested tori (Saturn-like) -->
         <group>
             <transform>
                 <translate x="10" y="0" z="0" />
             </transform>
             <models>
-                <model file="sphere_1_8_8.3d" /> <!-- Center sphere -->
+                <model file="sphere_1_8_8.3d" />
             </models>
             
-            <!-- Inner ring -->
             <group>
                 <transform>
                     <rotate angle="90" x="1" y="0" z="0" />
@@ -106,7 +95,7 @@
                 </models>
             </group>
             
-            <!-- Middle ring -->
+        
             <group>
                 <transform>
                     <rotate angle="90" x="1" y="0" z="0" />
@@ -117,7 +106,6 @@
                 </models>
             </group>
             
-            <!-- Outer ring -->
             <group>
                 <transform>
                     <rotate angle="90" x="1" y="0" z="0" />
