@@ -2,6 +2,8 @@ This document provides an overview of the project and instructions for running t
 
 ---
 
+-- Phase 2 concluded --
+
 ## Table of Contents
 1. [Project Overview](#project-overview)
 2. [Running Instructions](#running-instructions)
@@ -67,9 +69,9 @@ Notes:
 
 ### TODO 
 - [x] Fix some bugs
-- [ ] Clean up the code
+- [x] Clean up the code
 - [x] Fix the box shape
-- [ ] Document the rest of the code 
+- [x] Document the rest of the code 
 
 ### Demo
 ![Demo](https://github.com/diogocsilva12/CG-Project/raw/9a2d0f71306a7a6b5c4671d0377e751600867192/Phase2/usage_example.gif)
