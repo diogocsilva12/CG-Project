@@ -12,7 +12,7 @@
             <!-- Center the figure -->
         </transform>
         <models>
-            <model file="torus_1_0.5_32_16.3d" />
+            <model file="torus_6_2_25_30.3d" />
         </models>
     </group>
     
