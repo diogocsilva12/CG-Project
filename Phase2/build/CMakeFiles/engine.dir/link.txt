@@ -1,1 +1,0 @@
-/usr/bin/c++ CMakeFiles/engine.dir/engine/engine.cpp.o CMakeFiles/engine.dir/engine/xmlParser.cpp.o -o engine  /usr/lib/x86_64-linux-gnu/libGL.so /usr/lib/x86_64-linux-gnu/libGLU.so /usr/lib/x86_64-linux-gnu/libglut.so libtinyxml2.a 
