@@ -24,4 +24,13 @@ void torus(float outerRadius, float innerRadius, int sides, int rings, const std
 
 void circle(float radius, int segments, const std::string& filename);
 
+/**
+ * @brief Generate a Bezier surface model from control points
+ * 
+ * @param patchFile Path to the patch file with control points
+ * @param tessellation Level of subdivision for the surface
+ * @param outputFile Path to save the generated model
+ */
+void bezier(const std::string& patchFile, int tessellation, const std::string& outputFile);
+
 #endif // GENERATORAUX_H

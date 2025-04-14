@@ -284,8 +284,9 @@ while true; do
             echo "4. Cone"
             echo "5. Circle"
             echo "6. Torus"
+            echo "7. Bezier Patch"
             echo "0. Back"
-            
+                        
             read -p "Select figure type: " figure
             
             case $figure in
@@ -405,6 +406,65 @@ while true; do
                 ./generator torus $outer_radius $inner_radius $slices $stacks "../tests/$filename"
                 cd ..
                 echo "Generated: tests/$filename"
+                read -p "Press Enter to return to the main menu..."
+                ;;
+
+# ...existing code after the torus case...
+            7)
+                echo "=== Bezier Patch Parameters ==="
+                echo "Example: patch_file=teapot.patch, tessellation=20"
+                echo "Default: patch_file=teapot.patch, tessellation=10"
+                
+                # Check if we have patch files available
+                if [ ! -d "patches" ]; then
+                    echo "Creating patches directory..."
+                    mkdir -p patches
+                    echo "Error: No patch files found. Please add .patch files to the 'patches' directory."
+                    read -p "Press Enter to return to the main menu..."
+                    continue
+                fi
+                
+                # List available patch files
+                echo "Available patch files:"
+                patch_files=(patches/*.patch)
+                if [ ${#patch_files[@]} -eq 0 ] || [ ! -e "${patch_files[0]}" ]; then
+                    echo "No patch files found. Please add .patch files to the 'patches' directory."
+                    read -p "Press Enter to return to the main menu..."
+                    continue
+                fi
+                
+                counter=1
+                for file in "${patch_files[@]}"; do
+                    filename=$(basename "$file")
+                    echo "$counter) $filename"
+                    available_patches[$counter]=$file
+                    ((counter++))
+                done
+                
+                read -p "Select patch file number (default=1): " patch_number
+                patch_number=${patch_number:-1}
+                
+                if [ "$patch_number" -ge 1 ] && [ "$patch_number" -lt "$counter" ]; then
+                    selected_patch="${available_patches[$patch_number]}"
+                    
+                    read -p "Enter tessellation level (default=10): " tessellation
+                    tessellation=${tessellation:-10}
+                    
+                    # Extract basename for filename
+                    patch_basename=$(basename "$selected_patch" .patch)
+                    
+                    # Create standardized filename
+                    filename="bezier_${patch_basename}_${tessellation}.3d"
+                    
+                    # Ensure tests directory exists
+                    mkdir -p tests
+                    cd generator
+                    ./generator bezier "../${selected_patch}" $tessellation "../tests/$filename"
+                    cd ..
+                    echo "Generated: tests/$filename"
+                else
+                    echo "Invalid patch file selection!"
+                fi
                 read -p "Press Enter to return to the main menu..."
                 ;;
             0)

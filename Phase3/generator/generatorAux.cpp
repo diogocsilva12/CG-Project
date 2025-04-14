@@ -5,6 +5,7 @@
 #include <string>
 #include <stdexcept>
 #include <array>
+#include <sstream>
 #include "generatorAux.h"
 
 //Define 4x4 matrix type
@@ -386,5 +387,221 @@ void torus(float outerRadius, float innerRadius, int sides, int rings, const std
     }
 
     writeVertices(filename, vertices);
+}
+
+/**
+ * @brief Compute a point on a Bezier patch using Bernstein polynomials
+ * 
+ * @param controlPoints 4x4 grid of control points defining the patch
+ * @param u Parameter in the range [0,1] for the first dimension
+ * @param v Parameter in the range [0,1] for the second dimension
+ * @return Vertex Position on the Bezier patch
+ */
+Vertex calculateBezierPoint(const std::vector<std::vector<Vertex>>& controlPoints, float u, float v) {
+    // Bernstein basis polynomials
+    auto bernstein = [](int i, float t) -> float {
+        switch(i) {
+            case 0: return (1-t)*(1-t)*(1-t);
+            case 1: return 3*t*(1-t)*(1-t);
+            case 2: return 3*t*t*(1-t);
+            case 3: return t*t*t;
+            default: return 0.0f;
+        }
+    };
+    
+    Vertex result = {0.0f, 0.0f, 0.0f};
+    
+    // Compute using Bernstein polynomials
+    for (int i = 0; i < 4; i++) {
+        for (int j = 0; j < 4; j++) {
+            float blend = bernstein(i, u) * bernstein(j, v);
+            result.x += blend * controlPoints[i][j].x;
+            result.y += blend * controlPoints[i][j].y;
+            result.z += blend * controlPoints[i][j].z;
+        }
+    }
+    
+    return result;
+}
+
+/**
+ * @brief Generate a triangle mesh for a Bezier patch
+ * 
+ * @param controlPoints 4x4 grid of control points defining the patch
+ * @param tessellation Level of detail (number of subdivisions)
+ * @return std::vector<Vertex> Triangle vertices for the patch
+ */
+std::vector<Vertex> generateBezierPatch(const std::vector<std::vector<Vertex>>& controlPoints, int tessellation) {
+    std::vector<Vertex> vertices;
+    float step = 1.0f / tessellation;
+    
+    // Generate the mesh using parametric evaluation
+    for (int i = 0; i < tessellation; i++) {
+        for (int j = 0; j < tessellation; j++) {
+            float u0 = i * step;
+            float u1 = (i + 1) * step;
+            float v0 = j * step;
+            float v1 = (j + 1) * step;
+            
+            // Calculate the four corners of the current grid cell
+            Vertex p00 = calculateBezierPoint(controlPoints, u0, v0);
+            Vertex p01 = calculateBezierPoint(controlPoints, u0, v1);
+            Vertex p10 = calculateBezierPoint(controlPoints, u1, v0);
+            Vertex p11 = calculateBezierPoint(controlPoints, u1, v1);
+            
+            // First triangle - MODIFIED winding order
+            vertices.push_back(p00);
+            vertices.push_back(p11);
+            vertices.push_back(p10);
+            
+            // Second triangle - MODIFIED winding order
+            vertices.push_back(p00);
+            vertices.push_back(p01);
+            vertices.push_back(p11);
+        }
+    }
+    
+    return vertices;
+}
+
+/**
+ * @brief Parse a Bezier patch file and generate the 3D model
+ * 
+ * The patch file format should contain:
+ * - First line: number of patches
+ * - For each patch: 16 indices referring to the control points
+ * - After all patches: the coordinates of all control points
+ * 
+ * @param patchFile Path to the file containing Bezier patch definitions
+ * @param tessellation Level of detail (number of subdivisions)
+ * @param outputFile Output file path for the generated 3D model
+ */
+void bezier(const std::string& patchFile, int tessellation, const std::string& outputFile) {
+    if (tessellation <= 0) {
+        throw std::invalid_argument("Error: Tessellation level must be positive.");
+    }
+    
+    std::ifstream file(patchFile);
+    if (!file.is_open()) {
+        throw std::runtime_error("Error: Unable to open patch file " + patchFile);
+    }
+    
+    // Read number of patches
+    std::string line;
+    std::getline(file, line);
+    int numPatches = std::stoi(line);
+    
+    // Read patch indices
+    std::vector<std::vector<int>> patchIndices;
+    for (int i = 0; i < numPatches; i++) {
+        std::vector<int> patchIdx;
+        std::getline(file, line);
+        
+        // Parse indices, handling both comma-separated and space-separated formats
+        std::istringstream iss(line);
+        std::string token;
+        
+        // Check if comma-separated
+        if (line.find(',') != std::string::npos) {
+            while (std::getline(iss, token, ',')) {
+                // Trim whitespace
+                token.erase(0, token.find_first_not_of(" \t"));
+                token.erase(token.find_last_not_of(" \t") + 1);
+                if (!token.empty()) {
+                    patchIdx.push_back(std::stoi(token));
+                }
+            }
+        } else {
+            // Space-separated
+            int idx;
+            while (iss >> idx) {
+                patchIdx.push_back(idx);
+            }
+        }
+        
+        // Verify we have 16 control points per patch
+        if (patchIdx.size() != 16) {
+            throw std::runtime_error("Error: Each patch must have exactly 16 control points");
+        }
+        
+        patchIndices.push_back(patchIdx);
+    }
+    
+    // Read number of control points
+    std::getline(file, line);
+    int numControlPoints = std::stoi(line);
+    
+    // Read control points
+    std::vector<Vertex> controlPoints;
+    while (std::getline(file, line)) {
+        if (line.empty()) continue;
+        
+        std::istringstream iss(line);
+        float x, y, z;
+        
+        // Check if comma-separated
+        if (line.find(',') != std::string::npos) {
+            std::string xStr, yStr, zStr;
+            std::getline(iss, xStr, ',');
+            std::getline(iss, yStr, ',');
+            std::getline(iss, zStr, ',');
+            
+            // Trim whitespace
+            xStr.erase(0, xStr.find_first_not_of(" \t"));
+            xStr.erase(xStr.find_last_not_of(" \t") + 1);
+            yStr.erase(0, yStr.find_first_not_of(" \t"));
+            yStr.erase(yStr.find_last_not_of(" \t") + 1);
+            zStr.erase(0, zStr.find_first_not_of(" \t"));
+            zStr.erase(zStr.find_last_not_of(" \t") + 1);
+            
+            x = std::stof(xStr);
+            y = std::stof(yStr);
+            z = std::stof(zStr);
+        } else {
+            // Space-separated
+            iss >> x >> y >> z;
+        }
+        
+        controlPoints.push_back({x, y, z});
+    }
+    
+    // Verify we have the correct number of control points
+    if (controlPoints.size() != numControlPoints) {
+        std::cerr << "Warning: Expected " << numControlPoints << " control points but read " 
+                  << controlPoints.size() << std::endl;
+    }
+    
+    // Generate mesh for each patch
+    std::vector<Vertex> allVertices;
+    for (const auto& patch : patchIndices) {
+        // Convert flat indices to 4x4 grid of control points
+        std::vector<std::vector<Vertex>> patchControlPoints(4, std::vector<Vertex>(4));
+        for (int i = 0; i < 4; i++) {
+            for (int j = 0; j < 4; j++) {
+                int index = patch[i * 4 + j];
+                if (index >= 0 && index < controlPoints.size()) {
+                    patchControlPoints[i][j] = controlPoints[index];
+                } else {
+                    throw std::runtime_error("Error: Invalid control point index: " + std::to_string(index));
+                }
+            }
+        }
+        
+        // Generate and add vertices for this patch
+        std::vector<Vertex> patchVertices = generateBezierPatch(patchControlPoints, tessellation);
+        allVertices.insert(allVertices.end(), patchVertices.begin(), patchVertices.end());
+    }
+    
+    // Fix orientation by flipping the teapot right-side up
+    // Create a rotation matrix to flip the teapot
+    Matrix4x4 flipMatrix = rotationMatrixX(M_PI);
+    
+    // Apply the transformation to all vertices
+    for (auto& vertex : allVertices) {
+        vertex = transformVertex(vertex, flipMatrix);
+    }
+    
+    // Write all vertices to the output file
+    writeVertices(outputFile, allVertices);
 }
 

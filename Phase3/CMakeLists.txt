@@ -42,3 +42,10 @@ target_link_libraries(engine
     ${OPENGL_LIBRARIES}
     ${GLUT_LIBRARIES}
     tinyxml2)
+
+# Add to your CMakeLists.txt
+if(NOT APPLE)
+    find_package(GLEW REQUIRED)
+    include_directories(${GLEW_INCLUDE_DIRS})
+    target_link_libraries(engine ${GLEW_LIBRARIES})
+endif()

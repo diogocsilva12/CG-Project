@@ -148,6 +148,33 @@ void handleTorus(int argc, char** argv) {
     std::cout << "Torus generated successfully! Saved to " << filename << "\n";
 }
 
+/**
+ * @brief Handles the generation of a Bezier patch
+ * 
+ * Creates a Bezier patch based on the provided patch file and tessellation level.
+ * 
+ * @param argc The total number of command line arguments
+ * @param argv The array of command line arguments
+ *        argv[2]: patch_file - The file containing the Bezier patch definition
+ *        argv[3]: tessellation - The tessellation level
+ *        argv[4]: output filename (ignored; standardized name is used)
+ * @throws std::invalid_argument If the required parameters are missing or invalid
+ */
+void handleBezier(int argc, char** argv) {
+    if (argc != 5) {
+        throw std::invalid_argument("Error: Bezier requires 3 arguments: <patch_file> <tessellation> <output_file>");
+    }
+    
+    std::string patchFile = argv[2];
+    int tessellation = std::stoi(argv[3]);
+    
+    // Create standardized filename
+    std::string outputFile = "../tests/bezier_" + std::string(argv[3]) + ".3d";
+    
+    bezier(patchFile, tessellation, outputFile);
+    std::cout << "Bezier patch generated successfully! Saved to " << outputFile << "\n";
+}
+
 
 
 /**
@@ -170,6 +197,7 @@ int main(int argc, char** argv) {
     shapeHandlers["cone"] = handleCone;
     shapeHandlers["sphere"] = handleSphere;
     shapeHandlers["torus"] = handleTorus;
+    shapeHandlers["bezier"] = handleBezier;
 
     //Controle de erros
     if (argc < 2) {
