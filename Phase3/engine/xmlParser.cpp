@@ -23,17 +23,41 @@ void parseGroup(XMLElement* groupElement, Group& group, const std::string& xmlDi
             std::string elemName = elem->Name();
             
             if (elemName == "translate") {
-                group.transform.translateX = elem->FloatAttribute("x", 0.0f);
-                group.transform.translateY = elem->FloatAttribute("y", 0.0f);
-                group.transform.translateZ = elem->FloatAttribute("z", 0.0f);
-                group.transformOrder.push_back("translate");
+                if (elem->Attribute("time")) {
+                    group.transform.hasCurve = true;
+                    group.transform.curveTime = elem->FloatAttribute("time");
+                    group.transform.align = elem->BoolAttribute("align", false);
+                    // Parse points
+                    for (XMLElement* pointElem = elem->FirstChildElement("point"); pointElem; pointElem = pointElem->NextSiblingElement("point")) {
+                        Point p;
+                        p.x = pointElem->FloatAttribute("x");
+                        p.y = pointElem->FloatAttribute("y");
+                        p.z = pointElem->FloatAttribute("z");
+                        group.transform.curvePoints.push_back(p);
+                    }
+                    group.transformOrder.push_back("translate_curve");
+                } else {
+                    group.transform.translateX = elem->FloatAttribute("x", 0.0f);
+                    group.transform.translateY = elem->FloatAttribute("y", 0.0f);
+                    group.transform.translateZ = elem->FloatAttribute("z", 0.0f);
+                    group.transformOrder.push_back("translate");
+                }
             }
             else if (elemName == "rotate") {
-                group.transform.rotateAngle = elem->FloatAttribute("angle", 0.0f);
-                group.transform.rotateX = elem->FloatAttribute("x", 0.0f);
-                group.transform.rotateY = elem->FloatAttribute("y", 0.0f);
-                group.transform.rotateZ = elem->FloatAttribute("z", 0.0f);
-                group.transformOrder.push_back("rotate");
+                if (elem->Attribute("time")) {
+                    group.transform.timeRotation = true;
+                    group.transform.rotationTime = elem->FloatAttribute("time");
+                    group.transform.rotateX = elem->FloatAttribute("x", 0.0f);
+                    group.transform.rotateY = elem->FloatAttribute("y", 0.0f);
+                    group.transform.rotateZ = elem->FloatAttribute("z", 0.0f);
+                    group.transformOrder.push_back("rotate_time");
+                } else {
+                    group.transform.rotateAngle = elem->FloatAttribute("angle", 0.0f);
+                    group.transform.rotateX = elem->FloatAttribute("x", 0.0f);
+                    group.transform.rotateY = elem->FloatAttribute("y", 0.0f);
+                    group.transform.rotateZ = elem->FloatAttribute("z", 0.0f);
+                    group.transformOrder.push_back("rotate");
+                }
             }
             else if (elemName == "scale") {
                 group.transform.scaleX = elem->FloatAttribute("x", 1.0f);

@@ -50,6 +50,16 @@ struct Transform {
     float scaleX = 1.0f;
     float scaleY = 1.0f;
     float scaleZ = 1.0f;
+
+    // Catmull-Rom curve support
+    bool hasCurve = false;
+    float curveTime = 0.0f;
+    bool align = false;
+    std::vector<Point> curvePoints;
+
+    // Time-based rotation
+    bool timeRotation = false;
+    float rotationTime = 0.0f;
 };
 
 struct Group {

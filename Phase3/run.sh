@@ -190,7 +190,7 @@ run_tests_menu() {
         echo "=== Available Test Files ==="
         if [ -d "engine/configs" ]; then
             # Only show files that start with "test" and the solar system
-            files=(engine/configs/test*.xml engine/configs/static_solar_system.xml)
+            files=(engine/configs/test*.xml engine/configs/static_solar_system.xml engine/configs/dynamic_solar_system.xml)
             if [ ${#files[@]} -eq 0 ] || [ ! -e "${files[0]}" ]; then
                 echo "No test files found."
                 read -p "Press Enter to return to the main menu..."

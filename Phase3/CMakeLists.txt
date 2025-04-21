@@ -16,24 +16,21 @@ add_library(tinyxml2 STATIC
 )
 target_include_directories(tinyxml2 PUBLIC external/tinyxml2)
 
-# Create tests directory
-file(MAKE_DIRECTORY ${CMAKE_SOURCE_DIR}/generator/tests)
-
 # Generator executable
-add_executable(generator 
+add_executable(generator
     generator/generator.cpp
-    generator/generatorAux.cpp)
-
-# Set working directory for generator
+    generator/generatorAux.cpp
+)
 set_target_properties(generator PROPERTIES
-    RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/generator)
+    RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/generator
+)
 
 # Engine executable
 add_executable(engine
     engine/engine.cpp
-    engine/xmlParser.cpp)
-
-# Include directories for engine
+    engine/xmlParser.cpp
+    engine/catmullrom.cpp
+)
 target_include_directories(engine PRIVATE engine ${OPENGL_INCLUDE_DIRS} ${GLUT_INCLUDE_DIRS})
 
 # Link libraries for engine
@@ -41,11 +38,18 @@ target_link_libraries(engine
     PRIVATE
     ${OPENGL_LIBRARIES}
     ${GLUT_LIBRARIES}
-    tinyxml2)
+    tinyxml2
+)
 
-# Add to your CMakeLists.txt
+# GLEW for non-Apple platforms
 if(NOT APPLE)
     find_package(GLEW REQUIRED)
     include_directories(${GLEW_INCLUDE_DIRS})
     target_link_libraries(engine ${GLEW_LIBRARIES})
 endif()
+
+# Optionally, copy test data or configs after build
+# add_custom_command(TARGET engine POST_BUILD
+#     COMMAND ${CMAKE_COMMAND} -E copy_directory
+#     ${CMAKE_SOURCE_DIR}/engine/configs $<TARGET_FILE_DIR:engine>/configs
+# )

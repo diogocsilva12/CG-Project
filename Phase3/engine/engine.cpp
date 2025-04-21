@@ -21,6 +21,7 @@
 
 #include "engine.h"
 #include "xmlParser.h" 
+#include "catmullrom.h" // You need to implement Catmull-Rom helpers
 #include <fstream>
 #include <iostream>
 #include <cmath>
@@ -97,23 +98,68 @@ void loadModel(Model& model) {
     glBindBuffer(GL_ARRAY_BUFFER, 0);
 }
 
+/**
+ * @brief Draws a Catmull-Rom curve
+ * 
+ * Renders the trajectory of a Catmull-Rom curve using OpenGL line loops.
+ * 
+ * @param points The control points of the curve
+ * @param samples Number of samples to draw the curve
+ */
+void drawCatmullRomCurve(const std::vector<Point>& points, int samples = 100) {
+    if (points.size() < 4) return;
+    //glDisable(GL_LIGHTING); // If using lighting, disable for lines
+    glColor3f(0.7f, 0.7f, 0.7f); // Light gray for trajectory
+    glBegin(GL_LINE_LOOP);
+    for (int i = 0; i < samples; ++i) {
+        float t = (float)i / samples;
+        float pos[3], deriv[3];
+        getGlobalCatmullRomPoint(t, points, pos, deriv);
+        glVertex3f(pos[0], pos[1], pos[2]);
+    }
+    glEnd();
+    glColor3f(1,1,1); // Reset color
+    //glEnable(GL_LIGHTING);
+}
+
 //Render groups with transformations. Applies transformations in the order specified in the XML file.
 void renderGroup(const Group& group) {
+    // Draw trajectory if this group has a Catmull-Rom curve
+    if (group.transform.hasCurve && group.transform.curvePoints.size() >= 4) {
+        drawCatmullRomCurve(group.transform.curvePoints);
+    }
+
     glPushMatrix();
-    //store the order of transformations in [transformOrder]
     for (const auto& transform : group.transformOrder) {
         if (transform == "translate") {
-            glTranslatef(group.transform.translateX, 
-                        group.transform.translateY, 
-                        group.transform.translateZ);
+            glTranslatef(group.transform.translateX, group.transform.translateY, group.transform.translateZ);
+        }
+        else if (transform == "translate_curve") {
+            float t = 0.0f;
+            if (group.transform.curveTime > 0.0f) {
+                float elapsed = glutGet(GLUT_ELAPSED_TIME) / 1000.0f;
+                t = fmod(elapsed / group.transform.curveTime, 1.0f);
+            }
+            float pos[3], deriv[3];
+            getGlobalCatmullRomPoint(t, group.transform.curvePoints, pos, deriv);
+            glTranslatef(pos[0], pos[1], pos[2]);
+            if (group.transform.align) {
+                float up[3] = {0, 1, 0}, side[3], m[16];
+                cross(deriv, up, side);
+                normalize(deriv); normalize(side);
+                cross(side, deriv, up);
+                buildRotMatrix(deriv, up, side, m);
+                glMultMatrixf(m);
+            }
         }
         else if (transform == "rotate") {
-            if (group.transform.rotateAngle != 0.0f) {
-                glRotatef(group.transform.rotateAngle, 
-                          group.transform.rotateX, 
-                          group.transform.rotateY, 
-                          group.transform.rotateZ);
-            }
+            if (group.transform.rotateAngle != 0.0f)
+                glRotatef(group.transform.rotateAngle, group.transform.rotateX, group.transform.rotateY, group.transform.rotateZ);
+        }
+        else if (transform == "rotate_time") {
+            float elapsed = glutGet(GLUT_ELAPSED_TIME) / 1000.0f;
+            float angle = fmod(elapsed / group.transform.rotationTime, 1.0f) * 360.0f;
+            glRotatef(angle, group.transform.rotateX, group.transform.rotateY, group.transform.rotateZ);
         }
         else if (transform == "scale") {
             glScalef(group.transform.scaleX, group.transform.scaleY, group.transform.scaleZ);
@@ -522,6 +568,8 @@ void changeSize(int w, int h) {
 void idleFunction() {
     glutPostRedisplay();
 }
+
+
 
 /**
  * @brief Main function - program entry point
