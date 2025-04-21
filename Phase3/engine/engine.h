@@ -4,6 +4,12 @@
 #include <vector>
 #include <string>
 
+#ifdef __APPLE__
+#include <OpenGL/gl3.h>
+#else
+#include <GL/glew.h>
+#endif
+
 struct Point {
     float x, y, z;
 };
@@ -25,6 +31,7 @@ struct Window {
 struct Model {
     std::string filename;
     std::vector<Point> vertices;
+    GLuint vbo = 0; // <-- Add this line for VBO support
 };
 
 struct Transform {
