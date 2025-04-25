@@ -119,13 +119,12 @@ void drawCatmullRomCurve(const std::vector<Point>& points, int samples = 100) {
     }
     glEnd();
     glColor3f(1,1,1); // Reset color
-    //glEnable(GL_LIGHTING);
 }
 
 //Render groups with transformations. Applies transformations in the order specified in the XML file.
 void renderGroup(const Group& group) {
-    // Draw trajectory if this group has a Catmull-Rom curve
-    if (group.transform.hasCurve && group.transform.curvePoints.size() >= 4) {
+    // Só desenha a trajetória se drawCurve for true
+    if (group.transform.hasCurve && group.transform.curvePoints.size() >= 4 && group.transform.drawCurve) {
         drawCatmullRomCurve(group.transform.curvePoints);
     }
 

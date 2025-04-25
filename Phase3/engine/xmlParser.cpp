@@ -27,6 +27,11 @@ void parseGroup(XMLElement* groupElement, Group& group, const std::string& xmlDi
                     group.transform.hasCurve = true;
                     group.transform.curveTime = elem->FloatAttribute("time");
                     group.transform.align = elem->BoolAttribute("align", false);
+                    // Lê o atributo draw (por defeito true)
+                    const char* drawAttr = elem->Attribute("draw");
+                    group.transform.drawCurve = true;
+                    if (drawAttr && std::string(drawAttr) == "false")
+                        group.transform.drawCurve = false;
                     // Parse points
                     for (XMLElement* pointElem = elem->FirstChildElement("point"); pointElem; pointElem = pointElem->NextSiblingElement("point")) {
                         Point p;

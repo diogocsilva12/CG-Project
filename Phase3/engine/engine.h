@@ -60,6 +60,7 @@ struct Transform {
     // Time-based rotation
     bool timeRotation = false;
     float rotationTime = 0.0f;
+    bool drawCurve = true;
 };
 
 struct Group {
