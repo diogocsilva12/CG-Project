@@ -36,9 +36,9 @@
             <models>
                 <model file="sphere_10_20_20.3d" /> <!-- ./generator sphere 10 20 20 sphere_10_20_20.3d -->
             </models>
-            <group> <!-- Lua -->
+            <group> <!-- Lua 1 -->
                 <transform>
-                    <translate time = "8" align="True" draw="false">
+                    <translate time="8" align="True" draw="false">
 			    <point x="12.0207" y="0" z="12.0207"/>
 			    <point x="0" y="0" z="17"/>
 			    <point x="-12.0207" y="0" z="12.0207"/>
@@ -52,7 +52,83 @@
                     <scale x="0.24" y="0.24" z="0.24" />
                 </transform>
                 <models>
-                    <model file="sphere_10_20_20.3d" /> <!-- ./generator sphere 10 20 20 sphere_10_20_20.3d -->
+                    <model file="sphere_10_20_20.3d" />
+                </models>
+            </group>
+            <group> <!-- Lua 2 -->
+                <transform>
+                    <translate time="10" align="True" draw="false">
+			    <point x="12.0207" y="0" z="12.0207"/>
+			    <point x="0" y="0" z="17"/>
+			    <point x="-12.0207" y="0" z="12.0207"/>
+			    <point x="-17" y="0" z="0"/>
+			    <point x="-12.0207" y="0" z="-12.0207"/>
+			    <point x="0" y="0" z="-17"/>
+			    <point x="12.0207" y="0" z="-12.0207"/>
+			    <point x="17" y="0" z="0"/>                    
+		    </translate>
+                    <rotate time= "5" x = "0" y = "1" z = "0" />
+                    <scale x="0.18" y="0.18" z="0.18" />
+                </transform>
+                <models>
+                    <model file="sphere_10_20_20.3d" />
+                </models>
+            </group>
+            <group> <!-- Lua 3 -->
+                <transform>
+                    <translate time="12" align="True" draw="false">
+			    <point x="12.0207" y="0" z="12.0207"/>
+			    <point x="0" y="0" z="17"/>
+			    <point x="-12.0207" y="0" z="12.0207"/>
+			    <point x="-17" y="0" z="0"/>
+			    <point x="-12.0207" y="0" z="-12.0207"/>
+			    <point x="0" y="0" z="-17"/>
+			    <point x="12.0207" y="0" z="-12.0207"/>
+			    <point x="17" y="0" z="0"/>                    
+		    </translate>
+                    <rotate time= "7" x = "0" y = "1" z = "0" />
+                    <scale x="0.15" y="0.15" z="0.15" />
+                </transform>
+                <models>
+                    <model file="sphere_10_20_20.3d" />
+                </models>
+            </group>
+            <group> <!-- Lua 4 -->
+                <transform>
+                    <translate time="14" align="True" draw="false">
+			    <point x="12.0207" y="0" z="12.0207"/>
+			    <point x="0" y="0" z="17"/>
+			    <point x="-12.0207" y="0" z="12.0207"/>
+			    <point x="-17" y="0" z="0"/>
+			    <point x="-12.0207" y="0" z="-12.0207"/>
+			    <point x="0" y="0" z="-17"/>
+			    <point x="12.0207" y="0" z="-12.0207"/>
+			    <point x="17" y="0" z="0"/>                    
+		    </translate>
+                    <rotate time= "9" x = "0" y = "1" z = "0" />
+                    <scale x="0.12" y="0.12" z="0.12" />
+                </transform>
+                <models>
+                    <model file="sphere_10_20_20.3d" />
+                </models>
+            </group>
+            <group> <!-- Lua 5 -->
+                <transform>
+                    <translate time="16" align="True" draw="false">
+			    <point x="12.0207" y="0" z="12.0207"/>
+			    <point x="0" y="0" z="17"/>
+			    <point x="-12.0207" y="0" z="12.0207"/>
+			    <point x="-17" y="0" z="0"/>
+			    <point x="-12.0207" y="0" z="-12.0207"/>
+			    <point x="0" y="0" z="-17"/>
+			    <point x="12.0207" y="0" z="-12.0207"/>
+			    <point x="17" y="0" z="0"/>                    
+		    </translate>
+                    <rotate time= "11" x = "0" y = "1" z = "0" />
+                    <scale x="0.10" y="0.10" z="0.10" />
+                </transform>
+                <models>
+                    <model file="sphere_10_20_20.3d" />
                 </models>
             </group>
         </group> 
@@ -316,7 +392,7 @@
         <group> <!-- Cometa -->
             <transform>
                 
-                <translate time = "10" align="true">
+                <translate time = "10" align="true" draw="false">
                     <point x = "0" y = "-80" z = "80" />
                     <point x = "80" y = "-80" z = "0" />
                     <point x = "0" y = "300" z = "-40" />
@@ -330,4 +406,4 @@
             </models>
         </group>
     </group>
-</world> 
+</world>
