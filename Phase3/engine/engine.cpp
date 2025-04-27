@@ -596,7 +596,7 @@ int main(int argc, char** argv) {
     glutInitWindowSize(world.window.width, world.window.height);
     glutCreateWindow("CG@Fase 2 - G18");
 
-    glewExperimental = GL_TRUE;
+    //glewExperimental = GL_TRUE;
     
 #ifndef __APPLE__
     GLenum err = glewInit();
