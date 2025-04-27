@@ -45,11 +45,7 @@ target_link_libraries(engine
 if(NOT APPLE)
     find_package(GLEW REQUIRED)
     include_directories(${GLEW_INCLUDE_DIRS})
-    target_link_libraries(engine ${GLEW_LIBRARIES})
+    target_link_libraries(engine PRIVATE ${GLEW_LIBRARIES})
 endif()
 
-# Optionally, copy test data or configs after build
-# add_custom_command(TARGET engine POST_BUILD
-#     COMMAND ${CMAKE_COMMAND} -E copy_directory
-#     ${CMAKE_SOURCE_DIR}/engine/configs $<TARGET_FILE_DIR:engine>/configs
-# )
+

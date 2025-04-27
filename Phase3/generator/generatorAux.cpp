@@ -433,7 +433,7 @@ std::vector<Vertex> generateBezierPatch(const std::vector<std::vector<Vertex>>& 
     std::vector<Vertex> vertices;
     float step = 1.0f / tessellation;
 
-    //Precomputed points for effiency
+    //Precomputed points for efficiency
     std::vector<std::vector<Vertex>> grid(tessellation + 1, std::vector<Vertex>(tessellation + 1));
     for (int i = 0; i <= tessellation; ++i) {
         float u = i * step;
@@ -445,11 +445,11 @@ std::vector<Vertex> generateBezierPatch(const std::vector<std::vector<Vertex>>& 
 
     for (int i = 0; i < tessellation; ++i) {
         for (int j = 0; j < tessellation; ++j) {
-            // Triangle 1 (swap 2nd and 3rd vertex)
+            //Triangle 1
             vertices.push_back(grid[i][j]);
             vertices.push_back(grid[i+1][j+1]);
             vertices.push_back(grid[i+1][j]);
-            // Triangle 2 (swap 2nd and 3rd vertex)
+            //Triangle 2
             vertices.push_back(grid[i][j]);
             vertices.push_back(grid[i][j+1]);
             vertices.push_back(grid[i+1][j+1]);
@@ -458,18 +458,8 @@ std::vector<Vertex> generateBezierPatch(const std::vector<std::vector<Vertex>>& 
     return vertices;
 }
 
-/**
- * @brief Parse a Bezier patch file and generate the 3D model
- * 
- * The patch file format should contain:
- * - First line: number of patches
- * - For each patch: 16 indices referring to the control points
- * - After all patches: the coordinates of all control points
- * 
- * @param patchFile Path to the file containing Bezier patch definitions
- * @param tessellation Level of detail (number of subdivisions)
- * @param outputFile Output file path for the generated 3D model
- */
+//Parser for bezier patch file
+// Reads a patch file and generates the corresponding mesh
 void bezier(const std::string& patchFile, int tessellation, const std::string& outputFile) {
     if (tessellation <= 0) {
         throw std::invalid_argument("Error: Tessellation level must be positive.");
@@ -480,40 +470,27 @@ void bezier(const std::string& patchFile, int tessellation, const std::string& o
         throw std::runtime_error("Error: Unable to open patch file " + patchFile);
     }
     
-    // Read number of patches
+    //Read the number of patches
     std::string line;
     std::getline(file, line);
     int numPatches = std::stoi(line);
     
-    // Read patch indices
+    //Read the patch indices
     std::vector<std::vector<int>> patchIndices;
     for (int i = 0; i < numPatches; i++) {
         std::vector<int> patchIdx;
         std::getline(file, line);
         
-        // Parse indices, handling both comma-separated and space-separated formats
+        //Parse indices
         std::istringstream iss(line);
         std::string token;
         
-        // Check if comma-separated
-        if (line.find(',') != std::string::npos) {
-            while (std::getline(iss, token, ',')) {
-                // Trim whitespace
-                token.erase(0, token.find_first_not_of(" \t"));
-                token.erase(token.find_last_not_of(" \t") + 1);
-                if (!token.empty()) {
-                    patchIdx.push_back(std::stoi(token));
-                }
-            }
-        } else {
-            // Space-separated
-            int idx;
-            while (iss >> idx) {
-                patchIdx.push_back(idx);
-            }
+        int idx;
+        while (iss >> idx) {
+            patchIdx.push_back(idx);
         }
         
-        // Verify we have 16 control points per patch
+        //Verify if we have 16 control points per patch
         if (patchIdx.size() != 16) {
             throw std::runtime_error("Error: Each patch must have exactly 16 control points");
         }
@@ -521,19 +498,18 @@ void bezier(const std::string& patchFile, int tessellation, const std::string& o
         patchIndices.push_back(patchIdx);
     }
     
-    // Read number of control points
+    //Read the number of control points
     std::getline(file, line);
     int numControlPoints = std::stoi(line);
     
-    // Read control points
+    //Parse control points
     std::vector<Vertex> controlPoints;
     while (std::getline(file, line)) {
         if (line.empty()) continue;
         
         std::istringstream iss(line);
         float x, y, z;
-        
-        // Check if comma-separated
+        //Check if comma-separated
         if (line.find(',') != std::string::npos) {
             std::string xStr, yStr, zStr;
             std::getline(iss, xStr, ',');
@@ -559,16 +535,16 @@ void bezier(const std::string& patchFile, int tessellation, const std::string& o
         controlPoints.push_back({x, y, z});
     }
     
-    // Verify we have the correct number of control points
+    //Verify if we have the correct number of control points
     if (controlPoints.size() != numControlPoints) {
         std::cerr << "Warning: Expected " << numControlPoints << " control points but read " 
                   << controlPoints.size() << std::endl;
     }
     
-    // Generate mesh for each patch
+    //Generate the grid of vertices for each patch
     std::vector<Vertex> allVertices;
     for (const auto& patch : patchIndices) {
-        // Convert flat indices to 4x4 grid of control points
+        //Convert flat indices to 4x4 grid of control points
         std::vector<std::vector<Vertex>> patchControlPoints(4, std::vector<Vertex>(4));
         for (int i = 0; i < 4; i++) {
             for (int j = 0; j < 4; j++) {
@@ -581,20 +557,10 @@ void bezier(const std::string& patchFile, int tessellation, const std::string& o
             }
         }
         
-        // Generate and add vertices for this patch
+        //Generate and add vertices for this patch
         std::vector<Vertex> patchVertices = generateBezierPatch(patchControlPoints, tessellation);
         allVertices.insert(allVertices.end(), patchVertices.begin(), patchVertices.end());
     }
-    
-    // Fix orientation by flipping the teapot right-side up
-    // Create a rotation matrix to flip the teapot
-    // Matrix4x4 flipMatrix = rotationMatrixX(M_PI);
-
-    // Apply the transformation to all vertices
-    // for (auto& vertex : allVertices) {
-    //     vertex = transformVertex(vertex, flipMatrix);
-    // }
-
     // Write all vertices to the output file
     writeVertices(outputFile, allVertices);
 }
