@@ -282,9 +282,8 @@ while true; do
             echo "2. Box"
             echo "3. Sphere"
             echo "4. Cone"
-            echo "5. Circle"
-            echo "6. Torus"
-            echo "7. Bezier Patch"
+            echo "5. Torus"
+            echo "6. Bezier Patch"
             echo "0. Back"
                         
             read -p "Select figure type: " figure
@@ -368,25 +367,8 @@ while true; do
                 echo "Generated: tests/$filename"
                 read -p "Press Enter to return to the main menu..."
                 ;;
+            
             5)
-                echo "=== Circle Parameters ==="
-                echo "Example: radius=10, segments=64"
-                echo "Default: radius=1, segments=32"
-                read -p "Enter radius (default=1): " radius
-                read -p "Enter segments (default=32): " segments
-                radius=${radius:-1}
-                segments=${segments:-32}
-                # Create standardized filename
-                filename="circle_${radius}_${segments}.3d"
-                # Ensure tests directory exists
-                mkdir -p tests
-                cd generator
-                ./generator circle $radius $segments "../tests/$filename"
-                cd ..
-                echo "Generated: tests/$filename"
-                read -p "Press Enter to return to the main menu..."
-                ;;
-            6)
                 echo "=== Torus Parameters ==="
                 echo "Example: outer_radius=1, inner_radius=0.5, slices=16, stacks=8"
                 echo "Default: outer_radius=1, inner_radius=0.5, slices=16, stacks=8"
@@ -410,7 +392,7 @@ while true; do
                 ;;
 
 # ...existing code after the torus case...
-            7)
+            6)
                 echo "=== Bezier Patch Parameters ==="
                 echo "Example: patch_file=teapot.patch, tessellation=20"
                 echo "Default: patch_file=teapot.patch, tessellation=10"

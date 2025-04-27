@@ -21,13 +21,14 @@
 
 #include "engine.h"
 #include "xmlParser.h" 
-#include "catmullrom.h" // You need to implement Catmull-Rom helpers
+#include "catmullrom.h" 
 #include <fstream>
 #include <iostream>
 #include <cmath>
 #include <vector>
+#include <limits>
 
-//globals to track camera and movements values
+
 float cameraSpeed = 0.5f;  
 float rotationSpeed = 2.0f;    
 bool keys[256] = {false}; // Array to track key presses
@@ -49,8 +50,6 @@ int frameCount = 0;
 float fps = 0.0f;                
 int lastTime = 0;                //Fps tracker
 
-//Variáveis para animação
-bool pauseTranslation = false; // Pausa animações de translação
 
 /**
  * @brief Global world state containing all scene information
@@ -413,9 +412,6 @@ void keyPressed(unsigned char key, int x, int y) {
     //For debug menu
     if (key == 'h' || key == 'H') {
         showDebugMenu = !showDebugMenu;
-    }
-    if (key == 'p' || key == 'P') {
-        pauseTranslation = !pauseTranslation;
     }
     //ESC key to quit
     if (key == 27) 
