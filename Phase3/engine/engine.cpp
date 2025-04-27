@@ -49,6 +49,9 @@ int frameCount = 0;
 float fps = 0.0f;                
 int lastTime = 0;                //Fps tracker
 
+//Variáveis para animação
+bool pauseTranslation = false; // Pausa animações de translação
+
 /**
  * @brief Global world state containing all scene information
  * 
@@ -411,7 +414,9 @@ void keyPressed(unsigned char key, int x, int y) {
     if (key == 'h' || key == 'H') {
         showDebugMenu = !showDebugMenu;
     }
-    
+    if (key == 'p' || key == 'P') {
+        pauseTranslation = !pauseTranslation;
+    }
     //ESC key to quit
     if (key == 27) 
         exit(0);

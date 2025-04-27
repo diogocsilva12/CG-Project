@@ -8,7 +8,8 @@
 #include <sstream>
 #include "generatorAux.h"
 
-//Define 4x4 matrix type
+//-- MATRIX OPERATIONS --
+//Define the 4x4 matrix type
 typedef std::array<std::array<float, 4>, 4> Matrix4x4;
 
 // Matrix operations --
@@ -21,6 +22,7 @@ Matrix4x4 identityMatrix() {
     }};
 }
 
+//Translation matrices
 Matrix4x4 translationMatrix(float x, float y, float z) {
     Matrix4x4 m = identityMatrix();
     m[0][3] = x;
@@ -29,6 +31,8 @@ Matrix4x4 translationMatrix(float x, float y, float z) {
     return m;
 }
 
+
+//Scale matrices
 Matrix4x4 scaleMatrix(float x, float y, float z) {
     Matrix4x4 m = identityMatrix();
     m[0][0] = x;
@@ -37,6 +41,8 @@ Matrix4x4 scaleMatrix(float x, float y, float z) {
     return m;
 }
 
+
+//Rotation matrices X Axis
 Matrix4x4 rotationMatrixX(float angle) {
     float c = cos(angle);
     float s = sin(angle);
@@ -48,6 +54,7 @@ Matrix4x4 rotationMatrixX(float angle) {
     return m;
 }
 
+//Rotation matrices Y Axis
 Matrix4x4 rotationMatrixY(float angle) {
     float c = cos(angle);
     float s = sin(angle);
@@ -59,6 +66,7 @@ Matrix4x4 rotationMatrixY(float angle) {
     return m;
 }
 
+//Rotation matrices Z Axis
 Matrix4x4 rotationMatrixZ(float angle) {
     float c = cos(angle);
     float s = sin(angle);
@@ -83,6 +91,8 @@ Matrix4x4 multiplyMatrices(const Matrix4x4& a, const Matrix4x4& b) {
     }
     return result;
 }
+
+//-- VERTEX TRANSFORMATION --
 //Aplica uma transformacao a um vertice
 Vertex transformVertex(const Vertex& v, const Matrix4x4& m) {
     float x = v.x, y = v.y, z = v.z, w = 1.0f;
@@ -101,9 +111,8 @@ Vertex transformVertex(const Vertex& v, const Matrix4x4& m) {
     return {newX, newY, newZ};
 }
 
-/**
- * Writes a list of vertices to a file.
- */
+
+// Writes vertices to a file
 void writeVertices(const std::string& filename, const std::vector<Vertex>& vertices) {
     std::ofstream file(filename);
     if (!file.is_open()) {
@@ -117,6 +126,8 @@ void writeVertices(const std::string& filename, const std::vector<Vertex>& verti
 }
 
 
+//-- PRIMITIVES POINTS GENERATION --
+// Generates points for a plane
 void plane(float unit, int slices, const std::string& filename) {
     if (unit <= 0 || slices <= 0) {
         throw std::invalid_argument("Error: Unit and slices must be positive.");
@@ -153,7 +164,7 @@ void plane(float unit, int slices, const std::string& filename) {
     writeVertices(filename, vertices);
 }
 
-
+// Generates points for a box
 void box(float unit, int slices, const std::string& filename) {
     if (unit <= 0 || slices <= 0) {
         throw std::invalid_argument("Error: Unit and slices must be positive.");
@@ -228,6 +239,7 @@ void box(float unit, int slices, const std::string& filename) {
     writeVertices(filename, vertices);
 }
 
+// Generates points for a sphere
 void sphere(float radius, int slices, int stacks, const std::string& filename) {
     if (radius <= 0 || slices <= 0 || stacks <= 0) {
         throw std::invalid_argument("Error: Radius, slices, and stacks must be positive.");
@@ -286,6 +298,8 @@ void sphere(float radius, int slices, int stacks, const std::string& filename) {
     writeVertices(filename, vertices);
 }
 
+
+// Generates points for a cone 
 void cone(float radius, float height, int slices, int stacks, const std::string& filename) {
     if (radius <= 0 || height <= 0 || slices <= 0 || stacks <= 0) {
         throw std::invalid_argument("Error: Radius, height, slices, and stacks must be positive.");
@@ -339,128 +353,108 @@ void cone(float radius, float height, int slices, int stacks, const std::string&
     writeVertices(filename, vertices);
 }
 
-void torus(float outerRadius, float innerRadius, int sides, int rings, const std::string& filename) {
-    if (outerRadius <= 0 || innerRadius <= 0 || sides <= 0 || rings <= 0) {
-        throw std::invalid_argument("Error: Outer radius, inner radius, sides, and rings must be positive.");
+
+// Generates points for a torus
+void torus(float outerRadius, float innerRadius, int slices, int stacks, const std::string& filename) {
+    if (outerRadius <= 0 || innerRadius <= 0 || slices <= 0 || stacks <= 0) {
+        throw std::invalid_argument("Error: Outer radius, inner radius, slices, and stacks must be positive.");
     }
 
     std::vector<Vertex> vertices;
-    float ringRadius = (outerRadius - innerRadius) / 2;
-    float torusRadius = innerRadius + ringRadius;
+    float arch_alpha = (2 * M_PI) / stacks;
+    float arch_beta = (2 * M_PI) / slices;
 
-    for (int i = 0; i < rings; i++) {
-        float theta = 2.0f * M_PI * i / rings;
-        float theta_next = 2.0f * M_PI * (i + 1) / rings;
-
-        Matrix4x4 rotateM = rotationMatrixY(theta);
-        Matrix4x4 rotateNextM = rotationMatrixY(theta_next);
-
-        Matrix4x4 transM = translationMatrix(torusRadius, 0.0f, 0.0f);
     
-        Matrix4x4 transform = multiplyMatrices(rotateM, transM);
-        Matrix4x4 transformNext = multiplyMatrices(rotateNextM, transM);
+    float max_radius = (outerRadius + innerRadius) / 2.0f;
+    float min_radius = max_radius - innerRadius;
 
-        for (int j = 0; j < sides; j++) {
-            float phi = 2.0f * M_PI * j / sides;
-            float phi_next = 2.0f * M_PI * (j + 1) / sides;
-            
-    
-            Vertex p1 = {ringRadius * cos(phi), ringRadius * sin(phi), 0.0f};
-            Vertex p2 = {ringRadius * cos(phi_next), ringRadius * sin(phi_next), 0.0f};
-   
-            Vertex v1 = transformVertex(p1, transform);
-            Vertex v2 = transformVertex(p2, transform);
-       
-            Vertex v3 = transformVertex(p2, transformNext);
-            Vertex v4 = transformVertex(p1, transformNext);
+    for (int i = 0; i < stacks; i++) {
+        for (int j = 0; j < slices; j++) {
+            float x1 = (max_radius + min_radius * cos(arch_alpha * i)) * cos(arch_beta * j);
+            float x2 = (max_radius + min_radius * cos(arch_alpha * (i+1))) * cos(arch_beta * j);
+            float x3 = (max_radius + min_radius * cos(arch_alpha * (i+1))) * cos(arch_beta * (j+1));
+            float x4 = (max_radius + min_radius * cos(arch_alpha * i)) * cos(arch_beta * (j+1));
 
-            
-            vertices.push_back(v1);
-            vertices.push_back(v2);
-            vertices.push_back(v3);
+            float y1 = min_radius * sin(arch_alpha * i);
+            float y2 = min_radius * sin(arch_alpha * (i+1));
+            float y3 = min_radius * sin(arch_alpha * (i+1));
+            float y4 = min_radius * sin(arch_alpha * i);
 
-          
-            vertices.push_back(v1);
-            vertices.push_back(v3);
-            vertices.push_back(v4);
+            float z1 = (max_radius + min_radius * cos(arch_alpha * i)) * sin(arch_beta * j);
+            float z2 = (max_radius + min_radius * cos(arch_alpha * (i+1))) * sin(arch_beta * j);
+            float z3 = (max_radius + min_radius * cos(arch_alpha * (i+1))) * sin(arch_beta * (j+1));
+            float z4 = (max_radius + min_radius * cos(arch_alpha * i)) * sin(arch_beta * (j+1));
+
+            // Triangle 1
+            vertices.push_back({x1, y1, z1});
+            vertices.push_back({x2, y2, z2});
+            vertices.push_back({x4, y4, z4});
+
+            // Triangle 2
+            vertices.push_back({x2, y2, z2});
+            vertices.push_back({x3, y3, z3});
+            vertices.push_back({x4, y4, z4});
         }
     }
-
     writeVertices(filename, vertices);
 }
 
-/**
- * @brief Compute a point on a Bezier patch using Bernstein polynomials
- * 
- * @param controlPoints 4x4 grid of control points defining the patch
- * @param u Parameter in the range [0,1] for the first dimension
- * @param v Parameter in the range [0,1] for the second dimension
- * @return Vertex Position on the Bezier patch
- */
-Vertex calculateBezierPoint(const std::vector<std::vector<Vertex>>& controlPoints, float u, float v) {
-    // Bernstein basis polynomials
-    auto bernstein = [](int i, float t) -> float {
-        switch(i) {
-            case 0: return (1-t)*(1-t)*(1-t);
-            case 1: return 3*t*(1-t)*(1-t);
-            case 2: return 3*t*t*(1-t);
-            case 3: return t*t*t;
-            default: return 0.0f;
-        }
+//Linear interpolation between two vertices
+Vertex lerp(const Vertex& a, const Vertex& b, float t) {
+    return {
+        a.x + (b.x - a.x) * t,
+        a.y + (b.y - a.y) * t,
+        a.z + (b.z - a.z) * t
     };
-    
-    Vertex result = {0.0f, 0.0f, 0.0f};
-    
-    // Compute using Bernstein polynomials
-    for (int i = 0; i < 4; i++) {
-        for (int j = 0; j < 4; j++) {
-            float blend = bernstein(i, u) * bernstein(j, v);
-            result.x += blend * controlPoints[i][j].x;
-            result.y += blend * controlPoints[i][j].y;
-            result.z += blend * controlPoints[i][j].z;
-        }
-    }
-    
-    return result;
 }
 
-/**
- * @brief Generate a triangle mesh for a Bezier patch
- * 
- * @param controlPoints 4x4 grid of control points defining the patch
- * @param tessellation Level of detail (number of subdivisions)
- * @return std::vector<Vertex> Triangle vertices for the patch
- */
+//de Casteljau algorithm for Bezier curve (1D)
+Vertex deCasteljau1D(const std::vector<Vertex>& points, float t) {
+    std::vector<Vertex> temp = points;
+    for (int k = 1; k < temp.size(); ++k) {
+        for (int i = 0; i < temp.size() - k; ++i) {
+            temp[i] = lerp(temp[i], temp[i + 1], t);
+        }
+    }
+    return temp[0];
+}
+
+//de Casteljau for Bezier patch (2D)
+Vertex calculateBezierPoint(const std::vector<std::vector<Vertex>>& controlPoints, float u, float v) {
+    std::vector<Vertex> uCurve(4);
+    for (int i = 0; i < 4; ++i) {
+        uCurve[i] = deCasteljau1D(controlPoints[i], v);
+    }
+    return deCasteljau1D(uCurve, u);
+}
+
+// Generates a Bezier patch mesh
 std::vector<Vertex> generateBezierPatch(const std::vector<std::vector<Vertex>>& controlPoints, int tessellation) {
     std::vector<Vertex> vertices;
     float step = 1.0f / tessellation;
-    
-    // Generate the mesh using parametric evaluation
-    for (int i = 0; i < tessellation; i++) {
-        for (int j = 0; j < tessellation; j++) {
-            float u0 = i * step;
-            float u1 = (i + 1) * step;
-            float v0 = j * step;
-            float v1 = (j + 1) * step;
-            
-            // Calculate the four corners of the current grid cell
-            Vertex p00 = calculateBezierPoint(controlPoints, u0, v0);
-            Vertex p01 = calculateBezierPoint(controlPoints, u0, v1);
-            Vertex p10 = calculateBezierPoint(controlPoints, u1, v0);
-            Vertex p11 = calculateBezierPoint(controlPoints, u1, v1);
-            
-            // First triangle - MODIFIED winding order
-            vertices.push_back(p00);
-            vertices.push_back(p11);
-            vertices.push_back(p10);
-            
-            // Second triangle - MODIFIED winding order
-            vertices.push_back(p00);
-            vertices.push_back(p01);
-            vertices.push_back(p11);
+
+    //Precomputed points for effiency
+    std::vector<std::vector<Vertex>> grid(tessellation + 1, std::vector<Vertex>(tessellation + 1));
+    for (int i = 0; i <= tessellation; ++i) {
+        float u = i * step;
+        for (int j = 0; j <= tessellation; ++j) {
+            float v = j * step;
+            grid[i][j] = calculateBezierPoint(controlPoints, u, v);
         }
     }
-    
+
+    for (int i = 0; i < tessellation; ++i) {
+        for (int j = 0; j < tessellation; ++j) {
+            // Triangle 1 (swap 2nd and 3rd vertex)
+            vertices.push_back(grid[i][j]);
+            vertices.push_back(grid[i+1][j+1]);
+            vertices.push_back(grid[i+1][j]);
+            // Triangle 2 (swap 2nd and 3rd vertex)
+            vertices.push_back(grid[i][j]);
+            vertices.push_back(grid[i][j+1]);
+            vertices.push_back(grid[i+1][j+1]);
+        }
+    }
     return vertices;
 }
 
@@ -594,13 +588,13 @@ void bezier(const std::string& patchFile, int tessellation, const std::string& o
     
     // Fix orientation by flipping the teapot right-side up
     // Create a rotation matrix to flip the teapot
-    Matrix4x4 flipMatrix = rotationMatrixX(M_PI);
-    
+    // Matrix4x4 flipMatrix = rotationMatrixX(M_PI);
+
     // Apply the transformation to all vertices
-    for (auto& vertex : allVertices) {
-        vertex = transformVertex(vertex, flipMatrix);
-    }
-    
+    // for (auto& vertex : allVertices) {
+    //     vertex = transformVertex(vertex, flipMatrix);
+    // }
+
     // Write all vertices to the output file
     writeVertices(outputFile, allVertices);
 }
