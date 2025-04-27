@@ -84,21 +84,21 @@ Notes:
 
 
 # Generate sphere for celestial bodies
-./generator sphere 1 8 8 sphere_1_8_8.3d
+- ./generator sphere 1 8 8 sphere_1_8_8.3d
 
 # Generate torus for Saturn's rings
-./generator torus 1 0.5 16 8 torus_1_0.5_16_8.3d
+- ./generator torus 1 0.5 16 8 torus_1_0.5_16_8.3d
 
 # Generate circles for orbits
-./generator circle 30 64 circle_30_64.3d   # Mercury orbit
-./generator circle 40 64 circle_40_64.3d   # Venus orbit
-./generator circle 50 64 circle_50_64.3d   # Earth orbit
-./generator circle 3 32 circle_3_32.3d     # Moon orbit
-./generator circle 60 64 circle_60_64.3d   # Mars orbit
-./generator circle 2.5 32 circle_2.5_32.3d # Phobos orbit
-./generator circle 3.5 32 circle_3.5_32.3d # Deimos orbit
-./generator circle 75 64 circle_75_64.3d   # Jupiter orbit
-./generator circle 4 32 circle_4_32.3d     # Various moon orbits
-./generator circle 90 64 circle_90_64.3d   # Saturn orbit
-./generator circle 102 64 circle_102_64.3d # Uranus orbit
-./generator circle 110 64 circle_110_64.3d # Neptune orbit
+- ./generator circle 30 64 circle_30_64.3d   # Mercury orbit
+- ./generator circle 40 64 circle_40_64.3d   # Venus orbit
+- ./generator circle 50 64 circle_50_64.3d   # Earth orbit
+- ./generator circle 3 32 circle_3_32.3d     # Moon orbit
+- ./generator circle 60 64 circle_60_64.3d   # Mars orbit
+- ./generator circle 2.5 32 circle_2.5_32.3d # Phobos orbit
+- ./generator circle 3.5 32 circle_3.5_32.3d # Deimos orbit
+- ./generator circle 75 64 circle_75_64.3d   # Jupiter orbit
+- ./generator circle 4 32 circle_4_32.3d     # Various moon orbits
+- ./generator circle 90 64 circle_90_64.3d   # Saturn orbit
+- ./generator circle 102 64 circle_102_64.3d # Uranus orbit
+- ./generator circle 110 64 circle_110_64.3d # Neptune orbit
