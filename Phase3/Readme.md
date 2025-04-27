@@ -79,7 +79,7 @@ Notes:
 ![Demo](https://github.com/diogocsilva12/CG-Project/raw/9a2d0f71306a7a6b5c4671d0377e751600867192/Phase2/usage_example.gif)
 
 ### Solar System Simulation
-![Solar System Simulation]
+![Solar System Simulation](https://github.com/diogocsilva12/CG-Project/blob/main/Phase3/solarsystem.gif)
 
 
 
