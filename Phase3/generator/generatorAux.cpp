@@ -171,68 +171,91 @@ void box(float unit, int slices, const std::string& filename) {
     }
 
     std::vector<Vertex> vertices;
+    float comp = unit / slices;
     float offset = unit / 2.0f;
-    
-    for (int face = 0; face < 6; face++) {
-        Matrix4x4 faceTransform = identityMatrix();
-        switch(face) {
-            case 0: 
-                faceTransform = multiplyMatrices(translationMatrix(0, offset, 0), rotationMatrixX(0)); 
-                break;
-            case 1: 
-                faceTransform = multiplyMatrices(translationMatrix(0, -offset, 0),rotationMatrixX(M_PI)); 
-                break;
-            case 2: 
-                faceTransform = multiplyMatrices(translationMatrix(0, 0, offset), rotationMatrixX(M_PI/2)); 
-                break;
-            case 3: 
-                faceTransform = multiplyMatrices(translationMatrix(0, 0, -offset), multiplyMatrices(rotationMatrixX(-M_PI/2), rotationMatrixZ(M_PI))); 
-                break;
-            case 4: 
-                faceTransform = multiplyMatrices(translationMatrix(offset, 0, 0), rotationMatrixZ(-M_PI/2)); 
-                break;
-            case 5:
-                faceTransform = multiplyMatrices(translationMatrix(-offset, 0, 0), rotationMatrixZ(M_PI/2)); 
-                break;
-        }
-        
-        float comp = unit / slices;
-        Matrix4x4 scaleM = scaleMatrix(comp, 1.0f, comp);
-        Matrix4x4 positionM = translationMatrix(-unit/2 + comp/2, 0, -unit/2 + comp/2);
-        
-        for (int i = 0; i < slices; i++) {
-            for (int j = 0; j < slices; j++) {
-                Vertex v1 = {float(i), 0.0f, float(j)};
-                Vertex v2 = {float(i+1), 0.0f, float(j)};
-                Vertex v3 = {float(i+1), 0.0f, float(j+1)};
-                Vertex v4 = {float(i), 0.0f, float(j+1)};
-                
-                Matrix4x4 totalTransform = multiplyMatrices(faceTransform, 
-                                         multiplyMatrices(positionM, scaleM));
-                
-                v1 = transformVertex(v1, totalTransform);
-                v2 = transformVertex(v2, totalTransform);
-                v3 = transformVertex(v3, totalTransform);
-                v4 = transformVertex(v4, totalTransform);
+    float x1, x2, y1, y2, z1, z2;
 
-                if (face == 0 || face == 2 || face == 4) { 
-                    vertices.push_back(v1);
-                    vertices.push_back(v2);
-                    vertices.push_back(v3);
-                    
-                    vertices.push_back(v1);
-                    vertices.push_back(v3);
-                    vertices.push_back(v4);
-                } else { 
-                    vertices.push_back(v1);
-                    vertices.push_back(v3);
-                    vertices.push_back(v2);
-                    
-                    vertices.push_back(v1);
-                    vertices.push_back(v4);
-                    vertices.push_back(v3);
-                }
-            }
+    // Top and bottom faces (Y = +offset and Y = -offset)
+    for (int i = 0; i < slices; i++) {
+        for (int j = 0; j < slices; j++) {
+            x1 = i * comp - offset;
+            z1 = j * comp - offset;
+            x2 = (i + 1) * comp - offset;
+            z2 = (j + 1) * comp - offset;
+
+            // Top (+Y)
+            vertices.push_back({x1, offset, z1});
+            vertices.push_back({x2, offset, z2});
+            vertices.push_back({x2, offset, z1});
+
+            vertices.push_back({x1, offset, z1});
+            vertices.push_back({x1, offset, z2});
+            vertices.push_back({x2, offset, z2});
+
+            // Bottom (-Y)
+            vertices.push_back({x2, -offset, z2});
+            vertices.push_back({x1, -offset, z1});
+            vertices.push_back({x2, -offset, z1});
+
+            vertices.push_back({x1, -offset, z2});
+            vertices.push_back({x1, -offset, z1});
+            vertices.push_back({x2, -offset, z2});
+        }
+    }
+
+    // Front and back faces (Z = +offset and Z = -offset)
+    for (int i = 0; i < slices; i++) {
+        for (int j = 0; j < slices; j++) {
+            x1 = i * comp - offset;
+            y1 = j * comp - offset;
+            x2 = (i + 1) * comp - offset;
+            y2 = (j + 1) * comp - offset;
+
+            // Front (+Z)
+            vertices.push_back({x2, y2, offset});
+            vertices.push_back({x1, y1, offset});
+            vertices.push_back({x2, y1, offset});
+
+            vertices.push_back({x1, y2, offset});
+            vertices.push_back({x1, y1, offset});
+            vertices.push_back({x2, y2, offset});
+
+            // Back (-Z)
+            vertices.push_back({x1, y1, -offset});
+            vertices.push_back({x2, y2, -offset});
+            vertices.push_back({x2, y1, -offset});
+
+            vertices.push_back({x1, y1, -offset});
+            vertices.push_back({x1, y2, -offset});
+            vertices.push_back({x2, y2, -offset});
+        }
+    }
+
+    // Right and left faces (X = +offset and X = -offset)
+    for (int i = 0; i < slices; i++) {
+        for (int j = 0; j < slices; j++) {
+            z1 = i * comp - offset;
+            y1 = j * comp - offset;
+            z2 = (i + 1) * comp - offset;
+            y2 = (j + 1) * comp - offset;
+
+            // Right (+X)
+            vertices.push_back({offset, y1, z1});
+            vertices.push_back({offset, y2, z2});
+            vertices.push_back({offset, y1, z2});
+
+            vertices.push_back({offset, y1, z1});
+            vertices.push_back({offset, y2, z1});
+            vertices.push_back({offset, y2, z2});
+
+            // Left (-X)
+            vertices.push_back({-offset, y2, z2});
+            vertices.push_back({-offset, y1, z1});
+            vertices.push_back({-offset, y1, z2});
+
+            vertices.push_back({-offset, y2, z1});
+            vertices.push_back({-offset, y1, z1});
+            vertices.push_back({-offset, y2, z2});
         }
     }
 
@@ -490,10 +513,7 @@ void bezier(const std::string& patchFile, int tessellation, const std::string& o
             patchIdx.push_back(idx);
         }
         
-        //Verify if we have 16 control points per patch
-        if (patchIdx.size() != 16) {
-            throw std::runtime_error("Error: Each patch must have exactly 16 control points");
-        }
+
         
         patchIndices.push_back(patchIdx);
     }
