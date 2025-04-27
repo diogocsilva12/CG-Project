@@ -11,6 +11,7 @@
 #include <GLUT/glut.h>
 #include <OpenGL/gl3.h>
 #elif __linux__
+#include <GL/glew.h>
 #include <GL/glut.h>
 #include <GL/gl.h>
 #include <GL/glu.h>
@@ -589,13 +590,14 @@ int main(int argc, char** argv) {
 
     world = parseXMLFile(argv[1]);
     initCameraAngles();
-
     glutInit(&argc, argv);
     glutInitDisplayMode(GLUT_DEPTH | GLUT_DOUBLE | GLUT_RGBA);
     glutInitWindowPosition(100, 100);
     glutInitWindowSize(world.window.width, world.window.height);
     glutCreateWindow("CG@Fase 2 - G18");
 
+    glewExperimental = GL_TRUE;
+    
 #ifndef __APPLE__
     GLenum err = glewInit();
     if (GLEW_OK != err) {
