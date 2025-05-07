@@ -2,7 +2,7 @@ This document provides an overview of the project and instructions for running t
 
 ---
 
--- PHASE 3 CONCLUDED --
+-- PHASE 4 --
 
 ## Table of Contents
 1. [Project Overview](#project-overview)
