@@ -29,6 +29,7 @@
 #include <cmath>
 #include <vector>
 #include <limits>
+#include <sstream>
 
 
 float cameraSpeed = 0.5f;  
@@ -76,33 +77,98 @@ void loadModel(Model& model) {
         return;
     }
 
-    Point vertex;
+    std::vector<Point> vertices;
+    std::vector<Point> normals;
+    std::vector<float> texCoords;
+    
+    std::string line;
     int lineNum = 0;
-    while (file) {
+    
+    while (std::getline(file, line)) {
         ++lineNum;
-        if (!(file >> vertex.x >> vertex.y >> vertex.z)) {
-            if (!file.eof()) {
-                std::cerr << "Malformed line " << lineNum << " in " << model.filename << std::endl;
-                file.clear();
-                file.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+        std::istringstream iss(line);
+        
+        // Try to read as position + normal + texture format
+        Point vertex, normal;
+        float u, v;
+        
+        if (iss >> vertex.x >> vertex.y >> vertex.z >> normal.x >> normal.y >> normal.z >> u >> v) {
+            // Full format with position, normal, and texture
+            vertices.push_back(vertex);
+            normals.push_back(normal);
+            texCoords.push_back(u);
+            texCoords.push_back(v);
+        } else {
+            // Reset stream for retry
+            iss.clear();
+            iss.str(line);
+            
+            // Try to read as position + texture format
+            if (iss >> vertex.x >> vertex.y >> vertex.z >> u >> v) {
+                vertices.push_back(vertex);
+                texCoords.push_back(u);
+                texCoords.push_back(v);
+            } else {
+                // Reset stream for retry
+                iss.clear();
+                iss.str(line);
+                
+                // Try to read as position only format
+                if (iss >> vertex.x >> vertex.y >> vertex.z) {
+                    vertices.push_back(vertex);
+                } else {
+                    if (!file.eof()) {
+                        std::cerr << "Malformed line " << lineNum << " in " << model.filename << std::endl;
+                    }
+                }
             }
-            continue;
         }
-        model.vertices.push_back(vertex);
     }
 
-    if (model.vertices.empty()) {
+    if (vertices.empty()) {
         std::cerr << "Warning: Model " << model.filename << " has no vertices!" << std::endl;
         return;
     }
 
+    model.vertices = vertices;
+    
+    // Store normals if available
+    if (!normals.empty()) {
+        model.normals = normals;
+    }
+    
+    // Store texture coordinates if available
+    if (!texCoords.empty()) {
+        model.texCoords = texCoords;
+    }
+
+    // Create and populate vertex buffer
     if (model.vbo == 0) glGenBuffers(1, &model.vbo);
     glBindBuffer(GL_ARRAY_BUFFER, model.vbo);
     glBufferData(GL_ARRAY_BUFFER, model.vertices.size() * sizeof(Point), model.vertices.data(), GL_STATIC_DRAW);
+    
+    // Create and populate normal buffer if normals exist
+    if (!model.normals.empty()) {
+        if (model.nbo == 0) glGenBuffers(1, &model.nbo);
+        glBindBuffer(GL_ARRAY_BUFFER, model.nbo);
+        glBufferData(GL_ARRAY_BUFFER, model.normals.size() * sizeof(Point), model.normals.data(), GL_STATIC_DRAW);
+    }
+    
+    // Create and populate texture coordinate buffer if texture coordinates exist
+    if (!model.texCoords.empty()) {
+        if (model.tbo == 0) glGenBuffers(1, &model.tbo);
+        glBindBuffer(GL_ARRAY_BUFFER, model.tbo);
+        glBufferData(GL_ARRAY_BUFFER, model.texCoords.size() * sizeof(float), model.texCoords.data(), GL_STATIC_DRAW);
+    }
+    
     glBindBuffer(GL_ARRAY_BUFFER, 0);
     
+    // Load texture if specified
     if (!model.textureFile.empty()) {
         model.textureID = loadTexture(model.textureFile);
+        if (model.textureID == 0) {
+            std::cerr << "Failed to load texture: " << model.textureFile << std::endl;
+        }
     }
 }
 
@@ -116,7 +182,14 @@ void loadModel(Model& model) {
  */
 void drawCatmullRomCurve(const std::vector<Point>& points, int samples = 100) {
     if (points.size() < 4) return;
-    //glDisable(GL_LIGHTING); // If using lighting, disable for lines
+    
+    // Save current lighting state
+    GLboolean lightingEnabled = glIsEnabled(GL_LIGHTING);
+    
+    // Disable lighting for drawing curves
+    glDisable(GL_LIGHTING);
+    glDisable(GL_TEXTURE_2D);
+    
     glColor3f(0.7f, 0.7f, 0.7f); // Light gray for trajectory
     glBegin(GL_LINE_LOOP);
     for (int i = 0; i < samples; ++i) {
@@ -126,7 +199,109 @@ void drawCatmullRomCurve(const std::vector<Point>& points, int samples = 100) {
         glVertex3f(pos[0], pos[1], pos[2]);
     }
     glEnd();
-    glColor3f(1,1,1); // Reset color
+    
+    // Restore previous lighting state
+    if (lightingEnabled) {
+        glEnable(GL_LIGHTING);
+    }
+    
+    glColor3f(1.0f, 1.0f, 1.0f); // Reset color
+}
+
+// Replace your existing setupLights function with this one
+
+void setupLights(const std::vector<Light>& lights) {
+    // Disable lighting first, then re-enable lights as needed
+    glDisable(GL_LIGHTING);
+    
+    if (lights.empty()) {
+        return; // No lights to setup
+    }
+    
+    // Enable lighting
+    glEnable(GL_LIGHTING);
+    
+    // Configure up to 8 lights (OpenGL limit)
+    for (size_t i = 0; i < lights.size() && i < 8; i++) {
+        GLenum lightID = GL_LIGHT0 + i;
+        
+        // Disable the light first
+        glDisable(lightID);
+        
+        const Light& light = lights[i];
+        
+        // Define light colors (using white by default)
+        float ambient[4] = {0.2f, 0.2f, 0.2f, 1.0f};  // Subtle ambient
+        float diffuse[4] = {1.0f, 1.0f, 1.0f, 1.0f};  // Full diffuse
+        float specular[4] = {1.0f, 1.0f, 1.0f, 1.0f}; // Full specular
+        
+        glLightfv(lightID, GL_AMBIENT, ambient);
+        glLightfv(lightID, GL_DIFFUSE, diffuse);
+        glLightfv(lightID, GL_SPECULAR, specular);
+        
+        if (light.type == "point") {
+            // Point light
+            float position[4] = {light.posx, light.posy, light.posz, 1.0f};  // w=1 for position
+            glLightfv(lightID, GL_POSITION, position);
+            
+            // Default attenuation parameters
+            glLightf(lightID, GL_CONSTANT_ATTENUATION, 1.0f);
+            glLightf(lightID, GL_LINEAR_ATTENUATION, 0.0f);
+            glLightf(lightID, GL_QUADRATIC_ATTENUATION, 0.0f);
+        }
+        else if (light.type == "directional") {
+            // Directional light
+            float direction[4] = {light.dirx, light.diry, light.dirz, 0.0f};  // w=0 for direction
+            glLightfv(lightID, GL_POSITION, direction);  // In OpenGL, direction is stored in position with w=0
+        }
+        else if (light.type == "spotlight") {
+            // Spotlight
+            float position[4] = {light.posx, light.posy, light.posz, 1.0f};
+            float direction[3] = {light.dirx, light.diry, light.dirz};
+            
+            glLightfv(lightID, GL_POSITION, position);
+            glLightfv(lightID, GL_SPOT_DIRECTION, direction);
+            glLightf(lightID, GL_SPOT_CUTOFF, light.cutoff);
+            glLightf(lightID, GL_SPOT_EXPONENT, 2.0f);  // Controls spotlight focus
+        }
+        
+        // Now enable the light
+        glEnable(lightID);
+    }
+}
+
+// Update your setupMaterial function to include debug output
+
+void setupMaterial(const Material& material) {
+    // Create material property arrays with alpha=1.0
+    float diffuse[4] = {material.diffuse.r, material.diffuse.g, material.diffuse.b, 1.0f};
+    float ambient[4] = {material.ambient.r, material.ambient.g, material.ambient.b, 1.0f};
+    float specular[4] = {material.specular.r, material.specular.g, material.specular.b, 1.0f};
+    float emissive[4] = {material.emissive.r, material.emissive.g, material.emissive.b, 1.0f};
+    
+    // Print more detailed debugging information
+    static int materialCount = 0;
+    if (materialCount < 10) {  // Increased to see more materials
+        std::cout << "Setting material " << materialCount << ":" << std::endl;
+        std::cout << "  Diffuse: (" << diffuse[0] << ", " << diffuse[1] << ", " << diffuse[2] << ")" << std::endl;
+        
+        // Check for common error conditions
+        if (diffuse[0] > 1.0f || diffuse[1] > 1.0f || diffuse[2] > 1.0f) {
+            std::cout << "  WARNING: Diffuse color components > 1.0 - these need to be normalized!" << std::endl;
+        }
+        if (diffuse[0] == 0.0f && diffuse[1] == 0.0f && diffuse[2] == 0.0f) {
+            std::cout << "  WARNING: Diffuse color is black - check if colors are properly parsed!" << std::endl;
+        }
+        
+        materialCount++;
+    }
+    
+    // Apply material properties
+    glMaterialfv(GL_FRONT, GL_DIFFUSE, diffuse);
+    glMaterialfv(GL_FRONT, GL_AMBIENT, ambient);
+    glMaterialfv(GL_FRONT, GL_SPECULAR, specular);
+    glMaterialfv(GL_FRONT, GL_EMISSION, emissive);
+    glMaterialf(GL_FRONT, GL_SHININESS, material.shininess * 128.0f); // OpenGL expects 0-128 range
 }
 
 //Render groups with transformations. Applies transformations in the order specified in the XML file.
@@ -175,11 +350,16 @@ void renderGroup(const Group& group) {
     
     //Renders all models in group.models
     for (const Model& model : group.models) {
-        if (model.textureID) {
+        // Disable color material before setting material properties
+        glDisable(GL_COLOR_MATERIAL);
+        
+        // Setup material properties
+        setupMaterial(model.material);
+        
+        // Setup texture if available
+        if (model.textureID > 0) {
             glEnable(GL_TEXTURE_2D);
             glBindTexture(GL_TEXTURE_2D, model.textureID);
-            // glEnableClientState(GL_TEXTURE_COORD_ARRAY); // se usares VBO para texcoords
-            // glTexCoordPointer(...); // se usares VBO para texcoords
         } else {
             glDisable(GL_TEXTURE_2D);
         }
@@ -188,8 +368,28 @@ void renderGroup(const Group& group) {
             glBindBuffer(GL_ARRAY_BUFFER, model.vbo);
             glEnableClientState(GL_VERTEX_ARRAY);
             glVertexPointer(3, GL_FLOAT, sizeof(Point), 0);
+            
+            // Use normals if available
+            if (model.nbo != 0 && !model.normals.empty()) {
+                glBindBuffer(GL_ARRAY_BUFFER, model.nbo);
+                glEnableClientState(GL_NORMAL_ARRAY);
+                glNormalPointer(GL_FLOAT, sizeof(Point), 0);
+            }
+            
+            // Use texture coordinates if available
+            if (model.tbo != 0 && !model.texCoords.empty()) {
+                glBindBuffer(GL_ARRAY_BUFFER, model.tbo);
+                glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+                glTexCoordPointer(2, GL_FLOAT, 0, 0);
+            }
+            
             glDrawArrays(GL_TRIANGLES, 0, model.vertices.size());
+            
+            // Disable client states
             glDisableClientState(GL_VERTEX_ARRAY);
+            if (!model.normals.empty()) glDisableClientState(GL_NORMAL_ARRAY);
+            if (!model.texCoords.empty()) glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+            
             glBindBuffer(GL_ARRAY_BUFFER, 0);
         }
     }
@@ -424,16 +624,21 @@ void mouseMotion(int x, int y) {
 void keyPressed(unsigned char key, int x, int y) {
     keys[key] = true;
     
-    //For debug menu
+    // Print which key was pressed (for debugging)
+    std::cout << "Key pressed: '" << key << "' (ASCII: " << (int)key << ")" << std::endl;
+    
+    // For debug menu
     if (key == 'h' || key == 'H') {
         showDebugMenu = !showDebugMenu;
+        std::cout << "Debug menu toggled: " << (showDebugMenu ? "ON" : "OFF") << std::endl;
     }
-    //ESC key to quit
+    
+    // ESC key to quit
     if (key == 27) 
         exit(0);
+        
     glutPostRedisplay();
 }
-
 
 void keyReleased(unsigned char key, int x, int y) {
     keys[key] = false;
@@ -450,6 +655,11 @@ void keyReleased(unsigned char key, int x, int y) {
  * @param y Y coordinate in screen space (pixels from bottom)
  */
 void renderText(const char* text, float x, float y) {
+    // Save current states
+    GLboolean depthEnabled = glIsEnabled(GL_DEPTH_TEST);
+    GLboolean lightingEnabled = glIsEnabled(GL_LIGHTING);
+    GLboolean textureEnabled = glIsEnabled(GL_TEXTURE_2D);
+    
     // Save current matrices
     glMatrixMode(GL_PROJECTION);
     glPushMatrix();
@@ -460,8 +670,10 @@ void renderText(const char* text, float x, float y) {
     glPushMatrix();
     glLoadIdentity();
     
-    // Disable depth testing for text
+    // Disable features that could interfere with text rendering
     glDisable(GL_DEPTH_TEST);
+    glDisable(GL_LIGHTING);
+    glDisable(GL_TEXTURE_2D);
     
     // Set text color to white
     glColor3f(1.0f, 1.0f, 1.0f);
@@ -473,7 +685,9 @@ void renderText(const char* text, float x, float y) {
     }
     
     // Restore settings
-    glEnable(GL_DEPTH_TEST);
+    if (depthEnabled) glEnable(GL_DEPTH_TEST);
+    if (lightingEnabled) glEnable(GL_LIGHTING);
+    if (textureEnabled) glEnable(GL_TEXTURE_2D);
     
     // Restore matrices
     glPopMatrix();
@@ -513,12 +727,17 @@ void renderScene() {
               world.camera.lookAt.x, world.camera.lookAt.y, world.camera.lookAt.z,
               world.camera.up.x, world.camera.up.y, world.camera.up.z);
     
+    setupLights(world.lights);
     renderGroup(world.rootGroup);
     
     if (showDebugMenu) {
-        char buffer[128];
+        char buffer[256]; // Increase buffer size to prevent overflow
         
-        //uses a buffer to store information o fps and "print" it on the screen with snprintf
+        // Save OpenGL states that might affect text rendering
+        glDisable(GL_LIGHTING);
+        glDisable(GL_TEXTURE_2D);
+        
+        // Uses a buffer to store information on fps and "print" it on the screen with snprintf
         snprintf(buffer, sizeof(buffer), "FPS: %.1f", fps);
         renderText(buffer, 10, world.window.height - 20);
         
@@ -540,9 +759,40 @@ void renderScene() {
         snprintf(buffer, sizeof(buffer), "Total Models: %d", totalModels);
         renderText(buffer, 10, world.window.height - 100);
         
+        snprintf(buffer, sizeof(buffer), "Lights: %zu", world.lights.size());
+        renderText(buffer, 10, world.window.height - 120);
+        
+        if (!world.lights.empty()) {
+            const Light& light = world.lights[0];
+            if (light.type == "point") {
+                snprintf(buffer, sizeof(buffer), "Light 0: Point at (%.1f, %.1f, %.1f)", 
+                        light.posx, light.posy, light.posz);
+            } else if (light.type == "directional") {
+                snprintf(buffer, sizeof(buffer), "Light 0: Directional (%.1f, %.1f, %.1f)", 
+                        light.dirx, light.diry, light.dirz);
+            } else if (light.type == "spotlight") {
+                snprintf(buffer, sizeof(buffer), "Light 0: Spotlight at (%.1f, %.1f, %.1f) dir(%.1f, %.1f, %.1f) cutoff %.1f°", 
+                        light.posx, light.posy, light.posz, light.dirx, light.diry, light.dirz, light.cutoff);
+            }
+            renderText(buffer, 10, world.window.height - 140);
+        }
+
+        // Add material information for the first model in the first group (for debugging)
+        if (!world.rootGroup.models.empty()) {
+            const Model& model = world.rootGroup.models[0];
+            snprintf(buffer, sizeof(buffer), "First Model Material: Diff=(%.2f,%.2f,%.2f) Spec=(%.2f,%.2f,%.2f) Shin=%.1f", 
+                    model.material.diffuse.r, model.material.diffuse.g, model.material.diffuse.b,
+                    model.material.specular.r, model.material.specular.g, model.material.specular.b,
+                    model.material.shininess);
+            renderText(buffer, 10, world.window.height - 160);
+        }
         
         renderText("Controls: WASD=Move QE=Up/Down IJKL=Rotate +-=Zoom R=Reset F=Toggle Wireframe H=Toggle Debug ESC=Quit",
                   10, 20);
+                  
+        // Restore OpenGL state
+        if (glIsEnabled(GL_LIGHTING)) glEnable(GL_LIGHTING);
+        if (glIsEnabled(GL_TEXTURE_2D)) glEnable(GL_TEXTURE_2D);
     }
     
     glutSwapBuffers();
@@ -622,6 +872,21 @@ int main(int argc, char** argv) {
 
     loadModels(world.rootGroup);
 
+    // Initialize OpenGL lighting system (single clean setup)
+    glEnable(GL_LIGHTING);
+    glEnable(GL_NORMALIZE);  // This ensures normals are normalized
+    glShadeModel(GL_SMOOTH); // Enable smooth shading
+
+    // Set up global ambient light
+    float globalAmbient[4] = {0.2f, 0.2f, 0.2f, 1.0f};
+    glLightModelfv(GL_LIGHT_MODEL_AMBIENT, globalAmbient);
+    glLightModeli(GL_LIGHT_MODEL_TWO_SIDE, GL_FALSE);  // Lighting only on front faces
+    glLightModeli(GL_LIGHT_MODEL_LOCAL_VIEWER, GL_TRUE);  // More accurate specular highlights
+
+    // GL_COLOR_MATERIAL allows per-vertex color with lighting
+    glEnable(GL_COLOR_MATERIAL);
+    glColorMaterial(GL_FRONT, GL_AMBIENT_AND_DIFFUSE);
+
     glutDisplayFunc(renderScene);
     glutReshapeFunc(changeSize);
     
@@ -637,12 +902,20 @@ int main(int argc, char** argv) {
     
     glEnable(GL_DEPTH_TEST);
     glEnable(GL_CULL_FACE);
+    glEnable(GL_NORMALIZE);  // Normalize normals when scaling is applied
     glDepthFunc(GL_LESS);
     glCullFace(GL_BACK);
     glFrontFace(GL_CCW);
     
-    // Start in wireframe mode
-    glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+    // GL_COLOR_MATERIAL allows per-vertex color with lighting
+    glEnable(GL_COLOR_MATERIAL);
+    glColorMaterial(GL_FRONT, GL_AMBIENT_AND_DIFFUSE);
+    
+    // Start in filled mode instead of wireframe for better visualization with lighting
+    glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+
+    // Add this in your OpenGL initialization
+    glEnable(GL_TEXTURE_2D);
 
     // Initialize FPS timer variables
     lastTime = glutGet(GLUT_ELAPSED_TIME);

@@ -88,8 +88,130 @@ void parseGroup(XMLElement* groupElement, Group& group, const std::string& xmlDi
             XMLElement* textureElem = modelElement->FirstChildElement("texture");
             if (textureElem) {
                 const char* texFile = textureElem->Attribute("file");
-                if (texFile) model.textureFile = "../engine/textures/" + std::string(texFile);
+                if (texFile) {
+                    model.textureFile = "../engine/textures/" + std::string(texFile);
+                    std::cout << "Associating texture: " << model.textureFile << " with model: " << model.filename << std::endl;
+                }
             }
+
+            // Parse material/color information
+            XMLElement* colorElem = modelElement->FirstChildElement("color");
+            if (colorElem) {
+                // Parse diffuse color
+                XMLElement* diffuseElem = colorElem->FirstChildElement("diffuse");
+                if (diffuseElem) {
+                    int r = 200, g = 200, b = 200; // Default values
+                    diffuseElem->QueryIntAttribute("R", &r);
+                    diffuseElem->QueryIntAttribute("G", &g);
+                    diffuseElem->QueryIntAttribute("B", &b);
+                    
+                    // Convert from 0-255 integer range to 0.0-1.0 float range that OpenGL expects
+                    model.material.diffuse.r = r / 255.0f;
+                    model.material.diffuse.g = g / 255.0f;
+                    model.material.diffuse.b = b / 255.0f;
+                    
+                    // Debug output
+                    std::cout << "Parsed diffuse color: RGB(" << r << "," << g << "," << b << ") -> "
+                              << "(" << model.material.diffuse.r << "," 
+                              << model.material.diffuse.g << "," 
+                              << model.material.diffuse.b << ")" << std::endl;
+                } else {
+                    // Default diffuse to light gray if not specified
+                    model.material.diffuse.r = 0.78f;
+                    model.material.diffuse.g = 0.78f;
+                    model.material.diffuse.b = 0.78f;
+                }
+                
+                // Parse ambient color
+                XMLElement* ambientElem = colorElem->FirstChildElement("ambient");
+                if (ambientElem) {
+                    int r = 50, g = 50, b = 50;
+                    ambientElem->QueryIntAttribute("R", &r);
+                    ambientElem->QueryIntAttribute("G", &g);
+                    ambientElem->QueryIntAttribute("B", &b);
+                    model.material.ambient.r = r / 255.0f;
+                    model.material.ambient.g = g / 255.0f;
+                    model.material.ambient.b = b / 255.0f;
+                } else {
+                    // Default ambient to dark gray if not specified
+                    model.material.ambient.r = 0.2f;
+                    model.material.ambient.g = 0.2f;
+                    model.material.ambient.b = 0.2f;
+                }
+                
+                // Parse specular color
+                XMLElement* specularElem = colorElem->FirstChildElement("specular");
+                if (specularElem) {
+                    int r = 0, g = 0, b = 0;
+                    specularElem->QueryIntAttribute("R", &r);
+                    specularElem->QueryIntAttribute("G", &g);
+                    specularElem->QueryIntAttribute("B", &b);
+                    model.material.specular.r = r / 255.0f;
+                    model.material.specular.g = g / 255.0f;
+                    model.material.specular.b = b / 255.0f;
+                } else {
+                    // Default specular to black if not specified
+                    model.material.specular.r = 0.0f;
+                    model.material.specular.g = 0.0f;
+                    model.material.specular.b = 0.0f;
+                }
+                
+                // Parse emissive color
+                XMLElement* emissiveElem = colorElem->FirstChildElement("emissive");
+                if (emissiveElem) {
+                    int r = 0, g = 0, b = 0;
+                    emissiveElem->QueryIntAttribute("R", &r);
+                    emissiveElem->QueryIntAttribute("G", &g);
+                    emissiveElem->QueryIntAttribute("B", &b);
+                    model.material.emissive.r = r / 255.0f;
+                    model.material.emissive.g = g / 255.0f;
+                    model.material.emissive.b = b / 255.0f;
+                } else {
+                    // Default emissive to black if not specified
+                    model.material.emissive.r = 0.0f;
+                    model.material.emissive.g = 0.0f;
+                    model.material.emissive.b = 0.0f;
+                }
+                
+                // Parse shininess
+                XMLElement* shininessElem = colorElem->FirstChildElement("shininess");
+                if (shininessElem) {
+                    model.material.shininess = shininessElem->FloatAttribute("value", 0.0f);
+                } else {
+                    // Default shininess to 0 if not specified
+                    model.material.shininess = 0.0f;
+                }
+                
+                // Debug output for material properties
+                std::cout << "Model: " << model.filename << " Material properties:" << std::endl;
+                std::cout << "  Diffuse: (" << model.material.diffuse.r << ", " 
+                          << model.material.diffuse.g << ", " << model.material.diffuse.b << ")" << std::endl;
+                std::cout << "  Ambient: (" << model.material.ambient.r << ", " 
+                          << model.material.ambient.g << ", " << model.material.ambient.b << ")" << std::endl;
+                std::cout << "  Specular: (" << model.material.specular.r << ", " 
+                          << model.material.specular.g << ", " << model.material.specular.b << ")" << std::endl;
+                std::cout << "  Shininess: " << model.material.shininess << std::endl;
+            } else {
+                // Set default material properties if color element is not present
+                model.material.diffuse.r = 0.78f;
+                model.material.diffuse.g = 0.78f;
+                model.material.diffuse.b = 0.78f;
+                
+                model.material.ambient.r = 0.2f;
+                model.material.ambient.g = 0.2f;
+                model.material.ambient.b = 0.2f;
+                
+                model.material.specular.r = 0.0f;
+                model.material.specular.g = 0.0f;
+                model.material.specular.b = 0.0f;
+                
+                model.material.emissive.r = 0.0f;
+                model.material.emissive.g = 0.0f;
+                model.material.emissive.b = 0.0f;
+                
+                model.material.shininess = 0.0f;
+            }
+            
             std::cout << "Loading model from: " << model.filename << std::endl;
             
             group.models.push_back(model);
@@ -225,11 +347,45 @@ World parseXMLFile(const char* filename) {
             Light light;
             const char* type = lightElem->Attribute("type");
             if (type) light.type = std::string(type);
-            light.posx = lightElem->FloatAttribute("posx", 0.0f);
-            light.posy = lightElem->FloatAttribute("posy", 0.0f);
-            light.posz = lightElem->FloatAttribute("posz", 0.0f);
-            // Adiciona outros atributos se necessário
+            
+            // Normalize light type (handle "spot" as "spotlight")
+            if (light.type == "spot") {
+                light.type = "spotlight";
+            }
+            
+            // Parse position for point and spot lights
+            if (light.type == "point" || light.type == "spotlight") {
+                light.posx = lightElem->FloatAttribute("posx", 0.0f);
+                light.posy = lightElem->FloatAttribute("posy", 0.0f);
+                light.posz = lightElem->FloatAttribute("posz", 0.0f);
+            }
+            
+            // Parse direction for directional and spot lights
+            if (light.type == "directional" || light.type == "spotlight") {
+                light.dirx = lightElem->FloatAttribute("dirx", 0.0f);
+                light.diry = lightElem->FloatAttribute("diry", 0.0f);
+                light.dirz = lightElem->FloatAttribute("dirz", 0.0f);
+            }
+            
+            // Parse cutoff for spotlight
+            if (light.type == "spotlight") {
+                light.cutoff = lightElem->FloatAttribute("cutoff", 45.0f);
+            }
+            
             world.lights.push_back(light);
+            
+            // Improved debug message that shows appropriate information based on light type
+            std::cout << "Added " << light.type << " light";
+            if (light.type == "point" || light.type == "spotlight") {
+                std::cout << " at position (" << light.posx << ", " << light.posy << ", " << light.posz << ")";
+            }
+            if (light.type == "directional" || light.type == "spotlight") {
+                std::cout << " with direction (" << light.dirx << ", " << light.diry << ", " << light.dirz << ")";
+            }
+            if (light.type == "spotlight") {
+                std::cout << " and cutoff " << light.cutoff;
+            }
+            std::cout << std::endl;
         }
     }
 

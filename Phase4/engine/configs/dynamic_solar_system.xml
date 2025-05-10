@@ -8,6 +8,11 @@
         <projection fov="45" near="1" far="1000" /> <!-- optional, use these values as default-->
     </camera>
 
+	<lights> 
+		<light type="point" posx="0" posy="1" posz="0" />			
+	</lights>
+
+
     <group>
         <group> <!-- SUN -->
             <transform> 
@@ -15,12 +20,23 @@
                 <scale x="5.5" y="5.5" z="5.5" />
             </transform>
 			<models> 
-				<model file="sphere_10_20_20.3d" /> <!-- ./generator sphere 10 20 20 sphere_10_20_20.3d -->
+				<model file="sphere_10_20_20.3d"> <!-- generator sphere 1 8 8 sphere_1_8_8.3d -->
+                    <texture file="sun.jpg" />
+					<color>
+					    <diffuse R="255" G="90" B="0" />
+					    <ambient R="255" G="90" B="0" />
+					    <specular R="255" G="90" B="0" />
+					    <emissive R="255" G="90" B="0" />
+					    <shininess value="0" />
+					</color>
+				</model>
 			</models>
-        </group>  
+        </group> 
+
+
         <group> <!-- Mercurio -->
             <transform>
-                <translate time = "30" align="True" >
+                <translate time = "30" align="true" >
 		    <point x="63.638999999999996" y="0" z="63.638999999999996"/>
 		    <point x="0" y="0" z="90"/>
 		    <point x="-63.638999999999996" y="0" z="63.638999999999996"/>
@@ -28,17 +44,29 @@
 		    <point x="-63.638999999999996" y="0" z="-63.638999999999996"/>
 		    <point x="0" y="0" z="-90"/>
 		    <point x="63.638999999999996" y="0" z="-63.638999999999996"/>
-		    <point x="90" y="0" z="0"/>                        
+		    <point x="90" y="0" z="0"/>                     
 				</translate>
                 <rotate time="80" x="0" y="1" z="0"/>
                 <scale x="0.23" y="0.23" z="0.23" />
             </transform>
-            <models>
-                <model file="sphere_10_20_20.3d" /> <!-- ./generator sphere 10 20 20 sphere_10_20_20.3d -->
-            </models>
-            <group> <!-- Lua 1 -->
+			<models> 
+				<model file="sphere_10_20_20.3d"> <!-- ./generator sphere 10 20 20 sphere_10_20_20.3d -->
+                    <texture file="mercury.jpg" />
+					<color>
+						<diffuse R="169" G="169" B="169" />
+						<ambient R="84" G="84" B="84" />
+						<specular R="100" G="100" B="100" />
+						<emissive R="0" G="0" B="0" />
+						<shininess value="10" />
+					</color>					
+				</model>	
+			</models>        
+        
+
+
+            <group> <!-- Lua Mercurio-->
                 <transform>
-                    <translate time="8" align="True" draw="false">
+                    <translate time = "8" align="True" draw="false">
 			    <point x="12.0207" y="0" z="12.0207"/>
 			    <point x="0" y="0" z="17"/>
 			    <point x="-12.0207" y="0" z="12.0207"/>
@@ -51,90 +79,27 @@
                     <rotate time= "3" x = "0" y = "1" z = "0" />
                     <scale x="0.24" y="0.24" z="0.24" />
                 </transform>
-                <models>
-                    <model file="sphere_10_20_20.3d" />
-                </models>
-            </group>
-            <group> <!-- Lua 2 -->
-                <transform>
-                    <translate time="10" align="True" draw="false">
-			    <point x="12.0207" y="0" z="12.0207"/>
-			    <point x="0" y="0" z="17"/>
-			    <point x="-12.0207" y="0" z="12.0207"/>
-			    <point x="-17" y="0" z="0"/>
-			    <point x="-12.0207" y="0" z="-12.0207"/>
-			    <point x="0" y="0" z="-17"/>
-			    <point x="12.0207" y="0" z="-12.0207"/>
-			    <point x="17" y="0" z="0"/>                    
-		    </translate>
-                    <rotate time= "5" x = "0" y = "1" z = "0" />
-                    <scale x="0.18" y="0.18" z="0.18" />
-                </transform>
-                <models>
-                    <model file="sphere_10_20_20.3d" />
-                </models>
-            </group>
-            <group> <!-- Lua 3 -->
-                <transform>
-                    <translate time="12" align="True" draw="false">
-			    <point x="12.0207" y="0" z="12.0207"/>
-			    <point x="0" y="0" z="17"/>
-			    <point x="-12.0207" y="0" z="12.0207"/>
-			    <point x="-17" y="0" z="0"/>
-			    <point x="-12.0207" y="0" z="-12.0207"/>
-			    <point x="0" y="0" z="-17"/>
-			    <point x="12.0207" y="0" z="-12.0207"/>
-			    <point x="17" y="0" z="0"/>                    
-		    </translate>
-                    <rotate time= "7" x = "0" y = "1" z = "0" />
-                    <scale x="0.15" y="0.15" z="0.15" />
-                </transform>
-                <models>
-                    <model file="sphere_10_20_20.3d" />
-                </models>
-            </group>
-            <group> <!-- Lua 4 -->
-                <transform>
-                    <translate time="14" align="True" draw="false">
-			    <point x="12.0207" y="0" z="12.0207"/>
-			    <point x="0" y="0" z="17"/>
-			    <point x="-12.0207" y="0" z="12.0207"/>
-			    <point x="-17" y="0" z="0"/>
-			    <point x="-12.0207" y="0" z="-12.0207"/>
-			    <point x="0" y="0" z="-17"/>
-			    <point x="12.0207" y="0" z="-12.0207"/>
-			    <point x="17" y="0" z="0"/>                    
-		    </translate>
-                    <rotate time= "9" x = "0" y = "1" z = "0" />
-                    <scale x="0.12" y="0.12" z="0.12" />
-                </transform>
-                <models>
-                    <model file="sphere_10_20_20.3d" />
-                </models>
-            </group>
-            <group> <!-- Lua 5 -->
-                <transform>
-                    <translate time="16" align="True" draw="false">
-			    <point x="12.0207" y="0" z="12.0207"/>
-			    <point x="0" y="0" z="17"/>
-			    <point x="-12.0207" y="0" z="12.0207"/>
-			    <point x="-17" y="0" z="0"/>
-			    <point x="-12.0207" y="0" z="-12.0207"/>
-			    <point x="0" y="0" z="-17"/>
-			    <point x="12.0207" y="0" z="-12.0207"/>
-			    <point x="17" y="0" z="0"/>                    
-		    </translate>
-                    <rotate time= "11" x = "0" y = "1" z = "0" />
-                    <scale x="0.10" y="0.10" z="0.10" />
-                </transform>
-                <models>
-                    <model file="sphere_10_20_20.3d" />
-                </models>
-            </group>
-        </group> 
+				<models> 
+					<model file="sphere_10_20_20.3d"> <!-- ./generator sphere 10 20 20 sphere_10_20_20.3d -->
+                        <texture file="moon.jpg" />
+						<color>
+						    <diffuse R="192" G="192" B="192" />
+						    <ambient R="96" G="96" B="96" />
+						    <specular R="255" G="255" B="255" />
+						    <emissive R="0" G="0" B="0" />
+						    <shininess value="10" />
+						</color>					
+					</model>	
+				</models> 
+            </group>        
+
+        </group>
+
+
+
         <group> <!-- Venus -->
             <transform>
-                <translate time = "50" align="True" >
+                <translate time = "50" align="true" >
 		    <point x="77.78099999999999" y="0" z="77.78099999999999"/>
 		    <point x="0" y="0" z="110"/>
 		    <point x="-77.78099999999999" y="0" z="77.78099999999999"/>
@@ -147,9 +112,20 @@
                 <rotate time="176" x="0" y="1" z="0"/>
                 <scale x="0.32" y="0.32" z="0.32" />
             </transform>
-            <models>
-                <model file="sphere_10_20_20.3d" /> <!-- ./generator sphere 10 20 20 sphere_10_20_20.3d -->
-            </models>
+			<models> 
+				<model file="sphere_10_20_20.3d"> <!-- ./generator sphere 10 20 20 sphere_10_20_20.3d -->
+                    <texture file="venus.jpg" />
+					<color>
+						<diffuse R="255" G="218" B="185" />
+						<ambient R="128" G="109" B="92" />
+						<specular R="100" G="100" B="100" />
+						<emissive R="0" G="0" B="0" />
+						<shininess value="15" />
+					</color>					
+				</model>	
+			</models> 
+
+
             <group> <!--Venus Lua -->
                 <transform>
                     <translate time = "8" align="True" draw="false">
@@ -165,11 +141,24 @@
                     <rotate time= "2" x = "0" y = "1" z = "0" />
                     <scale x="0.2" y="0.2" z="0.2" />
                 </transform>
-                <models>
-                    <model file="sphere_10_20_20.3d" /> <!-- ./generator sphere 10 20 20 sphere_10_20_20.3d -->
-                </models>
+				<models> 
+					<model file="sphere_10_20_20.3d"> <!-- ./generator sphere 10 20 20 sphere_10_20_20.3d -->
+                        <texture file="moon.jpg" />
+						<color>
+						    <diffuse R="192" G="192" B="192" />
+						    <ambient R="96" G="96" B="96" />
+						    <specular R="255" G="255" B="255" />
+						    <emissive R="0" G="0" B="0" />
+						    <shininess value="10" />
+						</color>						
+					</model>	
+				</models> 
             </group>
-        </group>     
+
+        </group>  
+
+
+
         <group> <!-- Terra -->
             <transform>
                 <translate time = "70" align="True" >
@@ -184,10 +173,22 @@
 				</translate>
                 <rotate time="24" x="0" y="1" z="0"/>
                 <scale x="0.35" y="0.35" z="0.35" />
-            </transform>
-            <models>
-                <model file="sphere_10_20_20.3d" /> <!-- ./generator sphere 10 20 20 sphere_10_20_20.3d -->
-            </models>
+            </transform>  
+			<models> 
+				<model file="sphere_10_20_20.3d"> <!-- ./generator sphere 10 20 20 sphere_10_20_20.3d -->
+                    <texture file="earth.jpg" />
+					<color>
+						<diffuse R="0" G="102" B="204" />
+						<ambient R="0" G="51" B="102" />
+						<specular R="100" G="100" B="100" />
+						<emissive R="0" G="0" B="0" />
+						<shininess value="25" />
+					</color>					
+				</model>	
+			</models> 
+
+
+
             <group> <!-- Lua -->
                 <transform>
                     <translate time = "8" align="True" draw="false">
@@ -203,14 +204,29 @@
                     <rotate time= "28" x = "0" y = "1" z = "0" />
                     <scale x="0.23" y="0.23" z="0.23" />
                 </transform>
-                <models>
-                    <model file="sphere_10_20_20.3d" /> <!-- ./generator sphere 10 20 20 sphere_10_20_20.3d -->
-                </models>
+				<models> 
+					<model file="sphere_10_20_20.3d"> <!-- ./generator sphere 10 20 20 sphere_10_20_20.3d -->
+                        <texture file="moon.jpg" />
+						<color>
+						    <diffuse R="192" G="192" B="192" />
+						    <ambient R="96" G="96" B="96" />
+						    <specular R="255" G="255" B="255" />
+						    <emissive R="0" G="0" B="0" />
+						    <shininess value="10" />
+						</color>					
+					</model>	
+				</models> 
             </group>
-        </group>
+
+
+		</group>
+		
+
+
+
         <group> <!-- Marte -->
             <transform>
-                <translate time = "90" align="True">
+                <translate time = "90" align="true">
 		    <point x="106.065" y="0" z="106.065"/>
 		    <point x="0" y="0" z="150"/>
 		    <point x="-106.065" y="0" z="106.065"/>
@@ -223,9 +239,19 @@
                 <rotate time="25" x="0" y="1" z="0"/>
                 <scale x="0.29" y="0.29" z="0.29" />
             </transform>
-            <models>
-                <model file="sphere_10_20_20.3d" /> <!-- ./generator sphere 10 20 20 sphere_10_20_20.3d -->
-            </models>
+			<models> 
+				<model file="sphere_10_20_20.3d"> <!-- ./generator sphere 10 20 20 sphere_10_20_20.3d -->
+                    <texture file="mars.jpg" />
+					<color>
+						<diffuse R="183" G="65" B="14" />
+						<ambient R="91" G="32" B="7" />
+						<specular R="128" G="64" B="32" />
+						<emissive R="0" G="0" B="0" />
+						<shininess value="10" />
+					</color>					
+				</model>	
+			</models> 
+
             <group> <!-- Lua Marte-->
                 <transform>
                     <translate time = "17" align="True" draw="false">
@@ -241,14 +267,29 @@
                     <rotate time= "30" x = "0" y = "1" z = "0" />
                     <scale x="0.23" y="0.23" z="0.23" />
                 </transform>
-                <models>
-                    <model file="sphere_10_20_20.3d" /> <!-- ./generator sphere 10 20 20 sphere_10_20_20.3d -->
-                </models>
+				<models> 
+					<model file="sphere_10_20_20.3d"> <!-- ./generator sphere 10 20 20 sphere_10_20_20.3d -->
+                        <texture file="moon.jpg" />
+						<color>
+						    <diffuse R="192" G="192" B="192" />
+						    <ambient R="96" G="96" B="96" />
+						    <specular R="255" G="255" B="255" />
+						    <emissive R="0" G="0" B="0" />
+						    <shininess value="10" />
+						</color>						
+					</model>	
+				</models> 
             </group>
-        </group>
+
+		</group>	
+
+
+
+
+
         <group> <!-- Jupiter -->
             <transform>
-                <translate time = "160" align="True" >
+                <translate time = "160" align="true" >
 		    <point x="141.42" y="0" z="141.42"/>
 		    <point x="0" y="0" z="200"/>
 		    <point x="-141.42" y="0" z="141.42"/>
@@ -261,9 +302,20 @@
                 <rotate time="10" x="0" y="1" z="0"/>
                 <scale x="0.9" y="0.9" z="0.9" />
             </transform>
-            <models>
-                <model file="sphere_10_20_20.3d" /> <!-- ./generator sphere 10 20 20 sphere_10_20_20.3d -->
-            </models>
+			<models> 
+				<model file="sphere_10_20_20.3d"> <!-- ./generator sphere 10 20 20 sphere_10_20_20.3d -->
+                    <texture file="jupiter.jpg" />
+					<color>
+						<diffuse R="205" G="133" B="63" />
+						<ambient R="102" G="66" B="33" />
+						<specular R="100" G="100" B="100" />
+						<emissive R="0" G="0" B="0" />
+						<shininess value="20" />
+					</color>					
+				</model>	
+			</models> 
+
+
             <group> <!-- Lua Jupiter -->
                 <transform>
                     <!--translate x="0" y="0.03" z="1.38" /-->
@@ -280,14 +332,28 @@
                     <rotate time= "28" x = "0" y = "1" z = "0" />
                     <scale x="0.1" y="0.1" z="0.1" />
                 </transform>
-                <models>
-                    <model file="sphere_10_20_20.3d" /> <!-- ./generator sphere 10 20 20 sphere_10_20_20.3d -->
-                </models>
+				<models> 
+					<model file="sphere_10_20_20.3d"> <!-- ./generator sphere 10 20 20 sphere_10_20_20.3d -->
+                        <texture file="europa.jpg" />
+						<color>
+						    <diffuse R="192" G="192" B="192" />
+						    <ambient R="96" G="96" B="96" />
+						    <specular R="255" G="255" B="255" />
+						    <emissive R="0" G="0" B="0" />
+						    <shininess value="10" />
+						</color>						
+					</model>	
+				</models> 
             </group>
-        </group>
+
+		</group>
+
+
+
+
         <group> <!-- Saturno -->
             <transform>
-                <translate time = "200" align="True" >
+                <translate time = "200" align="true" >
 		    <point x="166.1685" y="0" z="166.1685"/>
 		    <point x="0" y="0" z="235"/>
 		    <point x="-166.1685" y="0" z="166.1685"/>
@@ -300,18 +366,38 @@
                 <rotate time="11" x="0" y="1" z="0"/>
                 <scale x="0.88" y="0.88" z="0.88" />
             </transform>
-            <models>
-                <model file="sphere_10_20_20.3d" /> <!-- ./generator sphere 10 20 20 sphere_10_20_20.3d -->
-            </models>
-	    <group> <!-- SATURNO ANEL -->
-	    <transform> 
-		     <rotate angle="-15" x="1" y="0" z="1" />
-	    </transform>
-			    <models> 
-				    <model file="torus_15_14_20_20.3d" /> <!-- ./generator torus 15 14 20 20 torus_15_14_20_20.3d -->
-			    </models>
-	    </group>
-        </group>
+			<models> 
+				<model file="sphere_10_20_20.3d"> <!-- ./generator sphere 10 20 20 sphere_10_20_20.3d -->
+                    <texture file="saturn.jpg" />
+					<color>
+						<diffuse R="210" G="180" B="140" />
+						<ambient R="105" G="90" B="70" />
+						<specular R="100" G="100" B="100" />
+						<emissive R="0" G="0" B="0" />
+						<shininess value="25" />
+					</color>					
+				</model>	
+			</models> 
+
+			    <group> <!-- SATURNO ANEL -->
+				    <transform> 
+					     <rotate angle="-15" x="1" y="0" z="1" />
+				    </transform>
+						    <models> 
+							    <model file="torus_15_14_20_20.3d"> <!-- ./generator torus 15 14 20 20 torus_15_14_20_20.3d -->
+                                    <texture file="saturn_ring.jpg" />
+									<color>
+									    <diffuse R="222" G="184" B="135" />
+									    <ambient R="111" G="92" B="67" />
+									    <specular R="255" G="255" B="255" />
+									    <emissive R="0" G="0" B="0" />
+									    <shininess value="10" />
+									</color>							    	
+							    </model>
+						    </models>
+			    </group>
+        </group>		
+
         <group> <!-- Urano -->
             <transform>
                 <translate time = "240" align="true" >
@@ -327,9 +413,20 @@
                 <rotate time="17" x="0" y="1" z="0"/>
                 <scale x="0.75" y="0.75" z="0.75" />
             </transform>
-            <models>
-                <model file="sphere_10_20_20.3d" /> <!-- ./generator sphere 10 20 20 sphere_10_20_20.3d -->
-            </models>
+			<models> 
+				<model file="sphere_10_20_20.3d"> <!-- ./generator sphere 10 20 20 sphere_10_20_20.3d -->
+                    <texture file="uranus.jpg" />
+					<color>
+						<diffuse R="173" G="216" B="230" />
+						<ambient R="86" G="108" B="115" />
+						<specular R="100" G="100" B="100" />
+						<emissive R="0" G="0" B="0" />
+						<shininess value="30" />
+					</color>					
+				</model>	
+			</models>
+
+
             <group> <!-- Lua Urano -->
                 <transform>
                     <translate time = "8" align="True" draw="false">
@@ -345,11 +442,24 @@
                     <rotate time= "40" x = "0" y = "1" z = "0" />
                     <scale x="0.1" y="0.1" z="0.1" />
                 </transform>
-                <models>
-                    <model file="sphere_10_20_20.3d" /> <!-- ./generator sphere 10 20 20 sphere_10_20_20.3d -->
-                </models>
+				<models> 
+					<model file="sphere_10_20_20.3d"> <!-- ./generator sphere 10 20 20 sphere_10_20_20.3d -->
+                        <texture file="moon.jpg" />
+						<color>
+						    <diffuse R="192" G="192" B="192" />
+						    <ambient R="96" G="96" B="96" />
+						    <specular R="255" G="255" B="255" />
+						    <emissive R="0" G="0" B="0" />
+						    <shininess value="10" />
+						</color>						
+					</model>	
+				</models>
             </group>
-        </group>
+
+		</group>
+		
+
+
         <group> <!-- Neptuno -->
             <transform>
                 <translate time = "280" align="true" >
@@ -365,9 +475,19 @@
                 <rotate time="16" x="0" y="1" z="0"/>
                 <scale x="0.79" y="0.79" z="0.79" />
             </transform>
-            <models>
-                <model file="sphere_10_20_20.3d" /> <!-- ./generator sphere 10 20 20 sphere_10_20_20.3d -->
-            </models>
+			<models> 
+				<model file="sphere_10_20_20.3d"> <!-- ./generator sphere 10 20 20 sphere_10_20_20.3d -->
+                    <texture file="neptune.jpg" />
+					<color>
+						<diffuse R="30" G="144" B="255" />
+						<ambient R="15" G="72" B="127" />
+						<specular R="100" G="100" B="100" />
+						<emissive R="0" G="0" B="0" />
+						<shininess value="20" />
+					</color>					
+				</model>	
+			</models>
+
             <group> <!-- Lua Neptuno-->
                 <transform>
                     <translate time = "20" align="True" draw="false">
@@ -383,16 +503,29 @@
                     <rotate time= "7" x = "0" y = "1" z = "0" />
                     <scale x="0.12" y="0.12" z="0.12" />
                 </transform>
-                <models>
-                    <model file="sphere_10_20_20.3d" /> <!-- ./generator sphere 10 20 20 sphere_10_20_20.3d -->
-                </models>
+				<models> 
+					<model file="sphere_10_20_20.3d"> <!-- ./generator sphere 10 20 20 sphere_10_20_20.3d -->
+                        <texture file="triton.jpg" />
+						<color>
+						    <diffuse R="192" G="192" B="192" />
+						    <ambient R="96" G="96" B="96" />
+						    <specular R="255" G="255" B="255" />
+						    <emissive R="0" G="0" B="0" />
+						    <shininess value="10" />
+						</color>						
+					</model>	
+				</models>
             </group>
+
         </group>
+
+
+
 
         <group> <!-- Cometa -->
             <transform>
                 
-                <translate time = "10" align="true" draw="true">
+                <translate time = "10" align="true">
                     <point x = "0" y = "-80" z = "80" />
                     <point x = "80" y = "-80" z = "0" />
                     <point x = "0" y = "300" z = "-40" />
@@ -402,8 +535,21 @@
                 <scale x="3" y="3" z="3" />
             </transform>
             <models>
-                <model file="bezier_10.3d" /> <!-- generator patch teapot.patch 10 bezier_10.3d -->
+                <model file="bezier_10.3d"> <!-- generator patch teapot.patch 10 bezier_10.3d -->
+                    <texture file="comet.jpg" />
+					<color>
+					    <diffuse R="255" G="215" B="0" />
+					    <ambient R="128" G="128" B="128" />
+					    <specular R="100" G="100" B="100" />
+					    <emissive R="0" G="0" B="0" />
+					    <shininess value="10" />
+					</color>                	
+                </model>
             </models>
-        </group>
+        </group>        			            	
+
+
+         
+        
     </group>
 </world>

@@ -12,7 +12,7 @@
             <!-- Center the figure -->
         </transform>
         <models>
-            <model file="plane_2_3.3d" />
+            <model file="plane_1_3.3d" />
         </models>
     </group>
     

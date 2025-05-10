@@ -1,9 +1,16 @@
 #ifndef TEXTURE_H
 #define TEXTURE_H
 
-#include <string>
+// Platform-specific GL includes
+#ifdef __APPLE__
+#include <OpenGL/gl.h>
+#else
 #include <GL/gl.h>
-
-GLuint loadTexture(const std::string& filename);
-
 #endif
+
+#include <string>
+
+// Load a texture from a file and return the OpenGL texture ID
+unsigned int loadTexture(const std::string& filename);
+
+#endif // TEXTURE_H
