@@ -25,19 +25,10 @@ void handlePlane(int argc, char** argv) {
     }
     float unit = std::stof(argv[2]);
     int slices = std::stoi(argv[3]);
+    // Create standardized filename
     std::string filename = "../tests/plane_" + std::string(argv[2]) + "_" + argv[3] + ".3d";
-
-    // Verifica se o nome do ficheiro de output tem "test_4"
-    std::string xmlName = argv[4];
-    if (xmlName.find("test_4") != std::string::npos) {
-        // Chama a função que gera com textura
-        planeWithTexture(unit, slices, filename);
-        std::cout << "Plane (com textura) gerado para fase 4! Guardado em " << filename << "\n";
-    } else {
-        // Chama a função normal (sem textura)
-        plane(unit, slices, filename);
-        std::cout << "Plane gerado para fases anteriores! Guardado em " << filename << "\n";
-    }
+    plane(unit, slices, filename);
+    std::cout << "Plane generated successfully! Saved to " << filename << "\n";
 }
 
 /**

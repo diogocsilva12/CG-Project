@@ -10,18 +10,9 @@ struct Vertex {
     float z;
 };
 
-struct VertexTexture {
-    float x, y, z;
-    float u, v;
-};
-
 void writeVertices(const std::string& filename, const std::vector<Vertex>& vertices);
 
-void writeVerticesWithTexture(const std::string& filename, const std::vector<Vertex>& vertices);
-
 void plane(float unit, int slices, const std::string& filename);
-
-void planeWithTexture(float unit, int slices, const std::string& filename);
 
 void box(float unit, int slices, const std::string& filename);
 

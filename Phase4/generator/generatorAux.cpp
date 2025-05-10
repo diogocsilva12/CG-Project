@@ -31,7 +31,6 @@ Matrix4x4 translationMatrix(float x, float y, float z) {
     return m;
 }
 
-
 //Scale matrices
 Matrix4x4 scaleMatrix(float x, float y, float z) {
     Matrix4x4 m = identityMatrix();
@@ -40,7 +39,6 @@ Matrix4x4 scaleMatrix(float x, float y, float z) {
     m[2][2] = z;
     return m;
 }
-
 
 //Rotation matrices X Axis
 Matrix4x4 rotationMatrixX(float angle) {
@@ -92,8 +90,46 @@ Matrix4x4 multiplyMatrices(const Matrix4x4& a, const Matrix4x4& b) {
     return result;
 }
 
+//-- HELPER FUNCTIONS --
+// Cross product of two vectors
+void crossProd(float *a, float *b, float *res) {
+    res[0] = a[1]*b[2] - a[2]*b[1];
+    res[1] = a[2]*b[0] - a[0]*b[2];
+    res[2] = a[0]*b[1] - a[1]*b[0];
+}
+
+// Normalize a vector
+void normalize(float *a) {
+    float l = sqrt(a[0]*a[0] + a[1]*a[1] + a[2]*a[2]);
+    if (l != 0) {
+        a[0] = a[0]/l;
+        a[1] = a[1]/l;
+        a[2] = a[2]/l;
+    }
+}
+
+// Matrix-vector multiplication
+void multMatrixVector(float m[4][4], float *v, float *res) {
+    for (int j = 0; j < 4; ++j) {
+        res[j] = 0;
+        for (int k = 0; k < 4; ++k) {
+            res[j] += v[k] * m[j][k];
+        }
+    }
+}
+
+// Matrix-matrix multiplication
+void multMatrixMatrix(float a[4][4], float b[4][4], float res[4][4]) {
+    for (int i = 0; i < 4; i++)
+        for (int j = 0; j < 4; j++) {
+            res[i][j] = 0;
+            for (int k = 0; k < 4; k++)
+                res[i][j] += a[i][k] * b[k][j];
+        }
+}
+
 //-- VERTEX TRANSFORMATION --
-//Aplica uma transformacao a um vertice
+// Apply a transformation to a vertex
 Vertex transformVertex(const Vertex& v, const Matrix4x4& m) {
     float x = v.x, y = v.y, z = v.z, w = 1.0f;
     
@@ -111,7 +147,6 @@ Vertex transformVertex(const Vertex& v, const Matrix4x4& m) {
     return {newX, newY, newZ};
 }
 
-
 // Writes vertices to a file
 void writeVertices(const std::string& filename, const std::vector<Vertex>& vertices) {
     std::ofstream file(filename);
@@ -125,116 +160,160 @@ void writeVertices(const std::string& filename, const std::vector<Vertex>& verti
     file.close();
 }
 
-void writeVerticesWithTexture(const std::string& filename, const std::vector<VertexTexture>& vertices) {
+// Structure for vertex with normal and texture coordinates
+struct VertexFull {
+    float x, y, z;         // Position
+    float nx, ny, nz;      // Normal
+    float u, v;            // Texture coordinates
+};
+
+// Writes vertices with normals and texture coordinates to a file
+void writeVerticesFull(const std::string& filename, const std::vector<VertexFull>& vertices) {
     std::ofstream file(filename);
-    if (!file.is_open()) throw std::runtime_error("Error: Unable to open file " + filename);
-    for (const auto& v : vertices)
-        file << v.x << " " << v.y << " " << v.z << " " << v.u << " " << v.v << "\n";
+    if (!file.is_open()) {
+        throw std::runtime_error("Error: Unable to open file " + filename);
+    }
+    
+    for (const auto& v : vertices) {
+        file << v.x << " " << v.y << " " << v.z << " "
+             << v.nx << " " << v.ny << " " << v.nz << " "
+             << v.u << " " << v.v << "\n";
+    }
     file.close();
 }
 
-
 //-- PRIMITIVES POINTS GENERATION --
-// Generates points for a plane
+// Generates points for a plane with normals and texture coordinates
 void plane(float unit, int slices, const std::string& filename) {
     if (unit <= 0 || slices <= 0) {
         throw std::invalid_argument("Error: Unit and slices must be positive.");
     }
 
-    std::vector<Vertex> vertices;
+    std::ofstream file(filename);
+    if (!file.is_open()) {
+        throw std::runtime_error("Error: Unable to open file " + filename);
+    }
+
     float comp = unit / slices;
     float offset = unit / 2.0f;
-    
-    Matrix4x4 scaleM = scaleMatrix(comp, 1.0f, comp);
-    Matrix4x4 transM = translationMatrix(-offset, 0.0f, -offset);
-    Matrix4x4 transform = multiplyMatrices(transM, scaleM);
+    float x1, x2, z1, z2;
+    float text = 1.0f / slices;
 
     for (int i = 0; i < slices; i++) {
         for (int j = 0; j < slices; j++) {
-            Vertex v1 = {float(i), 0.0f, float(j)};
-            Vertex v2 = {float(i+1), 0.0f, float(j+1)};
-            Vertex v3 = {float(i+1), 0.0f, float(j)};
-            Vertex v4 = {float(i), 0.0f, float(j+1)};
-            
-            v1 = transformVertex(v1, transform);
-            v2 = transformVertex(v2, transform);
-            v3 = transformVertex(v3, transform);
-            v4 = transformVertex(v4, transform);
+            x1 = i * comp - offset;
+            z1 = j * comp - offset;
+            x2 = (i+1) * comp - offset;
+            z2 = (j+1) * comp - offset;
 
-            vertices.push_back(v1);
-            vertices.push_back(v2);
-            vertices.push_back(v3);
-            vertices.push_back(v1);
-            vertices.push_back(v4);
-            vertices.push_back(v2);
+            // Triangle 1
+            file << x1 << ' ' << 0.0f << ' ' << z1 << ' ';
+            file << 0.0f << ' ' << 1.0f << ' ' << 0.0f << ' ';
+            file << i*text << ' ' << j*text << '\n';
+
+            file << x2 << ' ' << 0.0f << ' ' << z2 << ' ';
+            file << 0.0f << ' ' << 1.0f << ' ' << 0.0f << ' ';
+            file << (i+1)*text << ' ' << (j+1)*text << '\n';
+
+            file << x2 << ' ' << 0.0f << ' ' << z1 << ' ';
+            file << 0.0f << ' ' << 1.0f << ' ' << 0.0f << ' ';
+            file << (i+1)*text << ' ' << j*text << '\n';
+
+            // Triangle 2
+            file << x1 << ' ' << 0.0f << ' ' << z1 << ' ';
+            file << 0.0f << ' ' << 1.0f << ' ' << 0.0f << ' ';
+            file << i*text << ' ' << j*text << '\n';
+
+            file << x1 << ' ' << 0.0f << ' ' << z2 << ' ';
+            file << 0.0f << ' ' << 1.0f << ' ' << 0.0f << ' ';
+            file << i*text << ' ' << (j+1)*text << '\n';
+
+            file << x2 << ' ' << 0.0f << ' ' << z2 << ' ';
+            file << 0.0f << ' ' << 1.0f << ' ' << 0.0f << ' ';
+            file << (i+1)*text << ' ' << (j+1)*text << '\n';
         }
     }
-    writeVertices(filename, vertices);
+    
+    file.close();
 }
 
-void planeWithTexture(float unit, int slices, const std::string& filename) {
-    std::vector<VertexTexture> vertices;
-    float comp = unit / slices;
-    float offset = unit / 2.0f;
-    for (int i = 0; i < slices; i++) {
-        for (int j = 0; j < slices; j++) {
-            float x0 = i * comp - offset;
-            float x1 = (i + 1) * comp - offset;
-            float z0 = j * comp - offset;
-            float z1 = (j + 1) * comp - offset;
-            float u0 = (float)i / slices;
-            float u1 = (float)(i + 1) / slices;
-            float v0 = (float)j / slices;
-            float v1 = (float)(j + 1) / slices;
-            // Triângulo 1
-            vertices.push_back({x0, 0, z0, u0, v0});
-            vertices.push_back({x1, 0, z1, u1, v1});
-            vertices.push_back({x1, 0, z0, u1, v0});
-            // Triângulo 2
-            vertices.push_back({x0, 0, z0, u0, v0});
-            vertices.push_back({x0, 0, z1, u0, v1});
-            vertices.push_back({x1, 0, z1, u1, v1});
-        }
-    }
-    writeVerticesWithTexture(filename, vertices);
-} 
-
-// Generates points for a box
+// Generates points for a box with normals and texture coordinates
 void box(float unit, int slices, const std::string& filename) {
     if (unit <= 0 || slices <= 0) {
         throw std::invalid_argument("Error: Unit and slices must be positive.");
     }
 
-    std::vector<Vertex> vertices;
+    std::ofstream file(filename);
+    if (!file.is_open()) {
+        throw std::runtime_error("Error: Unable to open file " + filename);
+    }
+
     float comp = unit / slices;
     float offset = unit / 2.0f;
-    float x1, x2, y1, y2, z1, z2;
+    float x1, x2, y1, y2, z1, z2, tx1, tx2, tz1, tz2;
+    float text = 1.0f / slices;
 
     // Top and bottom faces (Y = +offset and Y = -offset)
     for (int i = 0; i < slices; i++) {
         for (int j = 0; j < slices; j++) {
             x1 = i * comp - offset;
             z1 = j * comp - offset;
-            x2 = (i + 1) * comp - offset;
-            z2 = (j + 1) * comp - offset;
+            x2 = (i+1) * comp - offset;
+            z2 = (j+1) * comp - offset;
+            tx1 = i*text;
+            tx2 = (i+1)*text;
+            tz1 = j*text;
+            tz2 = (j+1)*text;
 
             // Top (+Y)
-            vertices.push_back({x1, offset, z1});
-            vertices.push_back({x2, offset, z2});
-            vertices.push_back({x2, offset, z1});
+            file << x1 << ' ' << offset << ' ' << z1 << ' ';
+            file << 0.0f << ' ' << 1.0f << ' ' << 0.0f << ' ';
+            file << tx1 << ' ' << tz1 << '\n';
 
-            vertices.push_back({x1, offset, z1});
-            vertices.push_back({x1, offset, z2});
-            vertices.push_back({x2, offset, z2});
+            file << x2 << ' ' << offset << ' ' << z2 << ' ';
+            file << 0.0f << ' ' << 1.0f << ' ' << 0.0f << ' ';
+            file << tx2 << ' ' << tz2 << '\n';
+
+            file << x2 << ' ' << offset << ' ' << z1 << ' ';
+            file << 0.0f << ' ' << 1.0f << ' ' << 0.0f << ' ';
+            file << tx2 << ' ' << tz1 << '\n';
+
+            file << x1 << ' ' << offset << ' ' << z1 << ' ';
+            file << 0.0f << ' ' << 1.0f << ' ' << 0.0f << ' ';
+            file << tx1 << ' ' << tz1 << '\n';
+
+            file << x1 << ' ' << offset << ' ' << z2 << ' ';
+            file << 0.0f << ' ' << 1.0f << ' ' << 0.0f << ' ';
+            file << tx1 << ' ' << tz2 << '\n';
+
+            file << x2 << ' ' << offset << ' ' << z2 << ' ';
+            file << 0.0f << ' ' << 1.0f << ' ' << 0.0f << ' ';
+            file << tx2 << ' ' << tz2 << '\n';
 
             // Bottom (-Y)
-            vertices.push_back({x2, -offset, z2});
-            vertices.push_back({x1, -offset, z1});
-            vertices.push_back({x2, -offset, z1});
+            file << x2 << ' ' << -offset << ' ' << z2 << ' ';
+            file << 0.0f << ' ' << -1.0f << ' ' << 0.0f << ' ';
+            file << tx2 << ' ' << tz2 << '\n';
 
-            vertices.push_back({x1, -offset, z2});
-            vertices.push_back({x1, -offset, z1});
-            vertices.push_back({x2, -offset, z2});
+            file << x1 << ' ' << -offset << ' ' << z1 << ' ';
+            file << 0.0f << ' ' << -1.0f << ' ' << 0.0f << ' ';
+            file << tx1 << ' ' << tz1 << '\n';
+
+            file << x2 << ' ' << -offset << ' ' << z1 << ' ';
+            file << 0.0f << ' ' << -1.0f << ' ' << 0.0f << ' ';
+            file << tx2 << ' ' << tz1 << '\n';
+
+            file << x1 << ' ' << -offset << ' ' << z2 << ' ';
+            file << 0.0f << ' ' << -1.0f << ' ' << 0.0f << ' ';
+            file << tx1 << ' ' << tz2 << '\n';
+
+            file << x1 << ' ' << -offset << ' ' << z1 << ' ';
+            file << 0.0f << ' ' << -1.0f << ' ' << 0.0f << ' ';
+            file << tx1 << ' ' << tz1 << '\n';
+
+            file << x2 << ' ' << -offset << ' ' << z2 << ' ';
+            file << 0.0f << ' ' << -1.0f << ' ' << 0.0f << ' ';
+            file << tx2 << ' ' << tz2 << '\n';
         }
     }
 
@@ -243,26 +322,62 @@ void box(float unit, int slices, const std::string& filename) {
         for (int j = 0; j < slices; j++) {
             x1 = i * comp - offset;
             y1 = j * comp - offset;
-            x2 = (i + 1) * comp - offset;
-            y2 = (j + 1) * comp - offset;
+            x2 = (i+1) * comp - offset;
+            y2 = (j+1) * comp - offset;
+            tx1 = i*text;
+            tx2 = (i+1)*text;
+            tz1 = j*text;
+            tz2 = (j+1)*text;
 
             // Front (+Z)
-            vertices.push_back({x2, y2, offset});
-            vertices.push_back({x1, y1, offset});
-            vertices.push_back({x2, y1, offset});
+            file << x2 << ' ' << y2 << ' ' << offset << ' ';
+            file << 0.0f << ' ' << 0.0f << ' ' << 1.0f << ' ';
+            file << tx2 << ' ' << tz2 << '\n';
 
-            vertices.push_back({x1, y2, offset});
-            vertices.push_back({x1, y1, offset});
-            vertices.push_back({x2, y2, offset});
+            file << x1 << ' ' << y1 << ' ' << offset << ' ';
+            file << 0.0f << ' ' << 0.0f << ' ' << 1.0f << ' ';
+            file << tx1 << ' ' << tz1 << '\n';
+
+            file << x2 << ' ' << y1 << ' ' << offset << ' ';
+            file << 0.0f << ' ' << 0.0f << ' ' << 1.0f << ' ';
+            file << tx2 << ' ' << tz1 << '\n';
+
+            file << x1 << ' ' << y2 << ' ' << offset << ' ';
+            file << 0.0f << ' ' << 0.0f << ' ' << 1.0f << ' ';
+            file << tx1 << ' ' << tz2 << '\n';
+
+            file << x1 << ' ' << y1 << ' ' << offset << ' ';
+            file << 0.0f << ' ' << 0.0f << ' ' << 1.0f << ' ';
+            file << tx1 << ' ' << tz1 << '\n';
+
+            file << x2 << ' ' << y2 << ' ' << offset << ' ';
+            file << 0.0f << ' ' << 0.0f << ' ' << 1.0f << ' ';
+            file << tx2 << ' ' << tz2 << '\n';
 
             // Back (-Z)
-            vertices.push_back({x1, y1, -offset});
-            vertices.push_back({x2, y2, -offset});
-            vertices.push_back({x2, y1, -offset});
+            file << x1 << ' ' << y1 << ' ' << -offset << ' ';
+            file << 0.0f << ' ' << 0.0f << ' ' << -1.0f << ' ';
+            file << tx1 << ' ' << tz1 << '\n';
 
-            vertices.push_back({x1, y1, -offset});
-            vertices.push_back({x1, y2, -offset});
-            vertices.push_back({x2, y2, -offset});
+            file << x2 << ' ' << y2 << ' ' << -offset << ' ';
+            file << 0.0f << ' ' << 0.0f << ' ' << -1.0f << ' ';
+            file << tx2 << ' ' << tz2 << '\n';
+
+            file << x2 << ' ' << y1 << ' ' << -offset << ' ';
+            file << 0.0f << ' ' << 0.0f << ' ' << -1.0f << ' ';
+            file << tx2 << ' ' << tz1 << '\n';
+
+            file << x1 << ' ' << y1 << ' ' << -offset << ' ';
+            file << 0.0f << ' ' << 0.0f << ' ' << -1.0f << ' ';
+            file << tx1 << ' ' << tz1 << '\n';
+
+            file << x1 << ' ' << y2 << ' ' << -offset << ' ';
+            file << 0.0f << ' ' << 0.0f << ' ' << -1.0f << ' ';
+            file << tx1 << ' ' << tz2 << '\n';
+
+            file << x2 << ' ' << y2 << ' ' << -offset << ' ';
+            file << 0.0f << ' ' << 0.0f << ' ' << -1.0f << ' ';
+            file << tx2 << ' ' << tz2 << '\n';
         }
     }
 
@@ -271,381 +386,619 @@ void box(float unit, int slices, const std::string& filename) {
         for (int j = 0; j < slices; j++) {
             z1 = i * comp - offset;
             y1 = j * comp - offset;
-            z2 = (i + 1) * comp - offset;
-            y2 = (j + 1) * comp - offset;
+            z2 = (i+1) * comp - offset;
+            y2 = (j+1) * comp - offset;
+            tx1 = i*text;
+            tx2 = (i+1)*text;
+            tz1 = j*text;
+            tz2 = (j+1)*text;
 
             // Right (+X)
-            vertices.push_back({offset, y1, z1});
-            vertices.push_back({offset, y2, z2});
-            vertices.push_back({offset, y1, z2});
+            file << offset << ' ' << y1 << ' ' << z1 << ' ';
+            file << 1.0f << ' ' << 0.0f << ' ' << 0.0f << ' ';
+            file << tx1 << ' ' << tz1 << '\n';
 
-            vertices.push_back({offset, y1, z1});
-            vertices.push_back({offset, y2, z1});
-            vertices.push_back({offset, y2, z2});
+            file << offset << ' ' << y2 << ' ' << z2 << ' ';
+            file << 1.0f << ' ' << 0.0f << ' ' << 0.0f << ' ';
+            file << tx2 << ' ' << tz2 << '\n';
+
+            file << offset << ' ' << y1 << ' ' << z2 << ' ';
+            file << 1.0f << ' ' << 0.0f << ' ' << 0.0f << ' ';
+            file << tx2 << ' ' << tz1 << '\n';
+
+            file << offset << ' ' << y1 << ' ' << z1 << ' ';
+            file << 1.0f << ' ' << 0.0f << ' ' << 0.0f << ' ';
+            file << tx1 << ' ' << tz1 << '\n';
+
+            file << offset << ' ' << y2 << ' ' << z1 << ' ';
+            file << 1.0f << ' ' << 0.0f << ' ' << 0.0f << ' ';
+            file << tx1 << ' ' << tz2 << '\n';
+
+            file << offset << ' ' << y2 << ' ' << z2 << ' ';
+            file << 1.0f << ' ' << 0.0f << ' ' << 0.0f << ' ';
+            file << tx2 << ' ' << tz2 << '\n';
 
             // Left (-X)
-            vertices.push_back({-offset, y2, z2});
-            vertices.push_back({-offset, y1, z1});
-            vertices.push_back({-offset, y1, z2});
+            file << -offset << ' ' << y2 << ' ' << z2 << ' ';
+            file << -1.0f << ' ' << 0.0f << ' ' << 0.0f << ' ';
+            file << tx2 << ' ' << tz2 << '\n';
 
-            vertices.push_back({-offset, y2, z1});
-            vertices.push_back({-offset, y1, z1});
-            vertices.push_back({-offset, y2, z2});
+            file << -offset << ' ' << y1 << ' ' << z1 << ' ';
+            file << -1.0f << ' ' << 0.0f << ' ' << 0.0f << ' ';
+            file << tx1 << ' ' << tz1 << '\n';
+
+            file << -offset << ' ' << y1 << ' ' << z2 << ' ';
+            file << -1.0f << ' ' << 0.0f << ' ' << 0.0f << ' ';
+            file << tx2 << ' ' << tz1 << '\n';
+
+            file << -offset << ' ' << y2 << ' ' << z1 << ' ';
+            file << -1.0f << ' ' << 0.0f << ' ' << 0.0f << ' ';
+            file << tx1 << ' ' << tz2 << '\n';
+
+            file << -offset << ' ' << y1 << ' ' << z1 << ' ';
+            file << -1.0f << ' ' << 0.0f << ' ' << 0.0f << ' ';
+            file << tx1 << ' ' << tz1 << '\n';
+
+            file << -offset << ' ' << y2 << ' ' << z2 << ' ';
+            file << -1.0f << ' ' << 0.0f << ' ' << 0.0f << ' ';
+            file << tx2 << ' ' << tz2 << '\n';
         }
     }
 
-    writeVertices(filename, vertices);
+    file.close();
 }
 
-// Generates points for a sphere
+// Generates points for a sphere with normals and texture coordinates
 void sphere(float radius, int slices, int stacks, const std::string& filename) {
     if (radius <= 0 || slices <= 0 || stacks <= 0) {
         throw std::invalid_argument("Error: Radius, slices, and stacks must be positive.");
     }
 
-    std::vector<Vertex> vertices;
-    float arch_alfa = static_cast<float>(2 * M_PI) / slices;  
-    float stack_size = static_cast<float>(M_PI) / stacks;       
-    Matrix4x4 scaleM = scaleMatrix(radius, radius, radius);
-
-    for (int i = 0; i < stacks; i++) {
-        float theta1 = static_cast<float>(i) * stack_size;    
-        float theta2 = static_cast<float>(i + 1) * stack_size; 
-
-        for (int j = 0; j < slices; j++) {
-            float phi1 = static_cast<float>(j) * arch_alfa;   
-            float phi2 = static_cast<float>(j + 1) * arch_alfa;
-
-            Vertex v1 = {
-                static_cast<float>(sin(theta1) * cos(phi1)),
-                static_cast<float>(cos(theta1)),
-                static_cast<float>(sin(theta1) * sin(phi1))
-            };
-
-            Vertex v2 = {
-                static_cast<float>(sin(theta1) * cos(phi2)),
-                static_cast<float>(cos(theta1)),
-                static_cast<float>(sin(theta1) * sin(phi2))
-            };
-
-            Vertex v3 = {
-                static_cast<float>(sin(theta2) * cos(phi2)),
-                static_cast<float>(cos(theta2)),
-                static_cast<float>(sin(theta2) * sin(phi2))
-            };
-
-            Vertex v4 = {
-                static_cast<float>(sin(theta2) * cos(phi1)),
-                static_cast<float>(cos(theta2)),
-                static_cast<float>(sin(theta2) * sin(phi1))
-            };
-
-            v1 = transformVertex(v1, scaleM);
-            v2 = transformVertex(v2, scaleM);
-            v3 = transformVertex(v3, scaleM);
-            v4 = transformVertex(v4, scaleM);
-            vertices.push_back(v1);
-            vertices.push_back(v2);
-            vertices.push_back(v3);
-            vertices.push_back(v1);
-            vertices.push_back(v3);
-            vertices.push_back(v4);
-        }
+    std::ofstream file(filename);
+    if (!file.is_open()) {
+        throw std::runtime_error("Error: Unable to open file " + filename);
     }
 
-    writeVertices(filename, vertices);
+    float arch_alfa = 2 * M_PI / slices;
+    float arch_beta = M_PI / stacks;
+    float x1, x2, x3, x4, y1, y2, y3, y4, z1, z2, z3, z4;
+    float p1n[3], p2n[3], p3n[3], p4n[3];
+
+    for (int i = 0; i < slices; i++) {
+        for (int j = 0; j < stacks; j++) {
+            x1 = radius * cos(M_PI_2 - arch_beta * j) * sin(arch_alfa * i);
+            p1n[0] = cos(M_PI_2 - arch_beta * j) * sin(arch_alfa * i);
+            
+            x2 = radius * cos(M_PI_2 - arch_beta * (j+1)) * sin(arch_alfa * i);
+            p2n[0] = cos(M_PI_2 - arch_beta * (j+1)) * sin(arch_alfa * i);
+            
+            x3 = radius * cos(M_PI_2 - arch_beta * (j+1)) * sin(arch_alfa * (i+1));
+            p3n[0] = cos(M_PI_2 - arch_beta * (j+1)) * sin(arch_alfa * (i+1));
+            
+            x4 = radius * cos(M_PI_2 - arch_beta * j) * sin(arch_alfa * (i+1));
+            p4n[0] = cos(M_PI_2 - arch_beta * j) * sin(arch_alfa * (i+1));
+
+            y1 = radius * sin(M_PI_2 - arch_beta * j);
+            p1n[1] = sin(M_PI_2 - arch_beta * j);
+            
+            y2 = radius * sin(M_PI_2 - arch_beta * (j+1));
+            p2n[1] = sin(M_PI_2 - arch_beta * (j+1));
+            
+            y3 = radius * sin(M_PI_2 - arch_beta * (j+1));
+            p3n[1] = sin(M_PI_2 - arch_beta * (j+1));
+            
+            y4 = radius * sin(M_PI_2 - arch_beta * j);
+            p4n[1] = sin(M_PI_2 - arch_beta * j);
+
+            z1 = radius * cos(M_PI_2 - arch_beta * j) * cos(arch_alfa * i);
+            p1n[2] = cos(M_PI_2 - arch_beta * j) * cos(arch_alfa * i);
+            
+            z2 = radius * cos(M_PI_2 - arch_beta * (j+1)) * cos(arch_alfa * i);
+            p2n[2] = cos(M_PI_2 - arch_beta * (j+1)) * cos(arch_alfa * i);
+            
+            z3 = radius * cos(M_PI_2 - arch_beta * (j+1)) * cos(arch_alfa * (i+1));
+            p3n[2] = cos(M_PI_2 - arch_beta * (j+1)) * cos(arch_alfa * (i+1));
+            
+            z4 = radius * cos(M_PI_2 - arch_beta * j) * cos(arch_alfa * (i+1));
+            p4n[2] = cos(M_PI_2 - arch_beta * j) * cos(arch_alfa * (i+1));
+
+            normalize(p1n);
+            normalize(p2n);
+            normalize(p3n);
+            normalize(p4n);
+
+            if (j != stacks-1) {
+                file << x1 << ' ' << y1 << ' ' << z1 << ' ';
+                file << p1n[0] << ' ' << p1n[1] << ' ' << p1n[2] << ' ';
+                file << (float)i/slices << ' ' << (float)j/stacks << '\n';
+                
+                file << x2 << ' ' << y2 << ' ' << z2 << ' ';
+                file << p2n[0] << ' ' << p2n[1] << ' ' << p2n[2] << ' ';
+                file << (float)i/slices << ' ' << (float)(j+1)/stacks << '\n';
+                
+                file << x3 << ' ' << y3 << ' ' << z3 << ' ';
+                file << p3n[0] << ' ' << p3n[1] << ' ' << p3n[2] << ' ';
+                file << (float)(i+1)/slices << ' ' << (float)(j+1)/stacks << '\n';
+            }
+        
+            if (j != 0) {
+                file << x1 << ' ' << y1 << ' ' << z1 << ' ';
+                file << p1n[0] << ' ' << p1n[1] << ' ' << p1n[2] << ' ';
+                file << (float)i/slices << ' ' << (float)j/stacks << '\n';
+                
+                file << x3 << ' ' << y3 << ' ' << z3 << ' ';
+                file << p3n[0] << ' ' << p3n[1] << ' ' << p3n[2] << ' ';
+                file << (float)(i+1)/slices << ' ' << (float)(j+1)/stacks << '\n';
+                
+                file << x4 << ' ' << y4 << ' ' << z4 << ' ';
+                file << p4n[0] << ' ' << p4n[1] << ' ' << p4n[2] << ' ';
+                file << (float)(i+1)/slices << ' ' << (float)j/stacks << '\n';
+            }
+        }
+    }
+    
+    file.close();
 }
 
-
-// Generates points for a cone 
+// Generates points for a cone with normals and texture coordinates
 void cone(float radius, float height, int slices, int stacks, const std::string& filename) {
     if (radius <= 0 || height <= 0 || slices <= 0 || stacks <= 0) {
         throw std::invalid_argument("Error: Radius, height, slices, and stacks must be positive.");
     }
 
-    std::vector<Vertex> vertices;
-    float arch_alfa = 2 * static_cast<float>(M_PI) / slices;
-    
-
-    Vertex center = {0.0f, 0.0f, 0.0f};
-    for (int i = 0; i < slices; i++) {
-        float angle1 = arch_alfa * i;
-        float angle2 = arch_alfa * (i + 1);
-        
-        Vertex v1 = {radius * sin(angle1), 0.0f, radius * cos(angle1)};
-        Vertex v2 = {radius * sin(angle2), 0.0f, radius * cos(angle2)};
-
-        vertices.push_back(v1);
-        vertices.push_back(center);
-        vertices.push_back(v2);
+    std::ofstream file(filename);
+    if (!file.is_open()) {
+        throw std::runtime_error("Error: Unable to open file " + filename);
     }
-    
 
-    Vertex apex = {0.0f, height, 0.0f}; 
-    
+    float arch_alfa = 2 * M_PI / slices;
+    float ratio = height / radius;
+    float stack_size = height / stacks;
+    float x1, x2, x3, x4, y1, y2, z1, z2, z3, z4, h1, h2, r1, r2;
+    float p1n[3], p2n[3], p3n[3], p4n[3];
+
+    // Base of the cone
+    for (int i = 0; i < slices; i++) {
+        x1 = radius * sin(arch_alfa * i);
+        x2 = radius * sin(arch_alfa * (i+1));
+        z1 = radius * cos(arch_alfa * i);
+        z2 = radius * cos(arch_alfa * (i+1));
+     
+        file << x1 << ' ' << 0.0f << ' ' << z1 << ' ';
+        file << 0.0f << ' ' << -1.0f << ' ' << 0.0f << ' ';
+        file << 0.5f + 0.5f * sin(arch_alfa * i) << ' ' << 0.5f + 0.5f * cos(arch_alfa * i) << '\n';
+
+        file << 0.0f << ' ' << 0.0f << ' ' << 0.0f << ' ';
+        file << 0.0f << ' ' << -1.0f << ' ' << 0.0f << ' ';
+        file << 0.5f << ' ' << 0.5f << '\n';
+
+        file << x2 << ' ' << 0.0f << ' ' << z2 << ' ';
+        file << 0.0f << ' ' << -1.0f << ' ' << 0.0f << ' ';
+        file << 0.5f + 0.5f * sin(arch_alfa * (i+1)) << ' ' << 0.5f + 0.5f * cos(arch_alfa * (i+1)) << '\n';
+    }
+
+    // Sides of the cone
     for (int i = 0; i < stacks; i++) {
-        float h1 = height * static_cast<float>(i) / stacks;
-        float h2 = height * static_cast<float>(i + 1) / stacks;
-        float r1 = radius * (1.0f - static_cast<float>(i) / stacks);
-        float r2 = radius * (1.0f - static_cast<float>(i + 1) / stacks);
-        
         for (int j = 0; j < slices; j++) {
-            float angle1 = arch_alfa * j;
-            float angle2 = arch_alfa * (j + 1);
-            
-            Vertex v1 = {r1 * sin(angle1), h1, r1 * cos(angle1)};
-            Vertex v2 = {r1 * sin(angle2), h1, r1 * cos(angle2)};
-            Vertex v3 = {r2 * sin(angle2), h2, r2 * cos(angle2)};
-            Vertex v4 = {r2 * sin(angle1), h2, r2 * cos(angle1)};
+            h1 = height - (i * stack_size);
+            h2 = height - ((i+1) * stack_size);
+            r1 = h1 / ratio;
+            r2 = h2 / ratio;
+
+            x1 = r1 * sin(arch_alfa * j);
+            p1n[0] = sin(arch_alfa * j);
+            x2 = r1 * sin(arch_alfa * (j+1));
+            p2n[0] = sin(arch_alfa * (j+1));
+            x3 = r2 * sin(arch_alfa * (j+1));
+            p3n[0] = sin(arch_alfa * (j+1));
+            x4 = r2 * sin(arch_alfa * j);
+            p4n[0] = sin(arch_alfa * j);
+
+            y1 = (i * stack_size);
+            y2 = (i+1) * stack_size;
+            p1n[1] = sin(atan(radius/height));
+            p2n[1] = sin(atan(radius/height));
+            p3n[1] = sin(atan(radius/height));
+            p4n[1] = sin(atan(radius/height));
+
+            z1 = r1 * cos(arch_alfa * j);
+            p1n[2] = cos(arch_alfa * j);
+            z2 = r1 * cos(arch_alfa * (j+1));
+            p2n[2] = cos(arch_alfa * (j+1));
+            z3 = r2 * cos(arch_alfa * (j+1));
+            p3n[2] = cos(arch_alfa * (j+1));
+            z4 = r2 * cos(arch_alfa * j);
+            p4n[2] = cos(arch_alfa * j);
+
+            normalize(p1n);
+            normalize(p2n);
+            normalize(p3n);
+            normalize(p4n);
   
-            vertices.push_back(v1);
-            vertices.push_back(v2);
-            vertices.push_back(v3);
-            
-            vertices.push_back(v1);
-            vertices.push_back(v3);
-            vertices.push_back(v4);
+            file << x1 << ' ' << y1 << ' ' << z1 << ' ';
+            file << p1n[0] << ' ' << p1n[1] << ' ' << p1n[2] << ' ';
+            file << (float)j/slices << ' ' << (float)i/stacks << '\n';
+
+            file << x2 << ' ' << y1 << ' ' << z2 << ' ';
+            file << p2n[0] << ' ' << p2n[1] << ' ' << p2n[2] << ' ';
+            file << (float)(j+1)/slices << ' ' << (float)i/stacks << '\n';
+
+            file << x4 << ' ' << y2 << ' ' << z4 << ' ';
+            file << p4n[0] << ' ' << p4n[1] << ' ' << p4n[2] << ' ';
+            file << (float)j/slices << ' ' << (float)(i+1)/stacks << '\n';
+
+            if (i != stacks - 1) {
+                file << x4 << ' ' << y2 << ' ' << z4 << ' ';
+                file << p4n[0] << ' ' << p4n[1] << ' ' << p4n[2] << ' ';
+                file << (float)j/slices << ' ' << (float)(i+1)/stacks << '\n';
+
+                file << x2 << ' ' << y1 << ' ' << z2 << ' ';
+                file << p2n[0] << ' ' << p2n[1] << ' ' << p2n[2] << ' ';
+                file << (float)(j+1)/slices << ' ' << (float)i/stacks << '\n';
+
+                file << x3 << ' ' << y2 << ' ' << z3 << ' ';
+                file << p3n[0] << ' ' << p3n[1] << ' ' << p3n[2] << ' ';
+                file << (float)(j+1)/slices << ' ' << (float)(i+1)/stacks << '\n';
+            }
         }
     }
 
-    writeVertices(filename, vertices);
+    file.close();
 }
 
-
-// Generates points for a torus
-void torus(float outerRadius, float innerRadius, int slices, int stacks, const std::string& filename) {
-    if (outerRadius <= 0 || innerRadius <= 0 || slices <= 0 || stacks <= 0) {
-        throw std::invalid_argument("Error: Outer radius, inner radius, slices, and stacks must be positive.");
+// Generates points for a torus with normals and texture coordinates
+void torus(float max_radius, float min_radius, int slices, int stacks, const std::string& filename) {
+    if (max_radius <= 0 || min_radius <= 0 || slices <= 0 || stacks <= 0) {
+        throw std::invalid_argument("Error: Radii, slices, and stacks must be positive.");
     }
 
-    std::vector<Vertex> vertices;
+    std::ofstream file(filename);
+    if (!file.is_open()) {
+        throw std::runtime_error("Error: Unable to open file " + filename);
+    }
+
     float arch_alpha = (2 * M_PI) / stacks;
     float arch_beta = (2 * M_PI) / slices;
+    float x1, x2, x3, x4, y1, y2, y3, y4, z1, z2, z3, z4;
+    float p1n[3], p2n[3], p3n[3], p4n[3];
 
-    
-    float max_radius = (outerRadius + innerRadius) / 2.0f;
-    float min_radius = max_radius - innerRadius;
+    float outer_radius = (max_radius + min_radius) / 2;
+    float inner_radius = max_radius - min_radius;
 
     for (int i = 0; i < stacks; i++) {
         for (int j = 0; j < slices; j++) {
-            float x1 = (max_radius + min_radius * cos(arch_alpha * i)) * cos(arch_beta * j);
-            float x2 = (max_radius + min_radius * cos(arch_alpha * (i+1))) * cos(arch_beta * j);
-            float x3 = (max_radius + min_radius * cos(arch_alpha * (i+1))) * cos(arch_beta * (j+1));
-            float x4 = (max_radius + min_radius * cos(arch_alpha * i)) * cos(arch_beta * (j+1));
+            x1 = (outer_radius + inner_radius * cos(arch_alpha * i)) * cos(arch_beta * j);
+            p1n[0] = (inner_radius * cos(arch_alpha * i)) * cos(arch_beta * j);
+            
+            x2 = (outer_radius + inner_radius * cos(arch_alpha * (i+1))) * cos(arch_beta * j);
+            p2n[0] = (inner_radius * cos(arch_alpha * (i+1))) * cos(arch_beta * j);
+            
+            x3 = (outer_radius + inner_radius * cos(arch_alpha * (i+1))) * cos(arch_beta * (j+1));
+            p3n[0] = (inner_radius * cos(arch_alpha * (i+1))) * cos(arch_beta * (j+1));
+            
+            x4 = (outer_radius + inner_radius * cos(arch_alpha * i)) * cos(arch_beta * (j+1));
+            p4n[0] = (inner_radius * cos(arch_alpha * i)) * cos(arch_beta * (j+1));
 
-            float y1 = min_radius * sin(arch_alpha * i);
-            float y2 = min_radius * sin(arch_alpha * (i+1));
-            float y3 = min_radius * sin(arch_alpha * (i+1));
-            float y4 = min_radius * sin(arch_alpha * i);
+            y1 = inner_radius * sin(arch_alpha * i);
+            p1n[1] = inner_radius * sin(arch_alpha * i);
+            
+            y2 = inner_radius * sin(arch_alpha * (i+1));
+            p2n[1] = inner_radius * sin(arch_alpha * (i+1));
+            
+            y3 = inner_radius * sin(arch_alpha * (i+1));
+            p3n[1] = inner_radius * sin(arch_alpha * (i+1));
+            
+            y4 = inner_radius * sin(arch_alpha * i);
+            p4n[1] = inner_radius * sin(arch_alpha * i);
 
-            float z1 = (max_radius + min_radius * cos(arch_alpha * i)) * sin(arch_beta * j);
-            float z2 = (max_radius + min_radius * cos(arch_alpha * (i+1))) * sin(arch_beta * j);
-            float z3 = (max_radius + min_radius * cos(arch_alpha * (i+1))) * sin(arch_beta * (j+1));
-            float z4 = (max_radius + min_radius * cos(arch_alpha * i)) * sin(arch_beta * (j+1));
+            z1 = (outer_radius + inner_radius * cos(arch_alpha * i)) * sin(arch_beta * j);
+            p1n[2] = (inner_radius * cos(arch_alpha * i)) * sin(arch_beta * j);
+            
+            z2 = (outer_radius + inner_radius * cos(arch_alpha * (i+1))) * sin(arch_beta * j);
+            p2n[2] = (inner_radius * cos(arch_alpha * (i+1))) * sin(arch_beta * j);
+            
+            z3 = (outer_radius + inner_radius * cos(arch_alpha * (i+1))) * sin(arch_beta * (j+1));
+            p3n[2] = (inner_radius * cos(arch_alpha * (i+1))) * sin(arch_beta * (j+1));
+            
+            z4 = (outer_radius + inner_radius * cos(arch_alpha * i)) * sin(arch_beta * (j+1));
+            p4n[2] = (inner_radius * cos(arch_alpha * i)) * sin(arch_beta * (j+1));
 
-            // Triangle 1
-            vertices.push_back({x1, y1, z1});
-            vertices.push_back({x2, y2, z2});
-            vertices.push_back({x4, y4, z4});
+            normalize(p1n);
+            normalize(p2n);
+            normalize(p3n);
+            normalize(p4n);
 
-            // Triangle 2
-            vertices.push_back({x2, y2, z2});
-            vertices.push_back({x3, y3, z3});
-            vertices.push_back({x4, y4, z4});
+            file << x1 << ' ' << y1 << ' ' << z1 << ' ';
+            file << p1n[0] << ' ' << p1n[1] << ' ' << p1n[2] << ' ';
+            file << (float)i/stacks << ' ' << (float)j/slices << '\n';
+
+            file << x2 << ' ' << y2 << ' ' << z2 << ' ';
+            file << p2n[0] << ' ' << p2n[1] << ' ' << p2n[2] << ' ';
+            file << (float)(i+1)/stacks << ' ' << (float)j/slices << '\n';
+
+            file << x4 << ' ' << y4 << ' ' << z4 << ' ';
+            file << p4n[0] << ' ' << p4n[1] << ' ' << p4n[2] << ' ';
+            file << (float)i/stacks << ' ' << (float)(j+1)/slices << '\n';
+
+            file << x2 << ' ' << y2 << ' ' << z2 << ' ';
+            file << p2n[0] << ' ' << p2n[1] << ' ' << p2n[2] << ' ';
+            file << (float)(i+1)/stacks << ' ' << (float)j/slices << '\n';
+
+            file << x3 << ' ' << y3 << ' ' << z3 << ' ';
+            file << p3n[0] << ' ' << p3n[1] << ' ' << p3n[2] << ' ';
+            file << (float)(i+1)/stacks << ' ' << (float)(j+1)/slices << '\n';
+
+            file << x4 << ' ' << y4 << ' ' << z4 << ' ';
+            file << p4n[0] << ' ' << p4n[1] << ' ' << p4n[2] << ' ';
+            file << (float)i/stacks << ' ' << (float)(j+1)/slices << '\n';
         }
     }
-    writeVertices(filename, vertices);
+    
+    file.close();
 }
 
-//Linear interpolation between two vertices
-Vertex lerp(const Vertex& a, const Vertex& b, float t) {
-    return {
-        a.x + (b.x - a.x) * t,
-        a.y + (b.y - a.y) * t,
-        a.z + (b.z - a.z) * t
+// Bezier functions
+float B(float U, float V, float m[4][4]) {
+    float aux[4];
+    float v[4];
+    float r;
+
+    v[0] = powf(V, 3);
+    v[1] = powf(V, 2);
+    v[2] = V;
+    v[3] = 1;
+
+    multMatrixVector(m, v, aux);
+    r = powf(U, 3) * aux[0] + powf(U, 2) * aux[1] + U * aux[2] + aux[3];
+
+    return r;
+}
+
+float derivU(float U, float V, float m[4][4]) {
+    float aux[4];
+    float v[4];
+    float r;
+
+    v[0] = powf(V, 3);
+    v[1] = powf(V, 2);
+    v[2] = V;
+    v[3] = 1;
+
+    multMatrixVector(m, v, aux);
+    r = 3 * powf(U, 2) * aux[0] + 2 * U * aux[1] + aux[2];
+
+    return r;
+}
+
+float derivV(float U, float V, float m[4][4]) {
+    float aux[4];
+    float v[4];
+    float r;
+
+    v[0] = 3 * powf(V, 2);
+    v[1] = 2 * V;
+    v[2] = 1;
+    v[3] = 0;
+
+    multMatrixVector(m, v, aux);
+    r = powf(U, 3) * aux[0] + powf(U, 2) * aux[1] + U * aux[2] + aux[3];
+
+    return r;
+}
+
+// Generate Bezier surface patch
+std::string surface(float mx[4][4], float my[4][4], float mz[4][4], int tesselation) {
+    std::stringstream buffer;
+    float x1, x2, x3, x4, y1, y2, y3, y4, z1, z2, z3, z4;
+    float p1u[3], p2u[3], p3u[3], p4u[3], p1v[3], p2v[3], p3v[3], p4v[3], p1n[3], p2n[3], p3n[3], p4n[3]; 
+    float tesselation_level = 1.0f / tesselation;
+
+    for (float i = 0; i < 1; i += tesselation_level) {
+        for (float j = 0; j < 1; j += tesselation_level) {
+            // Calculate points
+            x1 = B(i, j, mx);
+            p1u[0] = derivU(i, j, mx);
+            p1v[0] = derivV(i, j, mx);
+
+            x2 = B(i + tesselation_level, j, mx);
+            p2u[0] = derivU(i + tesselation_level, j, mx);
+            p2v[0] = derivV(i + tesselation_level, j, mx);
+
+            x3 = B(i + tesselation_level, j + tesselation_level, mx);
+            p3u[0] = derivU(i + tesselation_level, j + tesselation_level, mx);
+            p3v[0] = derivV(i + tesselation_level, j + tesselation_level, mx);
+
+            x4 = B(i, j + tesselation_level, mx);
+            p4u[0] = derivU(i, j + tesselation_level, mx);
+            p4v[0] = derivV(i, j + tesselation_level, mx);
+
+            y1 = B(i, j, my);
+            p1u[1] = derivU(i, j, my);
+            p1v[1] = derivV(i, j, my);
+
+            y2 = B(i + tesselation_level, j, my);
+            p2u[1] = derivU(i + tesselation_level, j, my);
+            p2v[1] = derivV(i + tesselation_level, j, my);
+
+            y3 = B(i + tesselation_level, j + tesselation_level, my);
+            p3u[1] = derivU(i + tesselation_level, j + tesselation_level, my);
+            p3v[1] = derivV(i + tesselation_level, j + tesselation_level, my);
+            
+            y4 = B(i, j + tesselation_level, my);
+            p4u[1] = derivU(i, j + tesselation_level, my);
+            p4v[1] = derivV(i, j + tesselation_level, my);
+
+            z1 = B(i, j, mz);
+            p1u[2] = derivU(i, j, mz);
+            p1v[2] = derivV(i, j, mz);
+
+            z2 = B(i + tesselation_level, j, mz);
+            p2u[2] = derivU(i + tesselation_level, j, mz);
+            p2v[2] = derivV(i + tesselation_level, j, mz);
+
+            z3 = B(i + tesselation_level, j + tesselation_level, mz);
+            p3u[2] = derivU(i + tesselation_level, j + tesselation_level, mz);
+            p3v[2] = derivV(i + tesselation_level, j + tesselation_level, mz);
+
+            z4 = B(i, j + tesselation_level, mz);
+            p4u[2] = derivU(i, j + tesselation_level, mz);
+            p4v[2] = derivV(i, j + tesselation_level, mz);
+
+            // Calculate normals
+            crossProd(p1u, p1v, p1n);
+            crossProd(p2u, p2v, p2n);
+            crossProd(p3u, p3v, p3n);
+            crossProd(p4u, p4v, p4n);
+
+            normalize(p1n);
+            normalize(p2n);
+            normalize(p3n);
+            normalize(p4n);
+
+            // First triangle
+            buffer << x1 << ' ' << y1 << ' ' << z1 << ' ';
+            buffer << p1n[0] << ' ' << p1n[1] << ' ' << p1n[2] << ' ';
+            buffer << j << ' ' << i << '\n';
+
+            buffer << x2 << ' ' << y2 << ' ' << z2 << ' ';
+            buffer << p2n[0] << ' ' << p2n[1] << ' ' << p2n[2] << ' ';
+            buffer << j << ' ' << i + tesselation_level << '\n';
+
+            buffer << x4 << ' ' << y4 << ' ' << z4 << ' ';
+            buffer << p4n[0] << ' ' << p4n[1] << ' ' << p4n[2] << ' ';
+            buffer << j + tesselation_level << ' ' << i << '\n';
+
+            // Second triangle
+            buffer << x2 << ' ' << y2 << ' ' << z2 << ' ';
+            buffer << p2n[0] << ' ' << p2n[1] << ' ' << p2n[2] << ' ';
+            buffer << j << ' ' << i + tesselation_level << '\n';
+
+            buffer << x3 << ' ' << y3 << ' ' << z3 << ' ';
+            buffer << p3n[0] << ' ' << p3n[1] << ' ' << p3n[2] << ' ';
+            buffer << j + tesselation_level << ' ' << i + tesselation_level << '\n';
+
+            buffer << x4 << ' ' << y4 << ' ' << z4 << ' ';
+            buffer << p4n[0] << ' ' << p4n[1] << ' ' << p4n[2] << ' ';
+            buffer << j + tesselation_level << ' ' << i << '\n';
+        }
+    }
+    
+    return buffer.str();
+}
+
+// Read patches file
+std::vector<std::vector<std::vector<float>>> readPatchesFile(const std::string& patch) {
+    std::vector<std::vector<int>> indexPatch;
+    std::vector<std::vector<float>> controlPoints;
+    std::vector<std::vector<std::vector<float>>> ret;
+
+    std::fstream file(patch);
+    if (!file.is_open()) {
+        return ret;
+    }
+
+    std::string line;
+
+    // Read patches and control points
+    for (int j = 0; j < 2; j++) {
+        // Number of patches/control points (first line)
+        if (!std::getline(file, line)) return ret;
+        int n = std::stoi(line);
+
+        // If j == 0, reading patches; otherwise reading control points
+        for (int i = 0; i < n; i++) {
+            if (!std::getline(file, line)) return ret;
+            std::vector<int> index;
+            std::vector<float> point;
+            std::istringstream iss(line);
+            std::string token;
+            
+            while (std::getline(iss, token, ',')) {
+                if (j == 0) {
+                    index.push_back(std::stoi(token));
+                } else {
+                    point.push_back(std::stof(token));
+                }
+            }
+            
+            if (j == 0) {
+                indexPatch.push_back(index);
+            } else {
+                controlPoints.push_back(point);
+            }
+        }
+    }
+
+    for (const auto& indexes : indexPatch) {
+        std::vector<std::vector<float>> patch;
+        for (int index : indexes) {
+            patch.push_back(controlPoints[index]);
+        }
+        ret.push_back(patch);
+    }
+    
+    file.close();
+    return ret;
+}
+
+// Generate Bezier patches
+void bezier_patches(const std::string& patch, int tesselation, const std::string& filename) {
+    std::ofstream file(filename);
+    if (!file.is_open()) {
+        throw std::runtime_error("Error: Unable to open file " + filename);
+    }
+
+    std::vector<std::vector<std::vector<float>>> patches = readPatchesFile(patch);
+
+    float bezier[4][4] = {
+        {-1.0f, 3.0f, -3.0f, 1.0f},
+        {3.0f, -6.0f, 3.0f, 0.0f},
+        {-3.0f, 3.0f, 0.0f, 0.0f},
+        {1.0f, 0.0f, 0.0f, 0.0f}
     };
-}
 
-//de Casteljau algorithm for Bezier curve (1D)
-Vertex deCasteljau1D(const std::vector<Vertex>& points, float t) {
-    std::vector<Vertex> temp = points;
-    for (int k = 1; k < temp.size(); ++k) {
-        for (int i = 0; i < temp.size() - k; ++i) {
-            temp[i] = lerp(temp[i], temp[i + 1], t);
+    float mx[4][4];
+    float my[4][4];
+    float mz[4][4];
+    float aux[4][4];
+
+    for (size_t i = 0; i < patches.size(); i++) {
+        int posi = 0;
+        int posj = 0;
+
+        for (int j = 0; j < 16; j++) {
+            mx[posj][posi] = patches[i][j][0];
+            my[posj][posi] = patches[i][j][1];
+            mz[posj][posi] = patches[i][j][2];
+
+            posj++;
+            if (j == 3 || j == 7 || j == 11) {
+                posi++;
+                posj = 0;
+            }
         }
+
+        multMatrixMatrix(bezier, mx, aux);
+        multMatrixMatrix(aux, bezier, mx);
+
+        multMatrixMatrix(bezier, my, aux);
+        multMatrixMatrix(aux, bezier, my);
+
+        multMatrixMatrix(bezier, mz, aux);
+        multMatrixMatrix(aux, bezier, mz);
+
+        file << surface(mx, my, mz, tesselation);
     }
-    return temp[0];
+
+    file.close();
 }
 
-//de Casteljau for Bezier patch (2D)
-Vertex calculateBezierPoint(const std::vector<std::vector<Vertex>>& controlPoints, float u, float v) {
-    std::vector<Vertex> uCurve(4);
-    for (int i = 0; i < 4; ++i) {
-        uCurve[i] = deCasteljau1D(controlPoints[i], v);
-    }
-    return deCasteljau1D(uCurve, u);
-}
-
-// Generates a Bezier patch mesh
-std::vector<Vertex> generateBezierPatch(const std::vector<std::vector<Vertex>>& controlPoints, int tessellation) {
-    std::vector<Vertex> vertices;
-    float step = 1.0f / tessellation;
-
-    //Precomputed points for effiency
-    std::vector<std::vector<Vertex>> grid(tessellation + 1, std::vector<Vertex>(tessellation + 1));
-    for (int i = 0; i <= tessellation; ++i) {
-        float u = i * step;
-        for (int j = 0; j <= tessellation; ++j) {
-            float v = j * step;
-            grid[i][j] = calculateBezierPoint(controlPoints, u, v);
-        }
-    }
-
-    for (int i = 0; i < tessellation; ++i) {
-        for (int j = 0; j < tessellation; ++j) {
-            // Triangle 1 (swap 2nd and 3rd vertex)
-            vertices.push_back(grid[i][j]);
-            vertices.push_back(grid[i+1][j+1]);
-            vertices.push_back(grid[i+1][j]);
-            // Triangle 2 (swap 2nd and 3rd vertex)
-            vertices.push_back(grid[i][j]);
-            vertices.push_back(grid[i][j+1]);
-            vertices.push_back(grid[i+1][j+1]);
-        }
-    }
-    return vertices;
-}
-
-/**
- * @brief Parse a Bezier patch file and generate the 3D model
- * 
- * The patch file format should contain:
- * - First line: number of patches
- * - For each patch: 16 indices referring to the control points
- * - After all patches: the coordinates of all control points
- * 
- * @param patchFile Path to the file containing Bezier patch definitions
- * @param tessellation Level of detail (number of subdivisions)
- * @param outputFile Output file path for the generated 3D model
- */
+// Enhanced version of bezier using the correct function name
 void bezier(const std::string& patchFile, int tessellation, const std::string& outputFile) {
     if (tessellation <= 0) {
         throw std::invalid_argument("Error: Tessellation level must be positive.");
     }
     
-    std::ifstream file(patchFile);
-    if (!file.is_open()) {
-        throw std::runtime_error("Error: Unable to open patch file " + patchFile);
-    }
-    
-    // Read number of patches
-    std::string line;
-    std::getline(file, line);
-    int numPatches = std::stoi(line);
-    
-    // Read patch indices
-    std::vector<std::vector<int>> patchIndices;
-    for (int i = 0; i < numPatches; i++) {
-        std::vector<int> patchIdx;
-        std::getline(file, line);
-        
-        // Parse indices, handling both comma-separated and space-separated formats
-        std::istringstream iss(line);
-        std::string token;
-        
-        // Check if comma-separated
-        if (line.find(',') != std::string::npos) {
-            while (std::getline(iss, token, ',')) {
-                // Trim whitespace
-                token.erase(0, token.find_first_not_of(" \t"));
-                token.erase(token.find_last_not_of(" \t") + 1);
-                if (!token.empty()) {
-                    patchIdx.push_back(std::stoi(token));
-                }
-            }
-        } else {
-            // Space-separated
-            int idx;
-            while (iss >> idx) {
-                patchIdx.push_back(idx);
-            }
-        }
-        
-        // Verify we have 16 control points per patch
-        if (patchIdx.size() != 16) {
-            throw std::runtime_error("Error: Each patch must have exactly 16 control points");
-        }
-        
-        patchIndices.push_back(patchIdx);
-    }
-    
-    // Read number of control points
-    std::getline(file, line);
-    int numControlPoints = std::stoi(line);
-    
-    // Read control points
-    std::vector<Vertex> controlPoints;
-    while (std::getline(file, line)) {
-        if (line.empty()) continue;
-        
-        std::istringstream iss(line);
-        float x, y, z;
-        
-        // Check if comma-separated
-        if (line.find(',') != std::string::npos) {
-            std::string xStr, yStr, zStr;
-            std::getline(iss, xStr, ',');
-            std::getline(iss, yStr, ',');
-            std::getline(iss, zStr, ',');
-            
-            // Trim whitespace
-            xStr.erase(0, xStr.find_first_not_of(" \t"));
-            xStr.erase(xStr.find_last_not_of(" \t") + 1);
-            yStr.erase(0, yStr.find_first_not_of(" \t"));
-            yStr.erase(yStr.find_last_not_of(" \t") + 1);
-            zStr.erase(0, zStr.find_first_not_of(" \t"));
-            zStr.erase(zStr.find_last_not_of(" \t") + 1);
-            
-            x = std::stof(xStr);
-            y = std::stof(yStr);
-            z = std::stof(zStr);
-        } else {
-            // Space-separated
-            iss >> x >> y >> z;
-        }
-        
-        controlPoints.push_back({x, y, z});
-    }
-    
-    // Verify we have the correct number of control points
-    if (controlPoints.size() != numControlPoints) {
-        std::cerr << "Warning: Expected " << numControlPoints << " control points but read " 
-                  << controlPoints.size() << std::endl;
-    }
-    
-    // Generate mesh for each patch
-    std::vector<Vertex> allVertices;
-    for (const auto& patch : patchIndices) {
-        // Convert flat indices to 4x4 grid of control points
-        std::vector<std::vector<Vertex>> patchControlPoints(4, std::vector<Vertex>(4));
-        for (int i = 0; i < 4; i++) {
-            for (int j = 0; j < 4; j++) {
-                int index = patch[i * 4 + j];
-                if (index >= 0 && index < controlPoints.size()) {
-                    patchControlPoints[i][j] = controlPoints[index];
-                } else {
-                    throw std::runtime_error("Error: Invalid control point index: " + std::to_string(index));
-                }
-            }
-        }
-        
-        // Generate and add vertices for this patch
-        std::vector<Vertex> patchVertices = generateBezierPatch(patchControlPoints, tessellation);
-        allVertices.insert(allVertices.end(), patchVertices.begin(), patchVertices.end());
-    }
-    
-
-    // Write all vertices to the output file
-    writeVertices(outputFile, allVertices);
+    bezier_patches(patchFile, tessellation, outputFile);
 }
 

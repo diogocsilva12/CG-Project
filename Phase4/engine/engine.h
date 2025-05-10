@@ -10,81 +10,115 @@
 #include <GL/glew.h>
 #endif
 
+// Structure for a 3D point or vector
 struct Point {
     float x, y, z;
 };
 
-struct Camera {
-    Point position;
-    Point lookAt;
-    Point up;
-    float fov;
-    float near;
-    float far;
+// Structure for color components
+struct Color {
+    float r, g, b;
+    
+    Color() : r(200.0f/255.0f), g(200.0f/255.0f), b(200.0f/255.0f) {}  // Default: gray
 };
 
-struct Window {
-    int width;
-    int height;
+// Structure for material properties
+struct Material {
+    Color diffuse;    // Default: (200, 200, 200)
+    Color ambient;    // Default: (50, 50, 50)
+    Color specular;   // Default: (0, 0, 0)
+    Color emissive;   // Default: (0, 0, 0)
+    float shininess;  // Default: 0
+    
+    Material() : shininess(0.0f) {
+        ambient.r = 50.0f/255.0f;
+        ambient.g = 50.0f/255.0f;
+        ambient.b = 50.0f/255.0f;
+    }
 };
 
+// Structure for a light source
+struct Light {
+    std::string type;  // "point", "directional", or "spot"
+    float posx = 0.0f, posy = 0.0f, posz = 0.0f;    // Position (for point and spot lights)
+    float dirx = 0.0f, diry = 0.0f, dirz = 0.0f;    // Direction (for directional and spot lights)
+    float cutoff = 0.0f;              // Cutoff angle in degrees (for spot lights)
+};
+
+// Structure for a 3D model
 struct Model {
     std::string filename;
     std::string textureFile;
+    GLuint vbo = 0;
+    GLuint nbo = 0;  // Normal buffer object
+    GLuint tbo = 0;  // Texture coordinate buffer object
+    GLuint textureID = 0;
     std::vector<Point> vertices;
-    GLuint vbo = 0; // <-- Add this line for VBO support
-    GLuint textureID = 0; // Texture ID for OpenGL
+    std::vector<Point> normals;
+    std::vector<float> texCoords;
+    Material material;
 };
 
+// Structure for transformation information
 struct Transform {
-    // Translation values
-    float translateX = 0.0f;
-    float translateY = 0.0f;
-    float translateZ = 0.0f;
+    // Translation
+    float translateX = 0.0f, translateY = 0.0f, translateZ = 0.0f;
     
-    // Rotation values (in degrees)
-    float rotateAngle = 0.0f;
-    float rotateX = 0.0f;
-    float rotateY = 0.0f;
-    float rotateZ = 0.0f;
-    
-    // Scale values
-    float scaleX = 1.0f;
-    float scaleY = 1.0f;
-    float scaleZ = 1.0f;
-
-    // Catmull-Rom curve support
-    bool hasCurve = false;
-    float curveTime = 0.0f;
-    bool align = false;
-    std::vector<Point> curvePoints;
-
-    // Time-based rotation
+    // Rotation
+    float rotateAngle = 0.0f, rotateX = 0.0f, rotateY = 0.0f, rotateZ = 0.0f;
     bool timeRotation = false;
     float rotationTime = 0.0f;
+    
+    // Scale
+    float scaleX = 1.0f, scaleY = 1.0f, scaleZ = 1.0f;
+    
+    // Catmull-Rom curve
+    bool hasCurve = false;
+    std::vector<Point> curvePoints;
+    float curveTime = 0.0f;
+    bool align = false;
     bool drawCurve = true;
 };
 
+// Forward declaration of Group
+struct Group;
+
+// Structure for a group (contains models and child groups)
 struct Group {
+    Transform transform;
+    std::vector<std::string> transformOrder;
     std::vector<Model> models;
     std::vector<Group> childGroups;
-    Transform transform;
-    std::vector<std::string> transformOrder; // Store the order of transformations
 };
 
-struct Light {
-    std::string type;
-    float posx = 0.0f;
-    float posy = 0.0f;
-    float posz = 0.0f;
-    // Adiciona outros atributos se necessário (ex: direção, cutoff, etc.)
+// Structure for camera information
+struct Camera {
+    Point position = {0.0f, 0.0f, 5.0f};
+    Point lookAt = {0.0f, 0.0f, 0.0f};
+    Point up = {0.0f, 1.0f, 0.0f};
+    float fov = 60.0f;
+    float near = 1.0f;
+    float far = 1000.0f;
 };
 
+// Structure for window settings
+struct Window {
+    int width = 800;
+    int height = 600;
+};
+
+// Structure for the entire world (root of the scene graph)
 struct World {
-    Window window;
     Camera camera;
-    Group rootGroup; // Replace the models vector with a hierarchical structure
+    Window window;
+    Group rootGroup;
     std::vector<Light> lights;
 };
+
+// Function declarations for Catmull-Rom splines
+void getGlobalCatmullRomPoint(float gt, const std::vector<Point>& points, float* pos, float* deriv);
+void cross(const float* a, const float* b, float* res);
+void normalize(float* v);
+void buildRotMatrix(const float* x, const float* y, const float* z, float* m);
 
 #endif
