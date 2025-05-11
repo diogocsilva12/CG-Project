@@ -273,35 +273,18 @@ void setupLights(const std::vector<Light>& lights) {
 // Update your setupMaterial function to include debug output
 
 void setupMaterial(const Material& material) {
-    // Create material property arrays with alpha=1.0
+    // Create material property arrays
     float diffuse[4] = {material.diffuse.r, material.diffuse.g, material.diffuse.b, 1.0f};
     float ambient[4] = {material.ambient.r, material.ambient.g, material.ambient.b, 1.0f};
     float specular[4] = {material.specular.r, material.specular.g, material.specular.b, 1.0f};
-    float emissive[4] = {material.emissive.r, material.emissive.g, material.emissive.b, 1.0f};
+    float emissive[4] = {material.diffuse.r * 0.2f, material.diffuse.g * 0.2f, material.diffuse.b * 0.2f, 1.0f};
     
-    // Print more detailed debugging information
-    static int materialCount = 0;
-    if (materialCount < 10) {  // Increased to see more materials
-        std::cout << "Setting material " << materialCount << ":" << std::endl;
-        std::cout << "  Diffuse: (" << diffuse[0] << ", " << diffuse[1] << ", " << diffuse[2] << ")" << std::endl;
-        
-        // Check for common error conditions
-        if (diffuse[0] > 1.0f || diffuse[1] > 1.0f || diffuse[2] > 1.0f) {
-            std::cout << "  WARNING: Diffuse color components > 1.0 - these need to be normalized!" << std::endl;
-        }
-        if (diffuse[0] == 0.0f && diffuse[1] == 0.0f && diffuse[2] == 0.0f) {
-            std::cout << "  WARNING: Diffuse color is black - check if colors are properly parsed!" << std::endl;
-        }
-        
-        materialCount++;
-    }
-    
-    // Apply material properties
+    // Apply all material properties for proper lighting
     glMaterialfv(GL_FRONT, GL_DIFFUSE, diffuse);
     glMaterialfv(GL_FRONT, GL_AMBIENT, ambient);
     glMaterialfv(GL_FRONT, GL_SPECULAR, specular);
-    glMaterialfv(GL_FRONT, GL_EMISSION, emissive);
-    glMaterialf(GL_FRONT, GL_SHININESS, material.shininess * 128.0f); // OpenGL expects 0-128 range
+    glMaterialfv(GL_FRONT, GL_EMISSION, emissive);  // Keep some emission for visibility
+    glMaterialf(GL_FRONT, GL_SHININESS, material.shininess);
 }
 
 //Render groups with transformations. Applies transformations in the order specified in the XML file.
@@ -350,48 +333,57 @@ void renderGroup(const Group& group) {
     
     //Renders all models in group.models
     for (const Model& model : group.models) {
-        // Disable color material before setting material properties
+        // Disable color material mode first
         glDisable(GL_COLOR_MATERIAL);
         
         // Setup material properties
         setupMaterial(model.material);
         
+        // CRITICAL FIX: Make sure at least one light is enabled
+        glEnable(GL_LIGHTING);
+        glEnable(GL_LIGHT0);
+        
+        // Handle normals - IMPORTANT: Remove sizeof(Point) from glNormalPointer
+        if (model.nbo != 0 && !model.normals.empty()) {
+            glBindBuffer(GL_ARRAY_BUFFER, model.nbo);
+            glEnableClientState(GL_NORMAL_ARRAY);
+            glNormalPointer(GL_FLOAT, 0, 0);  // Remove sizeof(Point) - it should be 0
+        } else {
+            // No normals available - use a default normal
+            glDisableClientState(GL_NORMAL_ARRAY);
+            glNormal3f(0.0f, 1.0f, 0.0f);
+        }
+        
         // Setup texture if available
         if (model.textureID > 0) {
             glEnable(GL_TEXTURE_2D);
             glBindTexture(GL_TEXTURE_2D, model.textureID);
-        } else {
-            glDisable(GL_TEXTURE_2D);
-        }
-
-        if (model.vbo != 0 && !model.vertices.empty()) {
-            glBindBuffer(GL_ARRAY_BUFFER, model.vbo);
-            glEnableClientState(GL_VERTEX_ARRAY);
-            glVertexPointer(3, GL_FLOAT, sizeof(Point), 0);
             
-            // Use normals if available
-            if (model.nbo != 0 && !model.normals.empty()) {
-                glBindBuffer(GL_ARRAY_BUFFER, model.nbo);
-                glEnableClientState(GL_NORMAL_ARRAY);
-                glNormalPointer(GL_FLOAT, sizeof(Point), 0);
-            }
-            
-            // Use texture coordinates if available
             if (model.tbo != 0 && !model.texCoords.empty()) {
                 glBindBuffer(GL_ARRAY_BUFFER, model.tbo);
                 glEnableClientState(GL_TEXTURE_COORD_ARRAY);
                 glTexCoordPointer(2, GL_FLOAT, 0, 0);
             }
+        } else {
+            glDisable(GL_TEXTURE_2D);
+            glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+        }
+
+        // Render the model - also remove sizeof(Point) from glVertexPointer
+        if (model.vbo != 0 && !model.vertices.empty()) {
+            glBindBuffer(GL_ARRAY_BUFFER, model.vbo);
+            glEnableClientState(GL_VERTEX_ARRAY);
+            glVertexPointer(3, GL_FLOAT, 0, 0);  // Remove sizeof(Point) - it should be 0
             
             glDrawArrays(GL_TRIANGLES, 0, model.vertices.size());
-            
-            // Disable client states
-            glDisableClientState(GL_VERTEX_ARRAY);
-            if (!model.normals.empty()) glDisableClientState(GL_NORMAL_ARRAY);
-            if (!model.texCoords.empty()) glDisableClientState(GL_TEXTURE_COORD_ARRAY);
-            
-            glBindBuffer(GL_ARRAY_BUFFER, 0);
         }
+        
+        // Disable client states and clean up
+        glDisableClientState(GL_VERTEX_ARRAY);
+        glDisableClientState(GL_NORMAL_ARRAY);
+        glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+        glBindBuffer(GL_ARRAY_BUFFER, 0);
+        glBindTexture(GL_TEXTURE_2D, 0);
     }
     
     //Render the child models in xml
@@ -872,20 +864,27 @@ int main(int argc, char** argv) {
 
     loadModels(world.rootGroup);
 
-    // Initialize OpenGL lighting system (single clean setup)
+    // Initialize OpenGL lighting system
     glEnable(GL_LIGHTING);
-    glEnable(GL_NORMALIZE);  // This ensures normals are normalized
-    glShadeModel(GL_SMOOTH); // Enable smooth shading
+    glEnable(GL_NORMALIZE);  
+    glShadeModel(GL_SMOOTH);
 
-    // Set up global ambient light
+    // Set up white light for all lights (like your friend's code)
+    float white[4] = {1.0f, 1.0f, 1.0f, 1.0f};
+    for (int i = 0; i < 8; i++) {
+        glLightfv(GL_LIGHT0 + i, GL_DIFFUSE, white);
+        glLightfv(GL_LIGHT0 + i, GL_SPECULAR, white);
+    }
+
+    // Set up global ambient light - this is important
     float globalAmbient[4] = {0.2f, 0.2f, 0.2f, 1.0f};
     glLightModelfv(GL_LIGHT_MODEL_AMBIENT, globalAmbient);
-    glLightModeli(GL_LIGHT_MODEL_TWO_SIDE, GL_FALSE);  // Lighting only on front faces
-    glLightModeli(GL_LIGHT_MODEL_LOCAL_VIEWER, GL_TRUE);  // More accurate specular highlights
+    glLightModeli(GL_LIGHT_MODEL_TWO_SIDE, GL_FALSE);
+    glLightModeli(GL_LIGHT_MODEL_LOCAL_VIEWER, GL_TRUE);
 
-    // GL_COLOR_MATERIAL allows per-vertex color with lighting
-    glEnable(GL_COLOR_MATERIAL);
-    glColorMaterial(GL_FRONT, GL_AMBIENT_AND_DIFFUSE);
+    // CRITICAL: DO NOT enable GL_COLOR_MATERIAL - it interferes with material settings
+    // glEnable(GL_COLOR_MATERIAL); 
+    // glColorMaterial(GL_FRONT, GL_AMBIENT_AND_DIFFUSE);
 
     glutDisplayFunc(renderScene);
     glutReshapeFunc(changeSize);
@@ -906,10 +905,6 @@ int main(int argc, char** argv) {
     glDepthFunc(GL_LESS);
     glCullFace(GL_BACK);
     glFrontFace(GL_CCW);
-    
-    // GL_COLOR_MATERIAL allows per-vertex color with lighting
-    glEnable(GL_COLOR_MATERIAL);
-    glColorMaterial(GL_FRONT, GL_AMBIENT_AND_DIFFUSE);
     
     // Start in filled mode instead of wireframe for better visualization with lighting
     glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);

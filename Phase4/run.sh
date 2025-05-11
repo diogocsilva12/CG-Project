@@ -247,63 +247,7 @@ run_tests_menu() {
     done
 }
 
-# Function to run phase 4 test files with persistent viewing
-run_phase4_tests_menu() {
-    local return_to_main=false
-    local test_dir="test files/test_files_phase_4"
-    while [ "$return_to_main" = false ]; do
-        clear
-        echo "=== Phase 4 Test Files ==="
-        if [ -d "$test_dir" ]; then
-            files=("$test_dir"/*.xml)
-            if [ ${#files[@]} -eq 0 ] || [ ! -e "${files[0]}" ]; then
-                echo "No phase 4 test files found."
-                read -p "Press Enter to return to the main menu..."
-                return_to_main=true
-            else
-                echo "Test files:"
-                declare -a test_files
-                counter=1
-                for file in "${files[@]}"; do
-                    if [ -f "$file" ]; then
-                        filename=$(basename "$file" .xml)
-                        echo "$counter) $filename"
-                        test_files[$counter]=$filename
-                        ((counter++))
-                    fi
-                done
-                echo "0. Return to main menu"
-                read -p "Select test number (0 to return): " test_number
-                case $test_number in
-                    0)
-                        return_to_main=true
-                        ;;
-                    *)
-                        if [ "$test_number" -ge 1 ] && [ "$test_number" -lt "$counter" ]; then
-                            selected_test="${test_files[$test_number]}"
-                            if [ -f "$test_dir/${selected_test}.xml" ]; then
-                                echo "Running test: $selected_test"
-                                echo "(Close the viewer window when done to return to this menu)"
-                                cd build
-                                ./engine "../$test_dir/${selected_test}.xml"
-                                cd ..
-                                echo ""
-                                read -p "Press Enter to continue viewing tests..."
-                            fi
-                        else
-                            echo "Invalid test number!"
-                            read -p "Press Enter to try again..."
-                        fi
-                        ;;
-                esac
-            fi
-        else
-            echo "No phase 4 test files directory found!"
-            read -p "Press Enter to return to the main menu..."
-            return_to_main=true
-        fi
-    done
-}
+
 
 # Main menu
 while true; do
@@ -313,7 +257,6 @@ while true; do
     echo "2. Generate Figure"
     echo "3. View Generated Figures"
     echo "4. Run Test Files"
-    echo "5. Run Phase 4 Test Files"
     echo "0. Exit"
     echo "============================================="
     
@@ -522,11 +465,7 @@ while true; do
             # Call the test running menu function
             run_tests_menu
             ;;
-            
-        5)
-            # Call the phase 4 test running menu function
-            run_phase4_tests_menu
-            ;;
+
             
         0)
             echo "Exiting..."
