@@ -9,6 +9,9 @@
     </camera>
 
 	<lights> 
+		<!-- Main sun light - brighter and positioned at the sun's center -->
+		<light type="point" posx="0" posy="0" posz="0" />
+		<!-- Additional ambient light -->
 		<light type="point" posx="0" posy="1" posz="0" />			
 	</lights>
 
@@ -20,19 +23,20 @@
                 <scale x="5.5" y="5.5" z="5.5" />
             </transform>
 			<models> 
-				<model file="sphere_10_20_20.3d"> <!-- generator sphere 1 8 8 sphere_1_8_8.3d -->
+				<model file="sphere_10_20_20.3d">
                     <texture file="sun.jpg" />
 					<color>
-					    <diffuse R="255" G="90" B="0" />
-					    <ambient R="255" G="90" B="0" />
-					    <specular R="255" G="90" B="0" />
-					    <emissive R="255" G="90" B="0" />
+					    <diffuse R="255" G="165" B="0" />
+					    <ambient R="255" G="165" B="0" />
+					    <specular R="255" G="255" B="255" />
+					    <emissive R="255" G="255" B="0" />
 					    <shininess value="0" />
 					</color>
 				</model>
 			</models>
-        </group> 
 
+            
+        </group>
 
         <group> <!-- Mercurio -->
             <transform>
@@ -61,38 +65,6 @@
 					</color>					
 				</model>	
 			</models>        
-        
-
-
-            <group> <!-- Lua Mercurio-->
-                <transform>
-                    <translate time = "8" align="True" draw="false">
-			    <point x="12.0207" y="0" z="12.0207"/>
-			    <point x="0" y="0" z="17"/>
-			    <point x="-12.0207" y="0" z="12.0207"/>
-			    <point x="-17" y="0" z="0"/>
-			    <point x="-12.0207" y="0" z="-12.0207"/>
-			    <point x="0" y="0" z="-17"/>
-			    <point x="12.0207" y="0" z="-12.0207"/>
-			    <point x="17" y="0" z="0"/>                    
-		    </translate>
-                    <rotate time= "3" x = "0" y = "1" z = "0" />
-                    <scale x="0.24" y="0.24" z="0.24" />
-                </transform>
-				<models> 
-					<model file="sphere_10_20_20.3d"> <!-- ./generator sphere 10 20 20 sphere_10_20_20.3d -->
-                        <texture file="moon.jpg" />
-						<color>
-						    <diffuse R="192" G="192" B="192" />
-						    <ambient R="96" G="96" B="96" />
-						    <specular R="255" G="255" B="255" />
-						    <emissive R="0" G="0" B="0" />
-						    <shininess value="10" />
-						</color>					
-					</model>	
-				</models> 
-            </group>        
-
         </group>
 
 
@@ -124,36 +96,6 @@
 					</color>					
 				</model>	
 			</models> 
-
-
-            <group> <!--Venus Lua -->
-                <transform>
-                    <translate time = "8" align="True" draw="false">
-			    <point x="12.0207" y="0" z="12.0207"/>
-			    <point x="0" y="0" z="17"/>
-			    <point x="-12.0207" y="0" z="12.0207"/>
-			    <point x="-17" y="0" z="0"/>
-			    <point x="-12.0207" y="0" z="-12.0207"/>
-			    <point x="0" y="0" z="-17"/>
-			    <point x="12.0207" y="0" z="-12.0207"/>
-			    <point x="17" y="0" z="0"/>                    
-		    </translate>
-                    <rotate time= "2" x = "0" y = "1" z = "0" />
-                    <scale x="0.2" y="0.2" z="0.2" />
-                </transform>
-				<models> 
-					<model file="sphere_10_20_20.3d"> <!-- ./generator sphere 10 20 20 sphere_10_20_20.3d -->
-                        <texture file="moon.jpg" />
-						<color>
-						    <diffuse R="192" G="192" B="192" />
-						    <ambient R="96" G="96" B="96" />
-						    <specular R="255" G="255" B="255" />
-						    <emissive R="0" G="0" B="0" />
-						    <shininess value="10" />
-						</color>						
-					</model>	
-				</models> 
-            </group>
 
         </group>  
 
@@ -252,7 +194,7 @@
 				</model>	
 			</models> 
 
-            <group> <!-- Lua Marte-->
+            <group> <!-- Phobos -->
                 <transform>
                     <translate time = "17" align="True" draw="false">
 			    <point x="12.0207" y="0" z="12.0207"/>
@@ -269,7 +211,7 @@
                 </transform>
 				<models> 
 					<model file="sphere_10_20_20.3d"> <!-- ./generator sphere 10 20 20 sphere_10_20_20.3d -->
-                        <texture file="moon.jpg" />
+                        <texture file="phobos.jpg" />
 						<color>
 						    <diffuse R="192" G="192" B="192" />
 						    <ambient R="96" G="96" B="96" />
@@ -280,6 +222,37 @@
 					</model>	
 				</models> 
             </group>
+
+            <group> <!-- Deimos -->
+                <transform>
+                    <translate time = "22" align="True" draw="false">
+			    <point x="14.1421" y="0" z="14.1421"/>
+			    <point x="0" y="0" z="20"/>
+			    <point x="-14.1421" y="0" z="14.1421"/>
+			    <point x="-20" y="0" z="0"/>
+			    <point x="-14.1421" y="0" z="-14.1421"/>
+			    <point x="0" y="0" z="-20"/>
+			    <point x="14.1421" y="0" z="-14.1421"/>
+			    <point x="20" y="0" z="0"/>                    
+		    </translate>
+                    <rotate time= "32" x = "0" y = "1" z = "0" />
+                    <scale x="0.15" y="0.15" z="0.15" />
+                </transform>
+				<models> 
+					<model file="sphere_10_20_20.3d"> <!-- ./generator sphere 10 20 20 sphere_10_20_20.3d -->
+                        <texture file="deimos.jpg" />
+						<color>
+						    <diffuse R="176" G="176" B="176" />
+						    <ambient R="88" G="88" B="88" />
+						    <specular R="255" G="255" B="255" />
+						    <emissive R="0" G="0" B="0" />
+						    <shininess value="10" />
+						</color>						
+					</model>	
+				</models> 
+            </group>
+
+			
 
 		</group>	
 
@@ -444,7 +417,7 @@
                 </transform>
 				<models> 
 					<model file="sphere_10_20_20.3d"> <!-- ./generator sphere 10 20 20 sphere_10_20_20.3d -->
-                        <texture file="moon.jpg" />
+                        <texture file="oberon.jpg" />
 						<color>
 						    <diffuse R="192" G="192" B="192" />
 						    <ambient R="96" G="96" B="96" />
@@ -520,12 +493,10 @@
         </group>
 
 
-
-
         <group> <!-- Cometa -->
             <transform>
                 
-                <translate time = "10" align="true">
+                <translate time = "20" align="true">
                     <point x = "0" y = "-80" z = "80" />
                     <point x = "80" y = "-80" z = "0" />
                     <point x = "0" y = "300" z = "-40" />
