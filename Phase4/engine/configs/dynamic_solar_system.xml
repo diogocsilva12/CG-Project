@@ -496,7 +496,7 @@
         <group> <!-- Cometa -->
             <transform>
                 
-                <translate time = "10" align="true">
+                <translate time = "20" align="true">
                     <point x = "0" y = "-80" z = "80" />
                     <point x = "80" y = "-80" z = "0" />
                     <point x = "0" y = "300" z = "-40" />
