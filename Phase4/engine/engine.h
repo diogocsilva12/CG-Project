@@ -39,10 +39,11 @@ struct Material {
 
 // Structure for a light source
 struct Light {
-    std::string type;  // "point", "directional", or "spot"
+    std::string type = "point";  // "point", "directional", or "spotlight"
     float posx = 0.0f, posy = 0.0f, posz = 0.0f;    // Position (for point and spot lights)
     float dirx = 0.0f, diry = 0.0f, dirz = 0.0f;    // Direction (for directional and spot lights)
-    float cutoff = 0.0f;              // Cutoff angle in degrees (for spot lights)
+    float cutoff = 45.0f;              // Cutoff angle in degrees (for spotlights)
+    float intensity = 1.0f;           // Intensity of the light
 };
 
 // Structure for a 3D model
@@ -113,6 +114,7 @@ struct World {
     Window window;
     Group rootGroup;
     std::vector<Light> lights;
+    std::string skyboxTexture; // Path to skybox texture
 };
 
 // Function declarations for Catmull-Rom splines
