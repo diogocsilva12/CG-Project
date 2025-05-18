@@ -81,7 +81,8 @@ Notes:
 ### Solar System Simulation
 ![Solar System Simulation](https://github.com/diogocsilva12/CG-Project/blob/main/Phase3/solarsystem.gif)
 
-
+### Solar System Simulation with Textures
+![Solar System Simulation with Textures]
 
 # Generate sphere for celestial bodies
 - ./generator sphere 1 8 8 sphere_1_8_8.3d
