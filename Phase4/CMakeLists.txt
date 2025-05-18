@@ -116,7 +116,13 @@ target_link_libraries(engine
 if(NOT APPLE)
     find_package(GLEW REQUIRED)
     include_directories(${GLEW_INCLUDE_DIRS})
-    target_link_libraries(engine PRIVATE ${GLEW_LIBRARIES})
+    target_link_libraries(engine
+    PRIVATE
+    ${GLEW_LIBRARIES}
+    IL
+    ILU
+    ILUT
+    )
 endif()
 
 # Copy DLLs to binary directory on Windows
