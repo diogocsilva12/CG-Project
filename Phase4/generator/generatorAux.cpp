@@ -510,29 +510,28 @@ void sphere(float radius, int slices, int stacks, const std::string& filename) {
             if (j != stacks-1) {
                 file << x1 << ' ' << y1 << ' ' << z1 << ' ';
                 file << p1n[0] << ' ' << p1n[1] << ' ' << p1n[2] << ' ';
-                file << (float)i/slices << ' ' << (float)j/stacks << '\n';
+                file << (float)i/slices << ' ' << 1.0f - (float)j/stacks << '\n';
                 
                 file << x2 << ' ' << y2 << ' ' << z2 << ' ';
                 file << p2n[0] << ' ' << p2n[1] << ' ' << p2n[2] << ' ';
-                file << (float)i/slices << ' ' << (float)(j+1)/stacks << '\n';
+                file << (float)i/slices << ' ' << 1.0f - (float)(j+1)/stacks << '\n';
                 
                 file << x3 << ' ' << y3 << ' ' << z3 << ' ';
                 file << p3n[0] << ' ' << p3n[1] << ' ' << p3n[2] << ' ';
-                file << (float)(i+1)/slices << ' ' << (float)(j+1)/stacks << '\n';
+                file << (float)(i+1)/slices << ' ' << 1.0f - (float)(j+1)/stacks << '\n';
             }
-        
             if (j != 0) {
                 file << x1 << ' ' << y1 << ' ' << z1 << ' ';
                 file << p1n[0] << ' ' << p1n[1] << ' ' << p1n[2] << ' ';
-                file << (float)i/slices << ' ' << (float)j/stacks << '\n';
+                file << (float)i/slices << ' ' << 1.0f - (float)j/stacks << '\n';
                 
                 file << x3 << ' ' << y3 << ' ' << z3 << ' ';
                 file << p3n[0] << ' ' << p3n[1] << ' ' << p3n[2] << ' ';
-                file << (float)(i+1)/slices << ' ' << (float)(j+1)/stacks << '\n';
+                file << (float)(i+1)/slices << ' ' << 1.0f - (float)(j+1)/stacks << '\n';
                 
                 file << x4 << ' ' << y4 << ' ' << z4 << ' ';
                 file << p4n[0] << ' ' << p4n[1] << ' ' << p4n[2] << ' ';
-                file << (float)(i+1)/slices << ' ' << (float)j/stacks << '\n';
+                file << (float)(i+1)/slices << ' ' << 1.0f - (float)j/stacks << '\n';
             }
         }
     }
@@ -1001,4 +1000,3 @@ void bezier(const std::string& patchFile, int tessellation, const std::string& o
     
     bezier_patches(patchFile, tessellation, outputFile);
 }
-
