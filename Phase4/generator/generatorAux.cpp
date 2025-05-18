@@ -737,7 +737,7 @@ void torus(float max_radius, float min_radius, int slices, int stacks, const std
 }
 
 // Bezier functions
-float B(float U, float V, float m[4][4]) {
+float Bezier(float U, float V, float m[4][4]) {
     float aux[4];
     float v[4];
     float r;
@@ -795,51 +795,51 @@ std::string surface(float mx[4][4], float my[4][4], float mz[4][4], int tesselat
     for (float i = 0; i < 1; i += tesselation_level) {
         for (float j = 0; j < 1; j += tesselation_level) {
             // Calculate points
-            x1 = B(i, j, mx);
+            x1 = Bezier(i, j, mx);
             p1u[0] = derivU(i, j, mx);
             p1v[0] = derivV(i, j, mx);
 
-            x2 = B(i + tesselation_level, j, mx);
+            x2 = Bezier(i + tesselation_level, j, mx);
             p2u[0] = derivU(i + tesselation_level, j, mx);
             p2v[0] = derivV(i + tesselation_level, j, mx);
 
-            x3 = B(i + tesselation_level, j + tesselation_level, mx);
+            x3 = Bezier(i + tesselation_level, j + tesselation_level, mx);
             p3u[0] = derivU(i + tesselation_level, j + tesselation_level, mx);
             p3v[0] = derivV(i + tesselation_level, j + tesselation_level, mx);
 
-            x4 = B(i, j + tesselation_level, mx);
+            x4 = Bezier(i, j + tesselation_level, mx);
             p4u[0] = derivU(i, j + tesselation_level, mx);
             p4v[0] = derivV(i, j + tesselation_level, mx);
 
-            y1 = B(i, j, my);
+            y1 = Bezier(i, j, my);
             p1u[1] = derivU(i, j, my);
             p1v[1] = derivV(i, j, my);
 
-            y2 = B(i + tesselation_level, j, my);
+            y2 = Bezier(i + tesselation_level, j, my);
             p2u[1] = derivU(i + tesselation_level, j, my);
             p2v[1] = derivV(i + tesselation_level, j, my);
 
-            y3 = B(i + tesselation_level, j + tesselation_level, my);
+            y3 = Bezier(i + tesselation_level, j + tesselation_level, my);
             p3u[1] = derivU(i + tesselation_level, j + tesselation_level, my);
             p3v[1] = derivV(i + tesselation_level, j + tesselation_level, my);
             
-            y4 = B(i, j + tesselation_level, my);
+            y4 = Bezier(i, j + tesselation_level, my);
             p4u[1] = derivU(i, j + tesselation_level, my);
             p4v[1] = derivV(i, j + tesselation_level, my);
 
-            z1 = B(i, j, mz);
+            z1 = Bezier(i, j, mz);
             p1u[2] = derivU(i, j, mz);
             p1v[2] = derivV(i, j, mz);
 
-            z2 = B(i + tesselation_level, j, mz);
+            z2 = Bezier(i + tesselation_level, j, mz);
             p2u[2] = derivU(i + tesselation_level, j, mz);
             p2v[2] = derivV(i + tesselation_level, j, mz);
 
-            z3 = B(i + tesselation_level, j + tesselation_level, mz);
+            z3 = Bezier(i + tesselation_level, j + tesselation_level, mz);
             p3u[2] = derivU(i + tesselation_level, j + tesselation_level, mz);
             p3v[2] = derivV(i + tesselation_level, j + tesselation_level, mz);
 
-            z4 = B(i, j + tesselation_level, mz);
+            z4 = Bezier(i, j + tesselation_level, mz);
             p4u[2] = derivU(i, j + tesselation_level, mz);
             p4v[2] = derivV(i, j + tesselation_level, mz);
 
