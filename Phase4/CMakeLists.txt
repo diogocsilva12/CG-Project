@@ -83,8 +83,6 @@ target_link_libraries(engine
     ${ILU_LIBRARY}
     ${ILUT_LIBRARY}
     tinyxml2
-    IL
-    ILU
 )
 
 # GLEW for non-Apple platforms
@@ -92,7 +90,6 @@ if(NOT APPLE)
     find_package(GLEW REQUIRED)
     include_directories(${GLEW_INCLUDE_DIRS})
     target_link_libraries(engine PRIVATE ${GLEW_LIBRARIES})
-
 endif()
 
 

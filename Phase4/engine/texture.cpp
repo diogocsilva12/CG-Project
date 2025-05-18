@@ -5,18 +5,14 @@
 #ifdef __APPLE__
 #include <GLUT/glut.h>
 #include <OpenGL/gl.h>
-// Use absolute paths to the DevIL headers
-#include "/opt/homebrew/Cellar/devil/1.8.0_6/include/IL/il.h"
-#include "/opt/homebrew/Cellar/devil/1.8.0_6/include/IL/ilu.h" // Add this for iluErrorString
 #else
 #include <GL/glut.h>
 #include <GL/gl.h>
-#include <IL/il.h>
-#include <IL/ilu.h> // Add this for iluErrorString
-#include <IL/ilut.h> // Add this for ilutGL
 #endif
 
-
+// Use absolute paths to the DevIL headers
+#include "/opt/homebrew/Cellar/devil/1.8.0_6/include/IL/il.h"
+#include "/opt/homebrew/Cellar/devil/1.8.0_6/include/IL/ilu.h" // Add this for iluErrorString
 
 #include <iostream>
 #include <fstream>
