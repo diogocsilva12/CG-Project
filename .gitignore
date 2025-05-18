@@ -27,13 +27,13 @@ Thumbs.db
 "Phase 1"/CMakeCache.txt
 "Phase 1"/CMakeFiles/
 "Phase 1"/Makefile
-"Phase 1"/external/
+
 
 "Phase 2"/cmake_install.cmake
 "Phase 2"/CMakeCache.txt
 "Phase 2"/CMakeFiles/
 "Phase 2"/Makefile
-"Phase 2"/external/
+
 
 Makefile
 */Makefile
@@ -45,7 +45,6 @@ Makefile2
 cmake_install.cmake
 CMakeCache.txt
 CMakeFiles/
-external/
 
 # Ignorar qualquer pasta CMakeFiles em qualquer diretório
 **/CMakeFiles/
@@ -58,85 +57,11 @@ external/
 # Ignorar todos os arquivos .cmake no projeto
 **/*.cmake
 
-Phase2/build/.cmake/api/v1/reply/cache-v2-13a0703fc906190c2673.json
-Phase2/build/.cmake/api/v1/reply/cache-v2-1c37b5d6ec4a61ee63a1.json
-Phase2/build/.cmake/api/v1/reply/codemodel-v2-f28229adef07a6445589.json
-Phase2/build/.cmake/api/v1/reply/codemodel-v2-f63dfda303dcb017c862.json
-Phase2/build/.cmake/api/v1/reply/directory-.-Debug-f5ebdc15457944623624.json
-Phase2/build/.cmake/api/v1/reply/directory-.-f5ebdc15457944623624.json
-Phase2/build/.cmake/api/v1/reply/index-2025-03-27T11-10-59-0470.json
-Phase2/build/.cmake/api/v1/reply/index-2025-03-27T15-57-19-0644.json
-Phase2/build/.cmake/api/v1/reply/target-engine-017d65ecccf511220cd1.json
-Phase2/build/.cmake/api/v1/reply/target-engine-Debug-49f1cc2e37e31c34fc52.json
-Phase2/build/.cmake/api/v1/reply/target-generator-34861cb2e801b9dec69f.json
-Phase2/build/.cmake/api/v1/reply/target-generator-Debug-f698a27ba654d1d7ec0c.json
-Phase2/build/.cmake/api/v1/reply/target-tinyxml2-b670a6aec8958512e30f.json
-Phase2/build/.cmake/api/v1/reply/target-tinyxml2-Debug-06ace4f09a4c15c8dcc1.json
-Phase2/build/cmake_install.cmake
-Phase2/build/CMakeCache.txt
-Phase2/build/CMakeFiles/3.31.5/CMakeDetermineCompilerABI_C.bin
-Phase2/build/CMakeFiles/3.31.5/CMakeDetermineCompilerABI_CXX.bin
-Phase2/build/CMakeFiles/CMakeConfigureLog.yaml
-Phase2/build/CMakeFiles/engine.dir/flags.make
-Phase2/build/CMakeFiles/engine.dir/link.txt
-Phase2/build/CMakeFiles/generator.dir/flags.make
-Phase2/build/CMakeFiles/generator.dir/link.txt
-Phase2/build/CMakeFiles/tinyxml2.dir/flags.make
-Phase2/build/compile_commands.json
-Phase2/build/.cmake/api/v1/reply/cache-v2-13a0703fc906190c2673.json
-Phase2/build/.cmake/api/v1/reply/codemodel-v2-f63dfda303dcb017c862.json
-Phase2/build/.cmake/api/v1/reply/directory-.-f5ebdc15457944623624.json
-Phase2/build/.cmake/api/v1/reply/index-2025-03-27T11-10-59-0470.json
-Phase2/build/.cmake/api/v1/reply/target-engine-017d65ecccf511220cd1.json
-Phase2/build/.cmake/api/v1/reply/target-generator-34861cb2e801b9dec69f.json
-Phase2/build/.cmake/api/v1/reply/target-tinyxml2-b670a6aec8958512e30f.json
-Phase2/build/cmake_install.cmake
-Phase2/build/CMakeCache.txt
-Phase2/build/CMakeFiles/3.31.5/CMakeDetermineCompilerABI_C.bin
-Phase2/build/CMakeFiles/3.31.5/CMakeDetermineCompilerABI_CXX.bin
-Phase2/build/CMakeFiles/CMakeConfigureLog.yaml
-Phase2/build/CMakeFiles/engine.dir/flags.make
-Phase2/build/CMakeFiles/engine.dir/link.txt
-Phase2/build/CMakeFiles/generator.dir/flags.make
-Phase2/build/CMakeFiles/generator.dir/link.txt
-Phase2/build/CMakeFiles/tinyxml2.dir/flags.make
-Phase2/build/.cmake/api/v1/reply/cache-v2-13a0703fc906190c2673.json
-Phase2/build/.cmake/api/v1/reply/codemodel-v2-f63dfda303dcb017c862.json
-Phase2/build/.cmake/api/v1/reply/directory-.-f5ebdc15457944623624.json
-Phase2/build/.cmake/api/v1/reply/index-2025-03-27T11-10-59-0470.json
-Phase2/build/.cmake/api/v1/reply/target-engine-017d65ecccf511220cd1.json
-Phase2/build/.cmake/api/v1/reply/target-generator-34861cb2e801b9dec69f.json
-Phase2/build/.cmake/api/v1/reply/target-tinyxml2-b670a6aec8958512e30f.json
-Phase2/build/cmake_install.cmake
-Phase2/build/CMakeCache.txt
-Phase2/build/CMakeFiles/3.31.5/CMakeDetermineCompilerABI_C.bin
-Phase2/build/CMakeFiles/3.31.5/CMakeDetermineCompilerABI_CXX.bin
-Phase2/build/CMakeFiles/CMakeConfigureLog.yaml
-Phase2/build/CMakeFiles/engine.dir/flags.make
-Phase2/build/CMakeFiles/engine.dir/link.txt
-Phase2/build/CMakeFiles/generator.dir/flags.make
-Phase2/build/CMakeFiles/generator.dir/link.txt
-Phase2/build/CMakeFiles/tinyxml2.dir/flags.make
-Phase2/.DS_Store
-Phase2/build/.cmake/api/v1/reply/cache-v2-13a0703fc906190c2673.json
-Phase2/build/.cmake/api/v1/reply/codemodel-v2-f63dfda303dcb017c862.json
-Phase2/build/.cmake/api/v1/reply/directory-.-f5ebdc15457944623624.json
-Phase2/build/.cmake/api/v1/reply/index-2025-03-28T13-58-01-0256.json
-Phase2/build/.cmake/api/v1/reply/index-2025-03-28T22-53-56-0658.json
-Phase2/build/.cmake/api/v1/reply/target-engine-017d65ecccf511220cd1.json
-Phase2/build/.cmake/api/v1/reply/target-generator-34861cb2e801b9dec69f.json
-Phase2/build/.cmake/api/v1/reply/target-tinyxml2-b670a6aec8958512e30f.json
-Phase2/build/cmake_install.cmake
-Phase2/build/CMakeCache.txt
-Phase2/build/CMakeFiles/3.31.5/CMakeDetermineCompilerABI_C.bin
-Phase2/build/CMakeFiles/3.31.5/CMakeDetermineCompilerABI_CXX.bin
-Phase2/build/CMakeFiles/CMakeConfigureLog.yaml
-Phase2/build/CMakeFiles/engine.dir/flags.make
-Phase2/build/CMakeFiles/engine.dir/link.txt
-Phase2/build/CMakeFiles/generator.dir/flags.make
-Phase2/build/CMakeFiles/generator.dir/link.txt
-Phase2/build/CMakeFiles/tinyxml2.dir/flags.make
-Phase2/build/CMakeFiles/CMakeConfigureLog.yaml
-Phase2/engine/configs/temp_view.xml
-Phase2/TP_CG-Fase2-G18.zip
-Phase2/TP_CG-Fase2-G18
+
+# Ignorar executáveis generator e engine em qualquer pasta
+**/generator
+**/engine
+
+# Ignorar qualquer pasta build em qualquer local
+**/build/
+
