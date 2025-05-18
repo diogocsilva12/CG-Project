@@ -208,6 +208,68 @@ void drawCatmullRomCurve(const std::vector<Point>& points, int samples = 100) {
     glColor3f(1.0f, 1.0f, 1.0f); // Reset color
 }
 
+// Replace your existing setupLights function with this one
+
+void setupLights(const std::vector<Light>& lights) {
+    // Disable lighting first, then re-enable lights as needed
+    glDisable(GL_LIGHTING);
+    
+    if (lights.empty()) {
+        return; // No lights to setup
+    }
+    
+    // Enable lighting
+    glEnable(GL_LIGHTING);
+    
+    // Configure up to 8 lights (OpenGL limit)
+    for (size_t i = 0; i < lights.size() && i < 8; i++) {
+        GLenum lightID = GL_LIGHT0 + i;
+        
+        // Disable the light first
+        glDisable(lightID);
+        
+        const Light& light = lights[i];
+        
+        // Define light colors (using white by default)
+        float ambient[4] = {0.2f, 0.2f, 0.2f, 1.0f};  // Subtle ambient
+        float diffuse[4] = {1.0f, 1.0f, 1.0f, 1.0f};  // Full diffuse
+        float specular[4] = {1.0f, 1.0f, 1.0f, 1.0f}; // Full specular
+        
+        glLightfv(lightID, GL_AMBIENT, ambient);
+        glLightfv(lightID, GL_DIFFUSE, diffuse);
+        glLightfv(lightID, GL_SPECULAR, specular);
+        
+        if (light.type == "point") {
+            // Point light
+            float position[4] = {light.posx, light.posy, light.posz, 1.0f};  // w=1 for position
+            glLightfv(lightID, GL_POSITION, position);
+            
+            // Default attenuation parameters
+            glLightf(lightID, GL_CONSTANT_ATTENUATION, 1.0f);
+            glLightf(lightID, GL_LINEAR_ATTENUATION, 0.0f);
+            glLightf(lightID, GL_QUADRATIC_ATTENUATION, 0.0f);
+        }
+        else if (light.type == "directional") {
+            // Directional light
+            float direction[4] = {light.dirx, light.diry, light.dirz, 0.0f};  // w=0 for direction
+            glLightfv(lightID, GL_POSITION, direction);  // In OpenGL, direction is stored in position with w=0
+        }
+        else if (light.type == "spotlight") {
+            // Spotlight
+            float position[4] = {light.posx, light.posy, light.posz, 1.0f};
+            float direction[3] = {light.dirx, light.diry, light.dirz};
+            
+            glLightfv(lightID, GL_POSITION, position);
+            glLightfv(lightID, GL_SPOT_DIRECTION, direction);
+            glLightf(lightID, GL_SPOT_CUTOFF, light.cutoff);
+            glLightf(lightID, GL_SPOT_EXPONENT, 2.0f);  // Controls spotlight focus
+        }
+        
+        // Now enable the light
+        glEnable(lightID);
+    }
+}
+
 // Update your setupMaterial function to include debug output
 
 void setupMaterial(const Material& material) {
@@ -215,21 +277,17 @@ void setupMaterial(const Material& material) {
     float diffuse[4] = {material.diffuse.r, material.diffuse.g, material.diffuse.b, 1.0f};
     float ambient[4] = {material.ambient.r, material.ambient.g, material.ambient.b, 1.0f};
     float specular[4] = {material.specular.r, material.specular.g, material.specular.b, 1.0f};
-    
-    // Use the actual emissive color from the material
-    float emissive[4] = {material.emissive.r, material.emissive.g, material.emissive.b, 0.5f};
+    float emissive[4] = {material.diffuse.r * 0.2f, material.diffuse.g * 0.2f, material.diffuse.b * 0.2f, 1.0f};
     
     // Apply all material properties for proper lighting
     glMaterialfv(GL_FRONT, GL_DIFFUSE, diffuse);
     glMaterialfv(GL_FRONT, GL_AMBIENT, ambient);
     glMaterialfv(GL_FRONT, GL_SPECULAR, specular);
-    glMaterialfv(GL_FRONT, GL_EMISSION, emissive);
+    glMaterialfv(GL_FRONT, GL_EMISSION, emissive);  // Keep some emission for visibility
     glMaterialf(GL_FRONT, GL_SHININESS, material.shininess);
-    
-    
 }
 
-// Update the renderGroup function to conditionally apply materials and textures
+//Render groups with transformations. Applies transformations in the order specified in the XML file.
 void renderGroup(const Group& group) {
     // Só desenha a trajetória se drawCurve for true
     if (group.transform.hasCurve && group.transform.curvePoints.size() >= 4 && group.transform.drawCurve) {
@@ -278,44 +336,26 @@ void renderGroup(const Group& group) {
         // Disable color material mode first
         glDisable(GL_COLOR_MATERIAL);
         
-        // Only apply materials if they are defined in the XML
-        bool hasDefinedMaterial = (model.material.diffuse.r > 0 || 
-                                   model.material.diffuse.g > 0 || 
-                                   model.material.diffuse.b > 0 ||
-                                   model.material.ambient.r > 0 || 
-                                   model.material.ambient.g > 0 || 
-                                   model.material.ambient.b > 0);
+        // Setup material properties
+        setupMaterial(model.material);
         
-        if (hasDefinedMaterial) {
-            // Setup material properties
-            setupMaterial(model.material);
-        } else {
-            // Apply default material (white)
-            float defaultDiffuse[4] = {1.0f, 1.0f, 1.0f, 1.0f};
-            float defaultAmbient[4] = {0.2f, 0.2f, 0.2f, 1.0f};
-            float defaultSpecular[4] = {0.0f, 0.0f, 0.0f, 1.0f};
-            float defaultEmission[4] = {0.0f, 0.0f, 0.0f, 1.0f};
-            
-            glMaterialfv(GL_FRONT, GL_DIFFUSE, defaultDiffuse);
-            glMaterialfv(GL_FRONT, GL_AMBIENT, defaultAmbient);
-            glMaterialfv(GL_FRONT, GL_SPECULAR, defaultSpecular);
-            glMaterialfv(GL_FRONT, GL_EMISSION, defaultEmission);
-            glMaterialf(GL_FRONT, GL_SHININESS, 0.0f);
-        }
+        // CRITICAL FIX: Make sure at least one light is enabled
+        glEnable(GL_LIGHTING);
+        glEnable(GL_LIGHT0);
         
-        // Handle normals
+        // Handle normals - IMPORTANT: Remove sizeof(Point) from glNormalPointer
         if (model.nbo != 0 && !model.normals.empty()) {
             glBindBuffer(GL_ARRAY_BUFFER, model.nbo);
             glEnableClientState(GL_NORMAL_ARRAY);
-            glNormalPointer(GL_FLOAT, 0, 0);
+            glNormalPointer(GL_FLOAT, 0, 0);  // Remove sizeof(Point) - it should be 0
         } else {
             // No normals available - use a default normal
             glDisableClientState(GL_NORMAL_ARRAY);
             glNormal3f(0.0f, 1.0f, 0.0f);
         }
         
-        // Only setup texture if it's available
-        if (model.textureID > 0 && !model.textureFile.empty()) {
+        // Setup texture if available
+        if (model.textureID > 0) {
             glEnable(GL_TEXTURE_2D);
             glBindTexture(GL_TEXTURE_2D, model.textureID);
             
@@ -352,70 +392,6 @@ void renderGroup(const Group& group) {
     }
     glPopMatrix(); //Reset the transformation matrix
 }
-
-// Update the setupLights function to handle the case with no lights
-void setupLights(const std::vector<Light>& lights) {
-    // Disable all lights first
-    for (int i = 0; i < 8; i++) {
-        glDisable(GL_LIGHT0 + i);
-    }
-    
-    // If no lights specified in the XML, disable lighting completely
-    if (lights.empty()) {
-        glDisable(GL_LIGHTING);
-        return;
-    }
-    
-    // Enable lighting
-    glEnable(GL_LIGHTING);
-    
-    // Configure lights as specified in the XML
-    for (size_t i = 0; i < lights.size() && i < 8; i++) {
-        GLenum lightID = GL_LIGHT0 + i;
-        
-        const Light& light = lights[i];
-        
-        // Apply intensity to light colors
-        float ambient[4] = {0.2f * light.intensity, 0.2f * light.intensity, 0.2f * light.intensity, 1.0f};
-        float diffuse[4] = {1.0f * light.intensity, 1.0f * light.intensity, 1.0f * light.intensity, 1.0f};
-        float specular[4] = {1.0f * light.intensity, 1.0f * light.intensity, 1.0f * light.intensity, 1.0f};
-        
-        glLightfv(lightID, GL_AMBIENT, ambient);
-        glLightfv(lightID, GL_DIFFUSE, diffuse);
-        glLightfv(lightID, GL_SPECULAR, specular);
-        
-        if (light.type == "point") {
-            // Point light
-            float position[4] = {light.posx, light.posy, light.posz, 1.0f};  // w=1 for position
-            glLightfv(lightID, GL_POSITION, position);
-            
-            // Default attenuation parameters
-            glLightf(lightID, GL_CONSTANT_ATTENUATION, 1.0f);
-            glLightf(lightID, GL_LINEAR_ATTENUATION, 0.0f);
-            glLightf(lightID, GL_QUADRATIC_ATTENUATION, 0.0f);
-        }
-        else if (light.type == "directional") {
-            // Directional light
-            float direction[4] = {light.dirx, light.diry, light.dirz, 0.0f};  // w=0 for direction
-            glLightfv(lightID, GL_POSITION, direction);  // In OpenGL, direction is stored in position with w=0
-        }
-        else if (light.type == "spotlight") {
-            // Spotlight
-            float position[4] = {light.posx, light.posy, light.posz, 1.0f};
-            float direction[3] = {light.dirx, light.diry, light.dirz};
-            
-            glLightfv(lightID, GL_POSITION, position);
-            glLightfv(lightID, GL_SPOT_DIRECTION, direction);
-            glLightf(lightID, GL_SPOT_CUTOFF, light.cutoff);
-            glLightf(lightID, GL_SPOT_EXPONENT, 2.0f);  // Controls spotlight focus
-        }
-        
-        // Now enable the light
-        glEnable(lightID);
-    }
-}
-
-
 
 //Update camera position based on orbit angles
 void updateOrbit() {
@@ -725,91 +701,6 @@ void countModels(const Group& group, int& count) {
     }
 }
 
-GLuint skyboxTexture = 0;
-
-void renderSkybox(float size) {
-    // Skip if no skybox texture is loaded
-    if (skyboxTexture == 0) return;
-    
-    // Save current state
-    GLboolean depthTest = glIsEnabled(GL_DEPTH_TEST);
-    GLboolean lighting = glIsEnabled(GL_LIGHTING);
-    
-    // Setup skybox rendering
-    glDisable(GL_LIGHTING);
-    glDisable(GL_DEPTH_TEST);
-    glEnable(GL_TEXTURE_2D);
-    
-    // Save matrix state
-    glMatrixMode(GL_MODELVIEW);
-    glPushMatrix();
-    
-    // Only use the rotational component of the view matrix
-    // This makes the skybox move with the camera
-    float modelview[16];
-    glGetFloatv(GL_MODELVIEW_MATRIX, modelview);
-    
-    // Zero out the translation
-    modelview[12] = 0;
-    modelview[13] = 0;
-    modelview[14] = 0;
-    
-    glLoadMatrixf(modelview);
-    
-    // Bind skybox texture
-    glBindTexture(GL_TEXTURE_2D, skyboxTexture);
-    
-    // Draw skybox cube
-    glBegin(GL_QUADS);
-    
-    // Front face
-    glTexCoord2f(0.0f, 0.0f); glVertex3f(-size, -size, -size);
-    glTexCoord2f(1.0f, 0.0f); glVertex3f(size, -size, -size);
-    glTexCoord2f(1.0f, 1.0f); glVertex3f(size, size, -size);
-    glTexCoord2f(0.0f, 1.0f); glVertex3f(-size, size, -size);
-    
-    // Back face
-    glTexCoord2f(0.0f, 0.0f); glVertex3f(size, -size, size);
-    glTexCoord2f(1.0f, 0.0f); glVertex3f(-size, -size, size);
-    glTexCoord2f(1.0f, 1.0f); glVertex3f(-size, size, size);
-    glTexCoord2f(0.0f, 1.0f); glVertex3f(size, size, size);
-    
-    // Left face
-    glTexCoord2f(0.0f, 0.0f); glVertex3f(-size, -size, size);
-    glTexCoord2f(1.0f, 0.0f); glVertex3f(-size, -size, -size);
-    glTexCoord2f(1.0f, 1.0f); glVertex3f(-size, size, -size);
-    glTexCoord2f(0.0f, 1.0f); glVertex3f(-size, size, size);
-    
-    // Right face
-    glTexCoord2f(0.0f, 0.0f); glVertex3f(size, -size, -size);
-    glTexCoord2f(1.0f, 0.0f); glVertex3f(size, -size, size);
-    glTexCoord2f(1.0f, 1.0f); glVertex3f(size, size, size);
-    glTexCoord2f(0.0f, 1.0f); glVertex3f(size, size, -size);
-    
-    // Top face
-    glTexCoord2f(0.0f, 0.0f); glVertex3f(-size, size, -size);
-    glTexCoord2f(1.0f, 0.0f); glVertex3f(size, size, -size);
-    glTexCoord2f(1.0f, 1.0f); glVertex3f(size, size, size);
-    glTexCoord2f(0.0f, 1.0f); glVertex3f(-size, size, size);
-    
-    // Bottom face
-    glTexCoord2f(0.0f, 0.0f); glVertex3f(-size, -size, size);
-    glTexCoord2f(1.0f, 0.0f); glVertex3f(size, -size, size);
-    glTexCoord2f(1.0f, 1.0f); glVertex3f(size, -size, -size);
-    glTexCoord2f(0.0f, 1.0f); glVertex3f(-size, -size, -size);
-    
-    glEnd();
-    
-    // Restore matrices and state
-    glPopMatrix();
-    
-    // Restore OpenGL state
-    if (depthTest) glEnable(GL_DEPTH_TEST);
-    if (lighting) glEnable(GL_LIGHTING);
-    
-    glBindTexture(GL_TEXTURE_2D, 0);
-}
-
 void renderScene() {
     frameCount++;
     int currentTime = glutGet(GLUT_ELAPSED_TIME);
@@ -827,9 +718,6 @@ void renderScene() {
     gluLookAt(world.camera.position.x, world.camera.position.y, world.camera.position.z,
               world.camera.lookAt.x, world.camera.lookAt.y, world.camera.lookAt.z,
               world.camera.up.x, world.camera.up.y, world.camera.up.z);
-    
-    // Render skybox before anything else
-    renderSkybox(500.0f);  // Use a large size to ensure it's behind everything
     
     setupLights(world.lights);
     renderGroup(world.rootGroup);
@@ -956,22 +844,13 @@ int main(int argc, char** argv) {
         return 1;
     }
 
-    // Get the filename without path for checking
-    std::string filename = argv[1];
-    size_t lastSlash = filename.find_last_of("/\\");
-    std::string baseFilename = (lastSlash != std::string::npos) ? 
-                           filename.substr(lastSlash + 1) : filename;
-    
-    // Only load skybox for dynamic_solar_system.xml
-    bool enableSkybox = (baseFilename == "dynamic_solar_system.xml");
-    
     world = parseXMLFile(argv[1]);
     initCameraAngles();
     glutInit(&argc, argv);
     glutInitDisplayMode(GLUT_DEPTH | GLUT_DOUBLE | GLUT_RGBA);
     glutInitWindowPosition(100, 100);
     glutInitWindowSize(world.window.width, world.window.height);
-    glutCreateWindow("CG@Fase 4 - G18");
+    glutCreateWindow("CG@Fase 2 - G18");
 
     //glewExperimental = GL_TRUE;
     
@@ -985,32 +864,27 @@ int main(int argc, char** argv) {
 
     loadModels(world.rootGroup);
 
-    // Only load skybox if it's specified in the XML
-    skyboxTexture = 0;
-    if (!world.skyboxTexture.empty()) {
-        skyboxTexture = loadTexture(world.skyboxTexture.c_str());
-        if (skyboxTexture == 0) {
-            std::cerr << "Failed to load skybox texture: " << world.skyboxTexture << std::endl;
-        } else {
-            std::cout << "Successfully loaded skybox texture with ID: " << skyboxTexture << std::endl;
-        }
+    // Initialize OpenGL lighting system
+    glEnable(GL_LIGHTING);
+    glEnable(GL_NORMALIZE);  
+    glShadeModel(GL_SMOOTH);
+
+    // Set up white light for all lights (like your friend's code)
+    float white[4] = {1.0f, 1.0f, 1.0f, 1.0f};
+    for (int i = 0; i < 8; i++) {
+        glLightfv(GL_LIGHT0 + i, GL_DIFFUSE, white);
+        glLightfv(GL_LIGHT0 + i, GL_SPECULAR, white);
     }
 
-    // Initialize OpenGL lighting only if lights are defined in the XML
-    if (!world.lights.empty()) {
-        glEnable(GL_LIGHTING);
-        glEnable(GL_NORMALIZE);
-        glShadeModel(GL_SMOOTH);
+    // Set up global ambient light - this is important
+    float globalAmbient[4] = {0.2f, 0.2f, 0.2f, 1.0f};
+    glLightModelfv(GL_LIGHT_MODEL_AMBIENT, globalAmbient);
+    glLightModeli(GL_LIGHT_MODEL_TWO_SIDE, GL_FALSE);
+    glLightModeli(GL_LIGHT_MODEL_LOCAL_VIEWER, GL_TRUE);
 
-        // Set up global ambient light
-        float globalAmbient[4] = {0.2f, 0.2f, 0.2f, 1.0f};
-        glLightModelfv(GL_LIGHT_MODEL_AMBIENT, globalAmbient);
-        glLightModeli(GL_LIGHT_MODEL_TWO_SIDE, GL_FALSE);
-        glLightModeli(GL_LIGHT_MODEL_LOCAL_VIEWER, GL_TRUE);
-    } else {
-        // If no lights defined, start with lighting disabled
-        glDisable(GL_LIGHTING);
-    }
+    // CRITICAL: DO NOT enable GL_COLOR_MATERIAL - it interferes with material settings
+    // glEnable(GL_COLOR_MATERIAL); 
+    // glColorMaterial(GL_FRONT, GL_AMBIENT_AND_DIFFUSE);
 
     glutDisplayFunc(renderScene);
     glutReshapeFunc(changeSize);

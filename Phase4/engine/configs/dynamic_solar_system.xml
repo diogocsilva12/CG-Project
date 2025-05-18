@@ -1,7 +1,6 @@
 <world> 
     <eixos value="false" />
     <window width="1000" height="1000" />
-    <skybox texture="milkyway.jpg" />
     <camera> 
 	    <position x="40" y="200" z="-395" />
 	    <lookAt x="0" y="0" z="0" />
@@ -10,8 +9,8 @@
     </camera>
 
 	<lights> 
-		<!-- Main sun light - increased intensity -->
-		<light type="point" posx="0" posy="0" posz="0" intensity="1.5" /> <!-- Add intensity attribute -->
+		<!-- Main sun light - brighter and positioned at the sun's center -->
+		<light type="point" posx="0" posy="0" posz="0" />
 		<!-- Additional ambient light -->
 		<light type="point" posx="0" posy="1" posz="0" />			
 	</lights>
@@ -30,8 +29,8 @@
 					    <diffuse R="255" G="165" B="0" />
 					    <ambient R="255" G="165" B="0" />
 					    <specular R="255" G="255" B="255" />
-					    <emissive R="255" G="255" B="128" />
-					    <shininess value="128" />
+					    <emissive R="255" G="255" B="0" />
+					    <shininess value="0" />
 					</color>
 				</model>
 			</models>

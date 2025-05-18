@@ -290,22 +290,6 @@ World parseXMLFile(const char* filename) {
     }
 
     /**
-     * Parse skybox settings
-     * 
-     * Example: <skybox texture="skybox_texture.png" />
-     * 
-     * Extracts the texture attribute to define the skybox texture.
-     */
-    XMLElement* skyboxElement = rootElement->FirstChildElement("skybox");
-    if (skyboxElement) {
-        const char* texture = skyboxElement->Attribute("texture");
-        if (texture) {
-            world.skyboxTexture = "../engine/textures/" + std::string(texture);
-            std::cout << "Loading skybox texture: " << world.skyboxTexture << std::endl;
-        }
-    }
-
-    /**
      * Parse camera settings
      * 
      * Example:
@@ -364,9 +348,6 @@ World parseXMLFile(const char* filename) {
             const char* type = lightElem->Attribute("type");
             if (type) light.type = std::string(type);
             
-            // Add this line to parse the intensity attribute
-            light.intensity = lightElem->FloatAttribute("intensity", 1.0f);
-            
             // Normalize light type (handle "spot" as "spotlight")
             if (light.type == "spot") {
                 light.type = "spotlight";
@@ -393,9 +374,8 @@ World parseXMLFile(const char* filename) {
             
             world.lights.push_back(light);
             
-            // Update debug message to include intensity
+            // Improved debug message that shows appropriate information based on light type
             std::cout << "Added " << light.type << " light";
-            std::cout << " with intensity " << light.intensity;
             if (light.type == "point" || light.type == "spotlight") {
                 std::cout << " at position (" << light.posx << ", " << light.posy << ", " << light.posz << ")";
             }
