@@ -64,6 +64,3 @@ CMakeFiles/
 
 # Ignorar qualquer pasta build em qualquer local
 **/build/
-
-**/TP_CG-Fase2-G18.zip
-**/TP_CG-Fase1-G18/
